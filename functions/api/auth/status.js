@@ -1,4 +1,4 @@
-import { readSession, jsonResponse } from "../../../_shared/auth.js";
+import { readSession, jsonResponse } from "../../_shared/auth.js";
 
 export async function onRequest({ request, env }) {
   const session = await readSession(request, env);
