@@ -138,7 +138,13 @@ async function restoreSession(){
  try{enter(result.data.session.user,await getProfile(result.data.session.user))}
  catch(_){await sb.auth.signOut();$('#err').textContent='Profile not found. Please contact the dashboard administrator.'}
 }
-restoreSession();
+restoreSession().then(()=>{
+ const params=new URLSearchParams(location.search);
+ if(params.get('onedrive')==='connected'){
+  history.replaceState({},'',location.pathname);
+  syncOneDrive(false);
+ }
+});
 /* ---- charts ---- */
 function area(v,lab,w=640,h=210){const mx=Math.max(...v,1),p=28,x=i=>p+i*(w-2*p)/(v.length-1||1),y=a=>h-24-(a/mx)*(h-50);
  const pts=v.map((a,i)=>[x(i),y(a)]),ln=pts.map(q=>q.join(',')).join(' ');
@@ -202,6 +208,44 @@ function parse(buf){const wb=XLSX.read(buf,{cellDates:true}),g=s=>XLSX.utils.she
  const hol=[],sat=[];g('Holidays & Weekends').slice(25).forEach(r=>{if(r[1]&&r[2])hol.push({n:r[1],f:D8(r[2]),t:D8(r[3])});if(r[6])sat.push(D8(r[6]))});
  const tour=[];g('360 Virtual Tour').slice(2).forEach(r=>{if(r[2])tour.push({n:r[1],c:String(r[2]).trim(),o:r[3],b:r[4],l:r[5],d:r[6] instanceof Date?D8(r[6]):r[6],s:/live/i.test(r[7]||''),k:r[8]})});
  return{rows,hol,sat,tour,at:new Date().toISOString()}}
-$('#up').onclick=()=>$('#fi').click();
-$('#fi').onchange=async e=>{const f=e.target.files[0];if(!f)return;try{const d=parse(await f.arrayBuffer());if(!d.rows.length)throw 0;D=d;prep();go();toast('Loaded in this browser only. OneDrive live sync is not connected yet.')}catch(x){toast('Could not read that file. Use the Studio Status tracker .xlsx')}e.target.value=''};
+let oneDriveSyncTimer=null;
+async function syncOneDrive(redirectIfNeeded=true){
+ try{
+  const supa=await sb.auth.getSession();
+  const supaUser=supa.data?.session?.user;
+  if(!supaUser){toast('Please sign in to the dashboard first.');return false}
+  const statusResponse=await fetch('/api/auth/status',{cache:'no-store'});
+  const status=await statusResponse.json();
+  if(!status.authenticated){
+   if(redirectIfNeeded){location.href='/api/auth/login';return false}
+   return false;
+  }
+  const dashboardEmail=(supaUser.email||'').toLowerCase();
+  const microsoftEmail=(status.user?.email||'').toLowerCase();
+  if(!dashboardEmail||dashboardEmail!==microsoftEmail){
+   toast('Your dashboard login and Microsoft account must use the same NITEX email.');
+   return false;
+  }
+  const response=await fetch('/api/excel',{cache:'no-store'});
+  if(response.status===401){
+   if(redirectIfNeeded){location.href='/api/auth/login';return false}
+   return false;
+  }
+  if(!response.ok){
+   const error=await response.json().catch(()=>({}));
+   throw new Error(error.error||'Could not download the OneDrive workbook.');
+  }
+  const data=parse(await response.arrayBuffer());
+  if(!data.rows.length)throw new Error('The workbook was downloaded, but no Studio Status rows were found.');
+  D=data;prep();go();
+  toast('Studio Status updated from OneDrive.');
+  if(!oneDriveSyncTimer)oneDriveSyncTimer=setInterval(()=>syncOneDrive(false),300000);
+  return true;
+ }catch(error){
+  toast(error.message||'OneDrive sync failed. Please try again.');
+  return false;
+ }
+}
+$('#up').onclick=()=>syncOneDrive(true);
+$('#fi').onchange=async e=>{const f=e.target.files[0];if(!f)return;try{const d=parse(await f.arrayBuffer());if(!d.rows.length)throw 0;D=d;prep();go();toast('Excel preview loaded in this browser.')}catch(x){toast('Could not read that file. Use the Studio Status tracker .xlsx')}e.target.value=''};
 </script></body></html>
