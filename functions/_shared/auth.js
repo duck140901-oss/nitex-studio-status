@@ -17,7 +17,7 @@ export function getSessionId(request) {
   return entry ? decodeURIComponent(entry.slice(SESSION_COOKIE.length + 1)) : null;
 }
 
-export function getMicrosoftConfig(env) {
+export function getMicrosoftConfig(env, request) {
   const names = [
     "MICROSOFT_CLIENT_ID",
     "MICROSOFT_TENANT_ID",
@@ -27,12 +27,16 @@ export function getMicrosoftConfig(env) {
   const missing = names.filter(name => !env[name]);
   if (!env.AUTH_KV) missing.push("AUTH_KV");
   if (missing.length) throw new Error("Missing configuration: " + missing.join(", "));
+  const requestUrl = request ? new URL(request.url) : null;
+  const hostname = requestUrl?.hostname || "nitex-studio-status.pages.dev";
+  const allowedHost = hostname === "nitex-studio-status.pages.dev" || hostname.endsWith(".nitex-studio-status.pages.dev");
+  if (!allowedHost) throw new Error("This website host is not approved for Microsoft sign-in.");
   return {
     clientId: env.MICROSOFT_CLIENT_ID,
     tenantId: env.MICROSOFT_TENANT_ID,
     clientSecret: env.MICROSOFT_CLIENT_SECRET,
     encryptionKey: env.TOKEN_ENCRYPTION_KEY,
-    redirectUri: "https://nitex-studio-status.pages.dev/api/auth/callback"
+    redirectUri: (requestUrl ? requestUrl.origin : "https://nitex-studio-status.pages.dev") + "/api/auth/callback"
   };
 }
 
