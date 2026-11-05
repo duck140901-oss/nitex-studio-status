@@ -71,16 +71,6 @@ const SUPABASE_URL='https://dodslzhjjltkenmbxpia.supabase.co';
 const SUPABASE_PUBLISHABLE_KEY='sb_publishable_Xxcz13oqUkVKeJb8ZUtpLw_MiB7wkxX';
 const sb=window.supabase.createClient(SUPABASE_URL,SUPABASE_PUBLISHABLE_KEY);
 const ROLE_LABELS={team_lead:'Team Lead',studio_in_charge:'Studio In Charge',lead_visualizer:'Lead Visualizer',visualizer:'Visualizer'};
-let me=null;
-const $=s=>document.querySelector(s),n=v=>Math.round(v).toLocaleString('en-US'),f1=v=>(+v||0).toFixed(1);
-const sum=(a,f)=>a.reduce((s,r)=>s+f(r),0),avg=a=>a.length?sum(a,r=>r.d||0)/a.length:0;
-let Y,P='ov',SH=40;
-const PAGES=[['ov','Overview'],['ss','Studio Status'],['sm','Summary'],['hw','Holidays & Weekends'],['vt','360 Virtual Tour']];
-const prep=()=>{D.rows.forEach(r=>{r.y=+r.i.slice(0,4);r.m=+r.i.slice(5,7)-1});};
-const years=()=>[...new Set(D.rows.map(r=>r.y))].sort();
-const sel=()=>D.rows.filter(r=>Y==='All'||r.y===Y);
-const toast=t=>{const e=$('#toast');e.textContent=t;e.style.display='block';setTimeout(()=>e.style.display='none',4200)};
-prep();
 async function getProfile(authUser){
  const result=await sb.from('profiles').select('full_name,role,avatar_url').eq('id',authUser.id).single();
  if(result.error)throw result.error;return result.data;
