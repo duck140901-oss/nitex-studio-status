@@ -36,7 +36,7 @@ export function getMicrosoftConfig(env, request) {
     tenantId: env.MICROSOFT_TENANT_ID,
     clientSecret: env.MICROSOFT_CLIENT_SECRET,
     encryptionKey: env.TOKEN_ENCRYPTION_KEY,
-    redirectUri: (requestUrl ? requestUrl.origin : "https://nitex-studio-status.pages.dev") + "/api/auth/callback"
+    redirectUri: (hostname === "nitex-studio-status.pages.dev" ? "https://nitex-studio-status.pages.dev" : "https://feature-microsoft-onedrive-s.nitex-studio-status.pages.dev") + "/api/auth/callback"
   };
 }
 
