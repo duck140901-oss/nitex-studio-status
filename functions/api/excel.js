@@ -1,5 +1,5 @@
-import { getMicrosoftConfig, readSession, jsonResponse } from "../../_shared/auth.js";
-import { decryptToken, encryptToken } from "../../_shared/crypto.js";
+import { getMicrosoftConfig, readSession, jsonResponse } from "../_shared/auth.js";
+import { decryptToken, encryptToken } from "../_shared/crypto.js";
 
 const WORKBOOK_SHARE_URL = "https://nitexsol-my.sharepoint.com/:x:/g/personal/alamin_nitex_com/IQCGNsicNhQHQaCccySz1sPmAdZEYoo2kj2iePBDLhZFWj4?e=Jxym6u";
 
