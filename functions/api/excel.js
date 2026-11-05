@@ -4,8 +4,8 @@ import { decryptToken, encryptToken } from "../_shared/crypto.js";
 const WORKBOOK_SHARE_URL = "https://nitexsol-my.sharepoint.com/:x:/g/personal/alamin_nitex_com/IQCGNsicNhQHQaCccySz1sPmAdZEYoo2kj2iePBDLhZFWj4?e=Jxym6u";
 
 function toShareId(url) {
-  const encoded = btoa("u!" + btoa(url));
-  return encoded.replace(/=/g, "").replace(/\+/g, "-").replace(/\//g, "_");
+  const encoded = btoa(url);
+  return "u!" + encoded.replace(/=/g, "").replace(/\+/g, "-").replace(/\//g, "_");
 }
 
 async function getAccessToken(env, session, cfg) {
