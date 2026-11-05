@@ -1,5 +1,5 @@
-import { getMicrosoftConfig, jsonResponse, randomHex } from "../../../_shared/auth.js";
-import { encryptToken } from "../../../_shared/crypto.js";
+import { getMicrosoftConfig, jsonResponse, randomHex } from "../../_shared/auth.js";
+import { encryptToken } from "../../_shared/crypto.js";
 
 export async function onRequest({ request, env }) {
   try {
