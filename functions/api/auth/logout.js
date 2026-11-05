@@ -1,4 +1,4 @@
-import { SESSION_COOKIE, getSessionId, jsonResponse } from "../../../_shared/auth.js";
+import { SESSION_COOKIE, getSessionId, jsonResponse } from "../../_shared/auth.js";
 
 export async function onRequest({ request, env }) {
   const id = getSessionId(request);
