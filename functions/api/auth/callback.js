@@ -3,7 +3,7 @@ import { encryptToken } from "../../_shared/crypto.js";
 
 export async function onRequest({ request, env }) {
   try {
-    const cfg = getMicrosoftConfig(env);
+    const cfg = getMicrosoftConfig(env, request);
     const url = new URL(request.url);
     const authError = url.searchParams.get("error");
     if (authError) return new Response("Microsoft sign-in was cancelled or denied. Return to the dashboard and try again.", { status: 400 });
