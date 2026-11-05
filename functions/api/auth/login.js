@@ -22,7 +22,7 @@ export async function onRequest({ request, env }) {
       status: 302,
       headers: {
         location: authorize.toString(),
-        "set-cookie": "nitex_oauth_state=" + state + "; Path=/api/auth; HttpOnly; Secure; SameSite=Lax; Max-Age=600",
+        "set-cookie": "nitex_oauth_state=" + state + "; Domain=.nitex-studio-status.pages.dev; Path=/api/auth; HttpOnly; Secure; SameSite=Lax; Max-Age=600",
         "cache-control": "no-store"
       }
     });
