@@ -18,7 +18,14 @@ export async function onRequest({ env }) {
       state
     }).toString();
 
-    return Response.redirect(authorize.toString(), 302);
+    return new Response(null, {
+      status: 302,
+      headers: {
+        location: authorize.toString(),
+        "set-cookie": "nitex_oauth_state=" + state + "; Path=/api/auth; HttpOnly; Secure; SameSite=Lax; Max-Age=600",
+        "cache-control": "no-store"
+      }
+    });
   } catch (error) {
     return new Response(JSON.stringify({ error: error.message }), {
       status: 500,
