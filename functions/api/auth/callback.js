@@ -68,17 +68,13 @@ export async function onRequest({ request, env }) {
     };
     await env.AUTH_KV.put("session:" + sessionId, JSON.stringify(session), { expirationTtl: 2592000 });
 
-    return new Response(null, {
-      status: 302,
-      headers: {
-        location: "/?onedrive=connected",
-        "set-cookie": [
-          "nitex_studio_session=" + sessionId + "; Path=/; HttpOnly; Secure; SameSite=Lax; Max-Age=2592000",
-          "nitex_oauth_state=; Path=/api/auth; HttpOnly; Secure; SameSite=Lax; Max-Age=0"
-        ],
-        "cache-control": "no-store"
-      }
+    const headers = new Headers({
+      location: "/?onedrive=connected",
+      "cache-control": "no-store"
     });
+    headers.append("set-cookie", "nitex_studio_session=" + sessionId + "; Path=/; HttpOnly; Secure; SameSite=Lax; Max-Age=2592000");
+    headers.append("set-cookie", "nitex_oauth_state=; Path=/api/auth; HttpOnly; Secure; SameSite=Lax; Max-Age=0");
+    return new Response(null, { status: 302, headers });
   } catch (error) {
     return jsonResponse({ error: error.message || "Microsoft authentication failed." }, 500);
   }
