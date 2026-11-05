@@ -1,8 +1,8 @@
 import { getMicrosoftConfig, randomHex } from "../../_shared/auth.js";
 
-export async function onRequest({ env }) {
+export async function onRequest({ request, env }) {
   try {
-    const cfg = getMicrosoftConfig(env);
+    const cfg = getMicrosoftConfig(env, request);
     const state = randomHex(24);
     await env.AUTH_KV.put("oauth-state:" + state, "valid", { expirationTtl: 600 });
 
