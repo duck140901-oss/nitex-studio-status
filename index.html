@@ -140,10 +140,8 @@ async function restoreSession(){
 }
 restoreSession().then(()=>{
  const params=new URLSearchParams(location.search);
- if(params.get('onedrive')==='connected'){
-  history.replaceState({},'',location.pathname);
-  syncOneDrive(false);
- }
+ if(params.get('onedrive')==='connected')history.replaceState({},'',location.pathname);
+ syncOneDrive(false);
 });
 /* ---- charts ---- */
 function area(v,lab,w=640,h=210){const mx=Math.max(...v,1),p=28,x=i=>p+i*(w-2*p)/(v.length-1||1),y=a=>h-24-(a/mx)*(h-50);
