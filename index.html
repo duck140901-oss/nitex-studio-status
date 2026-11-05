@@ -203,7 +203,7 @@ function go(){const ys=['All',...years()];$('#yr').innerHTML=ys.map(y=>`<option 
 const D8=v=>v instanceof Date?iso(new Date(v.getTime()+12*36e5)):null;
 function parse(buf){const wb=XLSX.read(buf,{cellDates:true}),g=s=>XLSX.utils.sheet_to_json(wb.Sheets[s],{header:1,raw:true,defval:null}),rows=[];
  g('Studio Status').slice(8).forEach(r=>{if(r[2]==null||!r[4])return;rows.push({q:+r[2],s:r[3]||'',i:D8(r[4]),sh:D8(r[5]),c:D8(r[6]),g:D8(r[7]),k:D8(r[8]),u:D8(r[9]),d:+r[10]||0,t:r[11]||'',n:r[13]||''})});
- const hol=[],sat=[];g('Holidays & Weekends').slice(25).forEach(r=>{if(r[1]&&r[2])hol.push({n:r[1],f:D8(r[2]),t:D8(r[3])});if(r[6])sat.push(D8(r[6]))});
+ const hol=[],sat=[];g('Holidays & Weekends').slice(25).forEach(r=>{if(r[0]&&r[1])hol.push({n:r[0],f:D8(r[1]),t:D8(r[2])});if(r[5])sat.push(D8(r[5]))});
  const tour=[];g('360 Virtual Tour').slice(2).forEach(r=>{if(r[2])tour.push({n:r[1],c:String(r[2]).trim(),o:r[3],b:r[4],l:r[5],d:r[6] instanceof Date?D8(r[6]):r[6],s:/live/i.test(r[7]||''),k:r[8]})});
  return{rows,hol,sat,tour,at:new Date().toISOString()}}
 let oneDriveSyncTimer=null;
