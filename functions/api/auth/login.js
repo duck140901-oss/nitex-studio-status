@@ -1,4 +1,4 @@
-import { getMicrosoftConfig, randomHex } from "../../../_shared/auth.js";
+import { getMicrosoftConfig, randomHex } from "../../_shared/auth.js";
 
 export async function onRequest({ env }) {
   try {
