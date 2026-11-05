@@ -12,10 +12,15 @@ export async function onRequest({ request, env }) {
     const state = url.searchParams.get("state");
     if (!code || !state) return new Response("Missing authorization response. Please try signing in again.", { status: 400 });
 
+    const cookieHeader = request.headers.get("Cookie") || "";
+    const stateCookie = cookieHeader.split(";").map(v => v.trim()).find(v => v.startsWith("nitex_oauth_state="));
+    const browserState = stateCookie ? decodeURIComponent(stateCookie.slice("nitex_oauth_state=".length)) : "";
     const stateKey = "oauth-state:" + state;
     const stateValue = await env.AUTH_KV.get(stateKey);
     await env.AUTH_KV.delete(stateKey);
-    if (stateValue !== "valid") return new Response("Sign-in request expired or could not be verified. Please try again.", { status: 400 });
+    if (stateValue !== "valid" || !browserState || browserState !== state) {
+      return new Response("Sign-in request expired or could not be verified. Please try again.", { status: 400 });
+    }
 
     const tokenResponse = await fetch(
       "https://login.microsoftonline.com/" + cfg.tenantId + "/oauth2/v2.0/token",
@@ -66,8 +71,11 @@ export async function onRequest({ request, env }) {
     return new Response(null, {
       status: 302,
       headers: {
-        location: "/",
-        "set-cookie": "nitex_studio_session=" + sessionId + "; Path=/; HttpOnly; Secure; SameSite=Lax; Max-Age=2592000",
+        location: "/?onedrive=connected",
+        "set-cookie": [
+          "nitex_studio_session=" + sessionId + "; Path=/; HttpOnly; Secure; SameSite=Lax; Max-Age=2592000",
+          "nitex_oauth_state=; Path=/api/auth; HttpOnly; Secure; SameSite=Lax; Max-Age=0"
+        ],
         "cache-control": "no-store"
       }
     });
