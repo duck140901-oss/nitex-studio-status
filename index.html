@@ -77,7 +77,7 @@ const sel=()=>D.rows.filter(r=>Y==='All'||r.y===Y);
 const toast=t=>{const e=$('#toast');e.textContent=t;e.style.display='block';setTimeout(()=>e.style.display='none',4200)};
 /* ---- Supabase authentication and member profile ---- */
 const SUPABASE_URL='https://dodslzhjjltkenmbxpia.supabase.co';
-const SUPABASE_PUBLISHABLE_KEY='sb_publishable_Xxcz13oqUkVKeJb8ZUtpLw_MiB7wkxX';
+const SUPABASE_PUBLISHABLE_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRvZHNsemhqamx0a2VubWJ4cGlhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTM4NDg1MDEsImV4cCI6MjEwOTQyNDUwMX0.s5v42Q8D7yd5CbQiepUx1an1zt32k6EfY57O9B-2cAc';
 const sb=window.supabase.createClient(SUPABASE_URL,SUPABASE_PUBLISHABLE_KEY);
 const ROLE_LABELS={team_lead:'Team Lead',studio_in_charge:'Studio In Charge',lead_visualizer:'Lead Visualizer',visualizer:'Visualizer'};
 const AVATAR_FALLBACK='data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"%3E%3Crect width="64" height="64" fill="%23333"/%3E%3Ccircle cx="32" cy="23" r="12" fill="%23aaa"/%3E%3Cpath d="M8 62c2-16 11-24 24-24s22 8 24 24" fill="%23aaa"/%3E%3C/svg%3E';
