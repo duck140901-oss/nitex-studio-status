@@ -72,7 +72,7 @@ export const ONEDRIVE_UPDATE_EMAILS = ["alamin@nitex.com", "sowrav@nitex.com"];
 
 export async function verifyDashboardUserDiagnostic(request) {
   const authorization = request.headers.get("Authorization") || "";
-  const match = authorization.match(/^Bearer\\s+(.+)$/i);
+  const match = authorization.match(/^Bearer\s+(.+)$/i);
   if (!match) return { ok: false, reason: "missing_bearer_token" };
   let response;
   try {
