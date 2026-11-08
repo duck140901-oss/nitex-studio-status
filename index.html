@@ -112,7 +112,7 @@ $('#lf').onsubmit=async e=>{
  const email=$('#lu').value.trim().toLowerCase(),password=$('#lp').value;
  const result=await sb.auth.signInWithPassword({email,password});
  if(result.error){$('#err').textContent=result.error.message;return}
- try{enter(result.data.user,await getProfile(result.data.user))}
+ try{enter(result.data.user,await getProfile(result.data.user));syncOneDrive(false)}
  catch(err){await sb.auth.signOut();$('#err').textContent='Profile not found. Please contact the dashboard administrator.'}
 };
 $('#out').onclick=async()=>{await sb.auth.signOut();location.reload()};
