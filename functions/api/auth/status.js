@@ -1,8 +1,9 @@
-import { readSession, jsonResponse, verifyDashboardUser, ONEDRIVE_OWNER_EMAIL } from "../../_shared/auth.js";
+import { readSession, jsonResponse, verifyDashboardUserDiagnostic, ONEDRIVE_OWNER_EMAIL } from "../../_shared/auth.js";
 
 export async function onRequest({ request, env }) {
-  const user = await verifyDashboardUser(request);
-  if (!user) return jsonResponse({ authenticated: false, connected: false }, 401);
+  const auth = await verifyDashboardUserDiagnostic(request);
+  if (!auth.ok) return jsonResponse({ authenticated: false, connected: false, diagnostic: auth }, 401);
+  const user = auth.user;
   let stored = await env.AUTH_KV.get("onedrive:shared");
   if (!stored && user.email === ONEDRIVE_OWNER_EMAIL) {
     const oldSession = await readSession(request, env);
