@@ -1,13 +1,17 @@
-import { readSession, jsonResponse } from "../../_shared/auth.js";
+import { readSession, jsonResponse, verifyDashboardUser } from "../../_shared/auth.js";
 
 export async function onRequest({ request, env }) {
-  const session = await readSession(request, env);
-  if (!session) return jsonResponse({ authenticated: false });
+  const user = await verifyDashboardUser(request);
+  if (!user) return jsonResponse({ authenticated: false, connected: false }, 401);
+  const stored = await env.AUTH_KV.get("onedrive:shared");
+  let connection = null;
+  if (stored) {
+    try { connection = JSON.parse(stored); } catch { await env.AUTH_KV.delete("onedrive:shared"); }
+  }
   return jsonResponse({
     authenticated: true,
-    user: {
-      displayName: session.data.displayName,
-      email: session.data.email
-    }
+    connected: Boolean(connection?.refreshToken),
+    user: { email: user.email },
+    owner: connection?.email || null
   });
 }
