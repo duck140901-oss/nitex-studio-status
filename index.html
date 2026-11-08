@@ -69,10 +69,54 @@ a{color:inherit}#toast{position:fixed;bottom:20px;right:20px;background:var(--k)
 .team-member-role{color:#aaa;font-size:11px;line-height:1.25;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .team-loading{color:#888;font:10px Fragment Mono,monospace}
 @media(max-width:900px){#app{grid-template-columns:1fr}aside{position:static;height:auto;flex-direction:row;overflow-x:auto;padding:10px}.logo{margin:0 10px 0 0}.nav{white-space:nowrap}.team-panel{flex:0 0 270px}.profile{flex:0 0 auto;min-width:210px}main{padding:16px}.s3,.s4,.s5,.s6,.s7,.s8{grid-column:span 12}.pipe{grid-template-columns:repeat(2,1fr)}}
+
+/* Mobile layout: compact header with an expandable navigation drawer */
+#mobileNavToggle{display:none}
+@media(max-width:600px){
+ body{font-size:14px}
+ #app{grid-template-columns:minmax(0,1fr);min-width:0}
+ #app aside{position:sticky;top:0;z-index:8;height:auto;min-height:62px;padding:10px 14px;display:flex;flex-direction:row;flex-wrap:wrap;align-items:center;gap:8px;overflow:visible;box-shadow:0 2px 12px rgba(0,0,0,.16)}
+ #app aside .logo{flex:1 1 auto;min-width:0;margin:0;padding:0 4px;gap:9px}
+ #app aside .logo .sym{width:38px;height:20px;flex-basis:38px}
+ #app aside .logo .h{font-size:27px!important}
+ #mobileNavToggle{display:inline-flex;align-items:center;justify-content:center;flex:0 0 42px;width:42px;height:40px;border:1px solid #555;background:#171717;color:var(--y);font-size:22px;line-height:1;cursor:pointer}
+ #app aside #nav{display:none!important;flex:1 0 100%;width:100%;padding:8px 0 2px;border-top:1px solid #333;gap:4px}
+ #app aside.mobile-open #nav{display:flex!important;flex-direction:column}
+ #app aside #nav .nav{width:100%;padding:12px 10px;white-space:normal}
+ #app aside .team-panel,#app aside .profile,#app aside #out{display:none}
+ #app aside.mobile-open .team-panel{display:block;flex:1 0 100%;width:100%;padding:12px 4px;margin-top:4px}
+ #app aside.mobile-open .team-list{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;max-height:220px}
+ #app aside.mobile-open .team-member{gap:8px;min-height:42px}
+ #app aside.mobile-open .team-member img{width:38px;height:38px;flex-basis:38px}
+ #app aside.mobile-open .team-member-name{font-size:12px}
+ #app aside.mobile-open .team-member-role{font-size:10px}
+ #app aside.mobile-open .profile{display:flex;flex:1 1 auto;min-width:0;margin:4px 0 0;padding:12px 4px 4px}
+ #app aside.mobile-open .avatar-btn{width:44px;height:44px;flex-basis:44px}
+ #app aside.mobile-open #out{display:block;flex:0 0 auto;margin:4px 0 0}
+ main{padding:16px 12px 28px;min-width:0;width:100%;overflow:hidden}
+ .top{align-items:flex-start;gap:12px;padding-bottom:12px;margin-bottom:14px}
+ .top h1{font-size:clamp(24px,7vw,32px);overflow-wrap:anywhere}
+ .tools{width:100%;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px}
+ .tools select{min-width:0;width:100%;padding:10px}
+ .tools #up{grid-column:1/-1;width:100%;padding:11px}
+ .grid{grid-template-columns:minmax(0,1fr);gap:10px}
+ .s3,.s4,.s5,.s6,.s7,.s8,.s12{grid-column:1/-1}
+ .c{padding:14px}
+ .big{font-size:36px}
+ .pipe{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .sc{max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}
+ .sc table{min-width:620px}
+ .cal{gap:3px}
+ .cal b{font-size:11px}
+ #toast{left:12px;right:12px;bottom:calc(12px + env(safe-area-inset-bottom,0px));text-align:center}
+ #login .lens{width:65vw;height:48vh;right:-20%;top:12%}
+ #login form{width:min(380px,calc(100vw - 40px))}
+}
+@media(min-width:390px) and (max-width:600px){#app aside.mobile-open .team-list{grid-template-columns:repeat(2,minmax(0,1fr))}}
 </style></head><body>
 <div id="login"><div class="lens"></div><form id="lf"><h1 class="login-brand">NITEX<br>Studio Status</h1>
 <input id="lu" type="email" placeholder="Work email address" autocomplete="username" required aria-label="Email address"><input id="lp" type="password" placeholder="Password" autocomplete="current-password" aria-label="Password" required><button class="btn">Sign in</button><div id="err" class="m"></div></form></div>
-<div id="app"><aside><div class="logo"><span class="sym"></span><span class="h" style="font-size:36px;line-height:1;white-space:nowrap">NITEX</span></div><div id="nav" style="display:contents"></div><section class="team-panel" aria-label="Studio team"><div class="team-heading">STUDIO TEAM / 05</div><div id="teamList" class="team-list"><div class="team-loading">Loading team…</div></div></section><div class="profile" id="profile"><button type="button" id="avatarBtn" class="avatar-btn" title="Change profile photo"><img id="avatar" alt="Profile photo"></button><div class="profile-meta"><div id="who"></div><div id="role"></div><label for="avatarFile" class="change-photo">Change photo</label><input type="file" id="avatarFile" accept="image/png,image/jpeg,image/webp" hidden></div></div><button class="nav" id="out" style="padding:8px 8px">Sign out</button></aside>
+<div id="app"><aside><div class="logo"><span class="sym"></span><span class="h" style="font-size:36px;line-height:1;white-space:nowrap">NITEX</span></div><button type="button" id="mobileNavToggle" aria-label="Open navigation" aria-expanded="false">☰</button><div id="nav" style="display:contents"></div><section class="team-panel" aria-label="Studio team"><div class="team-heading">STUDIO TEAM / 05</div><div id="teamList" class="team-list"><div class="team-loading">Loading team…</div></div></section><div class="profile" id="profile"><button type="button" id="avatarBtn" class="avatar-btn" title="Change profile photo"><img id="avatar" alt="Profile photo"></button><div class="profile-meta"><div id="who"></div><div id="role"></div><label for="avatarFile" class="change-photo">Change photo</label><input type="file" id="avatarFile" accept="image/png,image/jpeg,image/webp" hidden></div></div><button class="nav" id="out" style="padding:8px 8px">Sign out</button></aside>
 <main><div class="top"><div><div class="m" id="sub"></div><h1 id="ttl"></h1></div><div class="tools"><select id="yr" aria-label="Year"></select><button class="btn" id="up" title="Connect to OneDrive and refresh the shared Studio Status workbook">Update from Excel</button><input type="file" id="fi" accept=".xlsx" hidden></div></div><div id="pg"></div></main></div><div id="toast" class="m"></div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -116,7 +160,8 @@ function enter(authUser,profile){
  $('#up').style.display=['alamin@nitex.com','sowrav@nitex.com'].includes((me.email||'').toLowerCase())?'':'none';
  Y=Math.max(...years());
  $('#nav').innerHTML=PAGES.map(p=>'<button class="nav" data-p="'+p[0]+'"><span class="sym"></span>'+p[1]+'</button>').join('');
- $('#nav').onclick=e=>{const el=e.target.closest('.nav');if(el){P=el.dataset.p;go()}};
+ $('#nav').onclick=e=>{const el=e.target.closest('.nav');if(el){P=el.dataset.p;go();const side=$('#app aside');side.classList.remove('mobile-open');$('#mobileNavToggle').setAttribute('aria-expanded','false');$('#mobileNavToggle').setAttribute('aria-label','Open navigation');$('#mobileNavToggle').textContent='☰'}};
+  $('#mobileNavToggle').onclick=()=>{const side=$('#app aside'),open=side.classList.toggle('mobile-open');$('#mobileNavToggle').setAttribute('aria-expanded',String(open));$('#mobileNavToggle').setAttribute('aria-label',open?'Close navigation':'Open navigation');$('#mobileNavToggle').textContent=open?'×':'☰'};
  $('#yr').onchange=e=>{Y=e.target.value==='All'?'All':+e.target.value;go()};
  go();
  loadTeamProfiles();
