@@ -9,7 +9,9 @@ body{background:var(--l);color:var(--k);font:15px/1.45 'Inter Tight',Arial,sans-
 .m{font-family:'Fragment Mono',ui-monospace,monospace;font-size:12px;color:var(--g)}
 #login{position:fixed;inset:0;background:var(--k);color:var(--w);display:grid;place-items:center;z-index:9;overflow:hidden}
 #login .lens{position:absolute;right:-8%;top:8%;width:46vw;height:70vh;background:var(--y);transform:skewX(-20deg)}
-#login form{position:relative;width:min(380px,88vw);display:grid;gap:12px}
+#login form{position:relative;width:min(380px,88vw);display:grid;gap:12px;animation:loginSlideIn .85s cubic-bezier(.22,1,.36,1) both}
+@keyframes loginSlideIn{from{opacity:0;transform:translate3d(-70vw,0,0) scale(.98)}to{opacity:1;transform:translate3d(0,0,0) scale(1)}}
+@media(prefers-reduced-motion:reduce){#login form{animation:none}}
 #login h1{font-size:clamp(32px,6vw,42px);line-height:1;margin-bottom:10px}
 input,select,button{font:inherit}
 input,select{background:var(--d);border:1px solid #333;color:var(--w);padding:12px;width:100%}
