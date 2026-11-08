@@ -19,7 +19,10 @@ export async function onRequest({ request, env }) {
       scope: "openid profile offline_access User.Read Files.Read",
       state
     }).toString();
-    return jsonResponse({ authorizationUrl: authorize.toString() });
+    const response = jsonResponse({ authorizationUrl: authorize.toString() });
+    const headers = new Headers(response.headers);
+    headers.append("set-cookie", "nitex_oauth_state=" + state + "; Domain=.nitex-studio-status.pages.dev; Path=/api/auth; HttpOnly; Secure; SameSite=Lax; Max-Age=600");
+    return new Response(response.body, { status: response.status, headers });
   } catch (error) {
     return jsonResponse({ error: error.message || "Could not start Microsoft sign-in." }, 500);
   }
