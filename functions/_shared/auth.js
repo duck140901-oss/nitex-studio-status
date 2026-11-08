@@ -57,3 +57,32 @@ export function randomHex(length = 32) {
   const bytes = crypto.getRandomValues(new Uint8Array(length));
   return Array.from(bytes, byte => byte.toString(16).padStart(2, "0")).join("");
 }
+
+const SUPABASE_URL = "https://dodslzhjjltkenmbxpia.supabase.co";
+const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_Xxcz13oqUkVKeJb8ZUtpLw_MiB7wkx";
+export const STUDIO_EMAILS = [
+  "touhid@nitex.com",
+  "moru@nitex.com",
+  "shachi@nitex.com",
+  "alamin@nitex.com",
+  "sowrav@nitex.com"
+];
+export const ONEDRIVE_OWNER_EMAIL = "alamin@nitex.com";
+export const ONEDRIVE_UPDATE_EMAILS = ["alamin@nitex.com", "sowrav@nitex.com"];
+
+export async function verifyDashboardUser(request) {
+  const authorization = request.headers.get("Authorization") || "";
+  const match = authorization.match(/^Bearer\s+(.+)$/i);
+  if (!match) return null;
+  const response = await fetch(SUPABASE_URL + "/auth/v1/user", {
+    headers: {
+      apikey: SUPABASE_PUBLISHABLE_KEY,
+      authorization: "Bearer " + match[1]
+    }
+  });
+  if (!response.ok) return null;
+  const user = await response.json();
+  const email = (user.email || "").toLowerCase();
+  if (!STUDIO_EMAILS.includes(email)) return null;
+  return { id: user.id, email };
+}
