@@ -59,7 +59,7 @@ export function randomHex(length = 32) {
 }
 
 const SUPABASE_URL = "https://dodslzhjjltkenmbxpia.supabase.co";
-const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_Xxcz13oqUkVKeJb8ZUtpLw_MiB7wkx";
+const SUPABASE_PUBLISHABLE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRvZHNsemhqamx0a2VubWJ4cGlhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTM4NDg1MDEsImV4cCI6MjEwOTQyNDUwMX0.s5v42Q8D7yd5CbQiepUx1an1zt32k6EfY57O9B-2cAc";
 export const STUDIO_EMAILS = [
   "touhid@nitex.com",
   "moru@nitex.com",
