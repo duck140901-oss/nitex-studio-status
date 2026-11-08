@@ -218,9 +218,19 @@ async function syncOneDrive(manual=false){
  if(oneDriveSyncInFlight)return false;
  oneDriveSyncInFlight=true;
  try{
-  const sessionResult=await sb.auth.getSession();
-  const accessToken=sessionResult.data?.session?.access_token;
-  if(!accessToken){toast('Please sign in to the dashboard first.');return false}
+  let sessionResult=await sb.auth.getSession();
+  let session=sessionResult.data?.session;
+  if(!session){toast('Please sign in to the dashboard first.');return false}
+  // Refresh an expired or near-expiry Supabase access token before calling protected APIs.
+  if(!session.expires_at || session.expires_at*1000 < Date.now()+120000){
+   const refreshed=await sb.auth.refreshSession();
+   if(refreshed.error || !refreshed.data?.session){
+    toast('Dashboard session could not be refreshed. Please sign out and sign in again.');
+    return false;
+   }
+   session=refreshed.data.session;
+  }
+  const accessToken=session.access_token;
   const headers={authorization:'Bearer '+accessToken};
   const statusResponse=await fetch('/api/auth/status',{headers,cache:'no-store'});
   const status=await statusResponse.json();
