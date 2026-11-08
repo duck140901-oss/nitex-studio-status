@@ -209,6 +209,10 @@ function parse(buf){const wb=XLSX.read(buf,{cellDates:true}),g=s=>XLSX.utils.she
 let oneDriveSyncTimer=null;
 let oneDriveSyncInFlight=false;
 let lastOneDriveSyncAt=0;
+function stopOneDriveAutoSync(message){
+ if(oneDriveSyncTimer){clearInterval(oneDriveSyncTimer);oneDriveSyncTimer=null;}
+ if(lastOneDriveSyncAt)toast(message);
+}
 async function syncOneDrive(redirectIfNeeded=true){
  if(oneDriveSyncInFlight)return false;
  oneDriveSyncInFlight=true;
@@ -220,6 +224,7 @@ async function syncOneDrive(redirectIfNeeded=true){
   const status=await statusResponse.json();
   if(!status.authenticated){
    if(redirectIfNeeded){location.href='/api/auth/login';return false}
+   stopOneDriveAutoSync('Microsoft connection expired. Click UPDATE FROM EXCEL to reconnect.');
    return false;
   }
   const dashboardEmail=(supaUser.email||'').toLowerCase();
@@ -231,6 +236,7 @@ async function syncOneDrive(redirectIfNeeded=true){
   const response=await fetch('/api/excel',{cache:'no-store'});
   if(response.status===401){
    if(redirectIfNeeded){location.href='/api/auth/login';return false}
+   stopOneDriveAutoSync('Microsoft connection expired. Click UPDATE FROM EXCEL to reconnect.');
    return false;
   }
   if(!response.ok){
