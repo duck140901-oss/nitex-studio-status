@@ -10,7 +10,7 @@ body{background:var(--l);color:var(--k);font:15px/1.45 'Inter Tight',Arial,sans-
 #login{position:fixed;inset:0;background:var(--k);color:var(--w);display:grid;place-items:center;z-index:9;overflow:hidden}
 #login .lens{position:absolute;right:-8%;top:8%;width:46vw;height:70vh;background:var(--y);transform:skewX(-20deg)}
 #login form{position:relative;width:min(380px,88vw);display:grid;gap:12px}
-#login h1{font-size:clamp(40px,8vw,76px);line-height:.92;margin-bottom:10px}
+#login h1{font-size:clamp(32px,6vw,42px);line-height:1;margin-bottom:10px}
 input,select,button{font:inherit}
 input,select{background:var(--d);border:1px solid #333;color:var(--w);padding:12px;width:100%}
 input:focus-visible,button:focus-visible,select:focus-visible{outline:2px solid var(--y);outline-offset:2px}
@@ -20,7 +20,7 @@ input:focus-visible,button:focus-visible,select:focus-visible{outline:2px solid 
 #app{display:none;min-height:100vh;grid-template-columns:270px 1fr}
 aside{background:var(--k);color:var(--w);padding:22px 14px;position:sticky;top:0;height:100vh;display:flex;flex-direction:column;gap:6px}
 .logo{display:flex;align-items:center;gap:10px;margin-bottom:26px;padding:0 8px}
-.sym{width:26px;height:16px;background:var(--y);transform:skewX(-20deg);display:inline-block}
+.sym{width:32px;height:20px;background:var(--y);transform:skewX(-20deg);display:inline-block}
 .nav{background:none;border:0;color:#bbb;text-align:left;padding:11px 12px;cursor:pointer;display:flex;gap:10px;align-items:center}
 .nav.on{background:var(--y);color:var(--k)}
 .nav.on .sym{background:var(--k)}.nav .sym{width:12px;height:10px;background:#555}
@@ -56,7 +56,7 @@ a{color:inherit}#toast{position:fixed;bottom:20px;right:20px;background:var(--k)
 .team-loading{color:#888;font:10px Fragment Mono,monospace}
 @media(max-width:900px){#app{grid-template-columns:1fr}aside{position:static;height:auto;flex-direction:row;overflow-x:auto;padding:10px}.logo{margin:0 10px 0 0}.nav{white-space:nowrap}.team-panel{flex:0 0 270px}.profile{flex:0 0 auto;min-width:210px}main{padding:16px}.s3,.s4,.s5,.s6,.s7,.s8{grid-column:span 12}.pipe{grid-template-columns:repeat(2,1fr)}}
 </style></head><body>
-<div id="login"><div class="lens"></div><form id="lf"><span class="m" style="color:var(--y)">NITEX / STUDIO</span><h1>Studio<br>Status</h1>
+<div id="login"><div class="lens"></div><form id="lf"><h1 class="login-brand">NITEX<br>Studio Status</h1>
 <input id="lu" type="email" placeholder="Work email address" autocomplete="username" required aria-label="Email address"><input id="lp" type="password" placeholder="Password" autocomplete="current-password" aria-label="Password" required><button class="btn">Sign in</button><div id="err" class="m"></div></form></div>
 <div id="app"><aside><div class="logo"><span class="sym"></span><span class="h" style="font-size:20px">Nitex</span></div><div id="nav" style="display:contents"></div><section class="team-panel" aria-label="Studio team"><div class="team-heading">STUDIO TEAM / 05</div><div id="teamList" class="team-list"><div class="team-loading">Loading team…</div></div></section><div class="profile" id="profile"><button type="button" id="avatarBtn" class="avatar-btn" title="Change profile photo"><img id="avatar" alt="Profile photo"></button><div class="profile-meta"><div id="who"></div><div id="role"></div><label for="avatarFile" class="change-photo">Change photo</label><input type="file" id="avatarFile" accept="image/png,image/jpeg,image/webp" hidden></div></div><button class="nav" id="out" style="padding:8px 8px">Sign out</button></aside>
 <main><div class="top"><div><div class="m" id="sub"></div><h1 id="ttl"></h1></div><div class="tools"><select id="yr" aria-label="Year"></select><button class="btn" id="up" title="Connect to OneDrive and refresh the shared Studio Status workbook">Update from Excel</button><input type="file" id="fi" accept=".xlsx" hidden></div></div><div id="pg"></div></main></div><div id="toast" class="m"></div>
