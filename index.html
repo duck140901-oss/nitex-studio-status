@@ -207,7 +207,11 @@ function parse(buf){const wb=XLSX.read(buf,{cellDates:true}),g=s=>XLSX.utils.she
  const tour=[];g('360 Virtual Tour').slice(2).forEach(r=>{if(r[2])tour.push({n:r[1],c:String(r[2]).trim(),o:r[3],b:r[4],l:r[5],d:r[6] instanceof Date?D8(r[6]):r[6],s:/live/i.test(r[7]||''),k:r[8]})});
  return{rows,hol,sat,tour,at:new Date().toISOString()}}
 let oneDriveSyncTimer=null;
+let oneDriveSyncInFlight=false;
+let lastOneDriveSyncAt=0;
 async function syncOneDrive(redirectIfNeeded=true){
+ if(oneDriveSyncInFlight)return false;
+ oneDriveSyncInFlight=true;
  try{
   const supa=await sb.auth.getSession();
   const supaUser=supa.data?.session?.user;
@@ -236,14 +240,22 @@ async function syncOneDrive(redirectIfNeeded=true){
   const data=parse(await response.arrayBuffer());
   if(!data.rows.length)throw new Error('The workbook was downloaded, but no Studio Status rows were found.');
   D=data;prep();go();
+  lastOneDriveSyncAt=Date.now();
   toast('Studio Status updated from OneDrive.');
   if(!oneDriveSyncTimer)oneDriveSyncTimer=setInterval(()=>syncOneDrive(false),300000);
   return true;
  }catch(error){
   toast(error.message||'OneDrive sync failed. Please try again.');
   return false;
+ }finally{
+  oneDriveSyncInFlight=false;
  }
 }
+document.addEventListener('visibilitychange',()=>{
+ if(document.visibilityState==='visible' && lastOneDriveSyncAt && Date.now()-lastOneDriveSyncAt>=300000){
+  syncOneDrive(false);
+ }
+});
 $('#up').onclick=()=>syncOneDrive(true);
 $('#fi').onchange=async e=>{const f=e.target.files[0];if(!f)return;try{const d=parse(await f.arrayBuffer());if(!d.rows.length)throw 0;D=d;prep();go();toast('Excel preview loaded in this browser.')}catch(x){toast('Could not read that file. Use the Studio Status tracker .xlsx')}e.target.value=''};
 </script></body></html>
