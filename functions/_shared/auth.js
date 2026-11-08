@@ -1,0 +1,109 @@
+export const SESSION_COOKIE = "nitex_studio_session";
+export const MICROSOFT_SCOPES = "openid profile offline_access User.Read Files.Read";
+
+export function jsonResponse(data, status = 200) {
+  return new Response(JSON.stringify(data), {
+    status,
+    headers: {
+      "content-type": "application/json; charset=utf-8",
+      "cache-control": "no-store"
+    }
+  });
+}
+
+export function getSessionId(request) {
+  const cookie = request.headers.get("Cookie") || "";
+  const entry = cookie.split(";").map(x => x.trim()).find(x => x.startsWith(SESSION_COOKIE + "="));
+  return entry ? decodeURIComponent(entry.slice(SESSION_COOKIE.length + 1)) : null;
+}
+
+export function getMicrosoftConfig(env, request) {
+  const names = [
+    "MICROSOFT_CLIENT_ID",
+    "MICROSOFT_TENANT_ID",
+    "MICROSOFT_CLIENT_SECRET",
+    "TOKEN_ENCRYPTION_KEY"
+  ];
+  const missing = names.filter(name => !env[name]);
+  if (!env.AUTH_KV) missing.push("AUTH_KV");
+  if (missing.length) throw new Error("Missing configuration: " + missing.join(", "));
+  const requestUrl = request ? new URL(request.url) : null;
+  const hostname = requestUrl?.hostname || "nitex-studio-status.pages.dev";
+  const allowedHost = hostname === "nitex-studio-status.pages.dev" || hostname.endsWith(".nitex-studio-status.pages.dev");
+  if (!allowedHost) throw new Error("This website host is not approved for Microsoft sign-in.");
+  return {
+    clientId: env.MICROSOFT_CLIENT_ID,
+    tenantId: env.MICROSOFT_TENANT_ID,
+    clientSecret: env.MICROSOFT_CLIENT_SECRET,
+    encryptionKey: env.TOKEN_ENCRYPTION_KEY,
+    redirectUri: (hostname === "nitex-studio-status.pages.dev" ? "https://nitex-studio-status.pages.dev" : "https://feature-microsoft-onedrive-s.nitex-studio-status.pages.dev") + "/api/auth/callback"
+  };
+}
+
+export async function readSession(request, env) {
+  const id = getSessionId(request);
+  if (!id) return null;
+  const value = await env.AUTH_KV.get("session:" + id);
+  if (!value) return null;
+  try {
+    return { id, data: JSON.parse(value) };
+  } catch {
+    await env.AUTH_KV.delete("session:" + id);
+    return null;
+  }
+}
+
+export function randomHex(length = 32) {
+  const bytes = crypto.getRandomValues(new Uint8Array(length));
+  return Array.from(bytes, byte => byte.toString(16).padStart(2, "0")).join("");
+}
+
+const SUPABASE_URL = "https://dodslzhjjltkenmbxpia.supabase.co";
+const SUPABASE_PUBLISHABLE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRvZHNsemhqamx0a2VubWJ4cGlhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTM4NDg1MDEsImV4cCI6MjEwOTQyNDUwMX0.s5v42Q8D7yd5CbQiepUx1an1zt32k6EfY57O9B-2cAc";
+export const STUDIO_EMAILS = [
+  "touhid@nitex.com",
+  "moru@nitex.com",
+  "shachi@nitex.com",
+  "alamin@nitex.com",
+  "sowrav@nitex.com"
+];
+export const ONEDRIVE_OWNER_EMAIL = "alamin@nitex.com";
+export const ONEDRIVE_UPDATE_EMAILS = ["alamin@nitex.com", "sowrav@nitex.com"];
+
+export async function verifyDashboardUserDiagnostic(request) {
+  const authorization = request.headers.get("Authorization") || "";
+  const match = authorization.match(/^Bearer\s+(.+)$/i);
+  if (!match) return { ok: false, reason: "missing_bearer_token" };
+  let response;
+  try {
+    response = await fetch(SUPABASE_URL + "/auth/v1/user", {
+      headers: {
+        apikey: SUPABASE_PUBLISHABLE_KEY,
+        authorization: "Bearer " + match[1]
+      }
+    });
+  } catch {
+    return { ok: false, reason: "supabase_auth_unreachable" };
+  }
+  if (!response.ok) {
+    let code = null;
+    let message = null;
+    try {
+      const body = await response.json();
+      code = typeof body.code === "string" ? body.code : (typeof body.error === "string" ? body.error : null);
+      message = typeof body.message === "string" ? body.message : (typeof body.msg === "string" ? body.msg : null);
+    } catch {}
+    return { ok: false, reason: "supabase_auth_rejected", upstreamStatus: response.status, upstreamCode: code, upstreamMessage: message };
+  }
+  let user;
+  try { user = await response.json(); }
+  catch { return { ok: false, reason: "invalid_supabase_user_response" }; }
+  const email = (user.email || "").toLowerCase();
+  if (!STUDIO_EMAILS.includes(email)) return { ok: false, reason: "email_not_in_studio_allowlist" };
+  return { ok: true, user: { id: user.id, email } };
+}
+
+export async function verifyDashboardUser(request) {
+  const result = await verifyDashboardUserDiagnostic(request);
+  return result.ok ? result.user : null;
+}
