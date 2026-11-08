@@ -99,7 +99,7 @@ function enter(authUser,profile){
  $('#login').style.display='none';$('#app').style.display='grid';
  $('#who').textContent=me.name;$('#role').textContent=me.role;
  $('#avatar').src=me.avatar_url||AVATAR_FALLBACK;
- $('#up').style.display=['moru@nitex.com','alamin@nitex.com','sowrav@nitex.com'].includes((me.email||'').toLowerCase())?'':'none';
+ $('#up').style.display=['alamin@nitex.com','sowrav@nitex.com'].includes((me.email||'').toLowerCase())?'':'none';
  Y=Math.max(...years());
  $('#nav').innerHTML=PAGES.map(p=>'<button class="nav" data-p="'+p[0]+'"><span class="sym"></span>'+p[1]+'</button>').join('');
  $('#nav').onclick=e=>{const el=e.target.closest('.nav');if(el){P=el.dataset.p;go()}};
