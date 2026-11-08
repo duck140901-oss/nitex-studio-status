@@ -8,6 +8,9 @@ function toShareId(url) {
 }
 
 async function getAccessToken(env, connection, cfg) {
+  if (connection.accessToken && connection.accessTokenExpiresAt > Date.now() + 120000) {
+    return decryptToken(connection.accessToken, cfg.encryptionKey);
+  }
   const oldRefreshToken = await decryptToken(connection.refreshToken, cfg.encryptionKey);
   const response = await fetch("https://login.microsoftonline.com/" + cfg.tenantId + "/oauth2/v2.0/token", {
     method: "POST",
@@ -22,11 +25,11 @@ async function getAccessToken(env, connection, cfg) {
   });
   const tokens = await response.json();
   if (!response.ok || !tokens.access_token) throw new Error(tokens.error_description || "Shared Microsoft connection expired. Alamin must reconnect OneDrive.");
-  if (tokens.refresh_token) {
-    connection.refreshToken = await encryptToken(tokens.refresh_token, cfg.encryptionKey);
-    connection.updatedAt = new Date().toISOString();
-    await env.AUTH_KV.put("onedrive:shared", JSON.stringify(connection), { expirationTtl: 7776000 });
-  }
+  connection.accessToken = await encryptToken(tokens.access_token, cfg.encryptionKey);
+  connection.accessTokenExpiresAt = Date.now() + Math.max(60, Number(tokens.expires_in) || 3600) * 1000;
+  if (tokens.refresh_token) connection.refreshToken = await encryptToken(tokens.refresh_token, cfg.encryptionKey);
+  connection.updatedAt = new Date().toISOString();
+  await env.AUTH_KV.put("onedrive:shared", JSON.stringify(connection), { expirationTtl: 7776000 });
   return tokens.access_token;
 }
 
