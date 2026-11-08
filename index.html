@@ -214,30 +214,40 @@ function stopOneDriveAutoSync(message){
  if(oneDriveSyncTimer){clearInterval(oneDriveSyncTimer);oneDriveSyncTimer=null;}
  if(lastOneDriveSyncAt)toast(message);
 }
-async function syncOneDrive(redirectIfNeeded=true){
+async function syncOneDrive(manual=false){
  if(oneDriveSyncInFlight)return false;
  oneDriveSyncInFlight=true;
  try{
-  const supa=await sb.auth.getSession();
-  const supaUser=supa.data?.session?.user;
-  if(!supaUser){toast('Please sign in to the dashboard first.');return false}
-  const statusResponse=await fetch('/api/auth/status',{cache:'no-store'});
+  const sessionResult=await sb.auth.getSession();
+  const accessToken=sessionResult.data?.session?.access_token;
+  if(!accessToken){toast('Please sign in to the dashboard first.');return false}
+  const headers={authorization:'Bearer '+accessToken};
+  const statusResponse=await fetch('/api/auth/status',{headers,cache:'no-store'});
   const status=await statusResponse.json();
-  if(!status.authenticated){
-   if(redirectIfNeeded){location.href='/api/auth/login';return false}
-   stopOneDriveAutoSync('Microsoft connection expired. Click UPDATE FROM EXCEL to reconnect.');
+  if(!statusResponse.ok||!status.authenticated){
+   if(manual){toast('Dashboard authentication expired. Please sign in again.');return false}
    return false;
   }
-  const dashboardEmail=(supaUser.email||'').toLowerCase();
-  const microsoftEmail=(status.user?.email||'').toLowerCase();
-  if(!dashboardEmail||dashboardEmail!==microsoftEmail){
-   toast('Your dashboard login and Microsoft account must use the same NITEX email.');
+  if(!status.connected){
+   if(manual && (me.email||'').toLowerCase()==='alamin@nitex.com'){
+    const loginResponse=await fetch('/api/auth/login',{headers,cache:'no-store'});
+    const loginData=await loginResponse.json();
+    if(!loginResponse.ok)throw new Error(loginData.error||'Could not connect OneDrive.');
+    location.href=loginData.authorizationUrl;
+    return false;
+   }
+   if(manual)toast('Shared OneDrive is not connected yet. Alamin must connect it first.');
    return false;
   }
-  const response=await fetch('/api/excel',{cache:'no-store'});
+  const response=await fetch('/api/excel'+(manual?'?manual=1':''),{headers,cache:'no-store'});
   if(response.status===401){
-   if(redirectIfNeeded){location.href='/api/auth/login';return false}
-   stopOneDriveAutoSync('Microsoft connection expired. Click UPDATE FROM EXCEL to reconnect.');
+   if(manual)toast('Dashboard authentication expired. Please sign in again.');
+   else stopOneDriveAutoSync('Shared OneDrive connection expired. Alamin must reconnect it.');
+   return false;
+  }
+  if(response.status===409){
+   const error=await response.json().catch(()=>({}));
+   if(manual)toast(error.error||'Shared OneDrive is not connected yet.');
    return false;
   }
   if(!response.ok){
@@ -248,7 +258,7 @@ async function syncOneDrive(redirectIfNeeded=true){
   if(!data.rows.length)throw new Error('The workbook was downloaded, but no Studio Status rows were found.');
   D=data;prep();go();
   lastOneDriveSyncAt=Date.now();
-  toast('Studio Status updated from OneDrive.');
+  if(manual)toast('Studio Status updated from OneDrive.');
   if(!oneDriveSyncTimer)oneDriveSyncTimer=setInterval(()=>syncOneDrive(false),300000);
   return true;
  }catch(error){
