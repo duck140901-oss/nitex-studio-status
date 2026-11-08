@@ -70,19 +70,38 @@ export const STUDIO_EMAILS = [
 export const ONEDRIVE_OWNER_EMAIL = "alamin@nitex.com";
 export const ONEDRIVE_UPDATE_EMAILS = ["alamin@nitex.com", "sowrav@nitex.com"];
 
-export async function verifyDashboardUser(request) {
+export async function verifyDashboardUserDiagnostic(request) {
   const authorization = request.headers.get("Authorization") || "";
-  const match = authorization.match(/^Bearer\s+(.+)$/i);
-  if (!match) return null;
-  const response = await fetch(SUPABASE_URL + "/auth/v1/user", {
-    headers: {
-      apikey: SUPABASE_PUBLISHABLE_KEY,
-      authorization: "Bearer " + match[1]
-    }
-  });
-  if (!response.ok) return null;
-  const user = await response.json();
+  const match = authorization.match(/^Bearer\\s+(.+)$/i);
+  if (!match) return { ok: false, reason: "missing_bearer_token" };
+  let response;
+  try {
+    response = await fetch(SUPABASE_URL + "/auth/v1/user", {
+      headers: {
+        apikey: SUPABASE_PUBLISHABLE_KEY,
+        authorization: "Bearer " + match[1]
+      }
+    });
+  } catch {
+    return { ok: false, reason: "supabase_auth_unreachable" };
+  }
+  if (!response.ok) {
+    let code = null;
+    try {
+      const body = await response.json();
+      code = typeof body.code === "string" ? body.code : (typeof body.error === "string" ? body.error : null);
+    } catch {}
+    return { ok: false, reason: "supabase_auth_rejected", upstreamStatus: response.status, upstreamCode: code };
+  }
+  let user;
+  try { user = await response.json(); }
+  catch { return { ok: false, reason: "invalid_supabase_user_response" }; }
   const email = (user.email || "").toLowerCase();
-  if (!STUDIO_EMAILS.includes(email)) return null;
-  return { id: user.id, email };
+  if (!STUDIO_EMAILS.includes(email)) return { ok: false, reason: "email_not_in_studio_allowlist" };
+  return { ok: true, user: { id: user.id, email } };
+}
+
+export async function verifyDashboardUser(request) {
+  const result = await verifyDashboardUserDiagnostic(request);
+  return result.ok ? result.user : null;
 }
