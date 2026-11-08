@@ -87,11 +87,13 @@ export async function verifyDashboardUserDiagnostic(request) {
   }
   if (!response.ok) {
     let code = null;
+    let message = null;
     try {
       const body = await response.json();
       code = typeof body.code === "string" ? body.code : (typeof body.error === "string" ? body.error : null);
+      message = typeof body.message === "string" ? body.message : (typeof body.msg === "string" ? body.msg : null);
     } catch {}
-    return { ok: false, reason: "supabase_auth_rejected", upstreamStatus: response.status, upstreamCode: code };
+    return { ok: false, reason: "supabase_auth_rejected", upstreamStatus: response.status, upstreamCode: code, upstreamMessage: message };
   }
   let user;
   try { user = await response.json(); }
