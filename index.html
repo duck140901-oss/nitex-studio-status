@@ -120,7 +120,7 @@ a{color:inherit}#toast{position:fixed;bottom:20px;right:20px;background:var(--k)
 .team-member:focus-visible{outline:2px solid var(--y);outline-offset:3px}
 .team-profile-modal{position:fixed;inset:0;z-index:30;display:none;align-items:center;justify-content:center;padding:18px}
 .team-profile-modal.open{display:flex}
-.team-profile-backdrop{position:absolute;inset:0;display:grid;place-items:center;padding:18px;background:rgba(0,0,0,.72);backdrop-filter:blur(3px)}
+.team-profile-backdrop{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:18px;background:rgba(0,0,0,.72);backdrop-filter:blur(3px)}
 .team-profile-dialog{position:relative;z-index:1;width:min(420px,100%);max-height:min(90vh,680px);overflow:auto;background:#fff;color:#000;border-top:5px solid var(--y);box-shadow:0 24px 80px rgba(0,0,0,.35);padding:26px}
 .team-profile-close{position:absolute;right:12px;top:10px;width:36px;height:36px;border:1px solid #ddd;background:#fff;color:#000;font-size:24px;line-height:1;cursor:pointer}
 .team-profile-photo{width:116px;height:116px;display:block;margin:8px auto 16px;border-radius:50%;object-fit:cover;background:#333;border:3px solid var(--y)}
@@ -203,7 +203,7 @@ async function loadTeamProfiles(){
  const order={team_lead:0,studio_in_charge:1,lead_visualizer:2,visualizer:3};
  teamProfiles=(result.data||[]).sort((a,b)=>(order[a.role]??9)-(order[b.role]??9)||a.full_name.localeCompare(b.full_name));
  box.innerHTML=teamProfiles.map((p,i)=>'<button type="button" class="team-member" data-team-index="'+i+'" aria-label="View profile of '+safeText(p.full_name)+'"><img src="'+safeText(p.avatar_url||AVATAR_FALLBACK)+'" alt="" loading="lazy"><span class="team-member-meta"><span class="team-member-name">'+safeText(p.full_name)+'</span><span class="team-member-role">'+safeText(ROLE_LABELS[p.role]||p.role)+'</span></span></button>').join('')||'<div class="team-loading">No team profiles found</div>';
- box.onclick=e=>{const item=e.target.closest('.team-member[data-team-index]');if(item)openTeamProfile(Number(item.dataset.teamIndex))};
+ box.querySelectorAll('.team-member[data-team-index]').forEach(button=>{button.addEventListener('click',()=>openTeamProfile(Number(button.dataset.teamIndex)))});
 }
 async function getProfile(authUser){
  const result=await sb.from('profiles').select('full_name,role,avatar_url').eq('id',authUser.id).single();
