@@ -48,21 +48,21 @@ main{padding:22px 28px 40px;min-width:0}
 .c h2{font-size:15px;margin-bottom:12px}
 .s3{grid-column:span 3}.s4{grid-column:span 4}.s5{grid-column:span 5}.s6{grid-column:span 6}.s7{grid-column:span 7}.s8{grid-column:span 8}.s12{grid-column:span 12}
 .big{font-family:'Archivo Black',sans-serif;font-size:44px;line-height:1}
-.overview-type-card,.overview-tour-card{min-height:300px;display:flex;flex-direction:column}
-.overview-type-content{flex:1;display:flex;align-items:center;justify-content:space-around;gap:12px;min-width:0}
-.overview-type-content svg{width:clamp(150px,15vw,190px);flex:0 0 auto}
-.overview-type-content svg text:first-of-type{font-size:23px}
-.overview-type-legend{flex-direction:column;gap:13px;margin:0;min-width:0}
-.overview-type-legend span{font-size:13px;line-height:1.35}
-.overview-type-legend span b{font-family:'Archivo Black',sans-serif;font-size:20px;margin-left:4px}
-.overview-tour-card{justify-content:space-between}
-.overview-tour-gauge{flex:1;min-height:205px;display:grid;place-items:center;width:100%}
-.overview-tour-gauge svg{width:100%!important;max-width:none!important;height:auto}
-.overview-tour-gauge svg text:first-of-type{font-size:40px}
-.overview-tour-gauge svg text:last-of-type{font-size:12px}
-.overview-tour-caption{text-align:center;font-size:13px;padding-bottom:4px}
-@media(max-width:1050px){.overview-type-content{gap:8px}.overview-type-content svg{width:145px}.overview-type-legend span{font-size:12px}.overview-type-legend span b{font-size:18px}}
-@media(max-width:700px){.overview-type-card,.overview-tour-card{min-height:260px}.overview-type-content{justify-content:center;gap:14px}.overview-type-content svg{width:min(42vw,170px)}.overview-type-legend span{font-size:12px}.overview-type-legend span b{font-size:18px}.overview-tour-gauge{min-height:180px}}
+.overview-type-card,.overview-tour-card{min-height:280px;display:flex;flex-direction:column}
+.overview-type-content{flex:1;display:grid;grid-template-columns:minmax(120px,150px) minmax(0,1fr);align-items:center;justify-content:center;gap:14px;min-width:0}
+.overview-type-content svg{width:100%;max-width:150px;flex:0 0 auto}
+.overview-type-content svg text:first-of-type{font-size:19px}
+.overview-type-legend{display:flex;flex-direction:column;gap:9px;margin:0;min-width:0}
+.overview-type-legend span{font-size:12px;line-height:1.3;white-space:normal}
+.overview-type-legend span b{font-family:'Archivo Black',sans-serif;font-size:16px;margin-left:4px}
+.overview-tour-card{justify-content:flex-start}
+.overview-tour-gauge{flex:1;min-height:170px;display:grid;place-items:center;width:100%;padding:8px 12px 0}
+.overview-tour-gauge svg{width:100%!important;max-width:250px!important;height:auto;max-height:165px}
+.overview-tour-gauge svg text:first-of-type{font-size:34px}
+.overview-tour-gauge svg text:last-of-type{font-size:10px}
+.overview-tour-caption{text-align:center;font-size:12px;padding:0 4px 8px}
+@media(max-width:1050px){.overview-type-content{grid-template-columns:minmax(105px,130px) minmax(0,1fr);gap:10px}.overview-type-content svg{max-width:130px}.overview-type-legend{gap:8px}.overview-type-legend span{font-size:11px}.overview-type-legend span b{font-size:15px}}
+@media(max-width:700px){.overview-type-card,.overview-tour-card{min-height:250px}.overview-type-content{grid-template-columns:minmax(110px,140px) minmax(0,1fr);gap:12px}.overview-type-content svg{max-width:140px}.overview-type-legend span{font-size:12px}.overview-type-legend span b{font-size:16px}.overview-tour-gauge{min-height:155px}.overview-tour-gauge svg{max-height:150px}}
 .feature-metric-card{min-height:280px;display:flex;flex-direction:column;justify-content:space-between;gap:22px;padding:26px}
 .feature-metric-card .m{font-size:clamp(15px,1.15vw,17px);line-height:1.55;letter-spacing:.01em}
 .feature-metric-card .big{font-size:clamp(82px,8vw,112px);line-height:.92;letter-spacing:-.045em}
