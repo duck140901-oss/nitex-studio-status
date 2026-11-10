@@ -157,6 +157,35 @@ a{color:inherit}#toast{position:fixed;bottom:20px;right:20px;background:var(--k)
 .team-profile-value{font-size:14px;font-weight:600;overflow-wrap:anywhere}
 @media(max-width:600px){.team-profile-dialog{padding:22px 18px}.team-profile-photo{width:104px;height:104px}.team-profile-name{font-size:21px}.team-profile-detail{grid-template-columns:94px minmax(0,1fr)}}
 
+
+/* Overview cards: balanced chart scale and readable labels */
+.overview-type-content{grid-template-columns:minmax(160px,174px) minmax(0,1fr);gap:12px;justify-content:stretch}
+.overview-type-content svg{width:174px;max-width:174px}
+.overview-type-content svg text:first-of-type{font-size:23px}
+.overview-type-content svg text:last-of-type{font-size:10px}
+.overview-type-legend{gap:11px}
+.overview-type-legend span{font-size:14px;line-height:1.4}
+.overview-type-legend span b{font-size:18px;margin-left:5px}
+.overview-tour-gauge{min-height:185px;padding:8px 10px 0}
+.overview-tour-gauge svg{max-width:285px!important;max-height:180px}
+.overview-tour-gauge svg text:first-of-type{font-size:41px}
+.overview-tour-gauge svg text:last-of-type{font-size:13px}
+.overview-tour-caption{font-size:14px;line-height:1.4;padding:2px 8px 10px}
+@media(max-width:1050px){
+ .overview-type-content{grid-template-columns:minmax(145px,158px) minmax(0,1fr);gap:10px}
+ .overview-type-content svg{width:158px;max-width:158px}
+ .overview-type-legend span{font-size:13px}
+ .overview-type-legend span b{font-size:17px}
+}
+@media(max-width:700px){
+ .overview-type-content{grid-template-columns:minmax(145px,165px) minmax(0,1fr);gap:12px}
+ .overview-type-content svg{width:165px;max-width:165px}
+ .overview-type-legend span{font-size:14px}
+ .overview-type-legend span b{font-size:18px}
+ .overview-tour-gauge{min-height:175px}
+ .overview-tour-gauge svg{max-height:170px}
+}
+
 </style></head><body>
 <div id="login"><div class="lens"></div><form id="lf"><h1 class="login-brand">NITEX<br>Studio Status</h1>
 <input id="lu" type="email" placeholder="Work email address" autocomplete="username" required aria-label="Email address"><input id="lp" type="password" placeholder="Password" autocomplete="current-password" aria-label="Password" required><button class="btn">Sign in</button><div id="err" class="m"></div></form></div>
