@@ -48,6 +48,13 @@ main{padding:22px 28px 40px;min-width:0}
 .c h2{font-size:15px;margin-bottom:12px}
 .s3{grid-column:span 3}.s4{grid-column:span 4}.s5{grid-column:span 5}.s6{grid-column:span 6}.s7{grid-column:span 7}.s8{grid-column:span 8}.s12{grid-column:span 12}
 .big{font-family:'Archivo Black',sans-serif;font-size:44px;line-height:1}
+.feature-metric-card{min-height:300px;display:flex;flex-direction:column;justify-content:space-between;gap:18px}
+.feature-metric-card .big{font-size:clamp(76px,9vw,140px);line-height:.9;letter-spacing:-.055em}
+.tour-live-card{min-height:300px;display:flex;flex-direction:column;justify-content:center;align-items:stretch}
+.tour-live-card .tour-live-gauge{width:100%;height:100%;min-height:250px;display:grid;place-items:center}
+.tour-live-card .tour-live-gauge svg{width:100%;height:100%;max-width:none;max-height:280px}
+@media(max-width:700px){.feature-metric-card,.tour-live-card{min-height:220px}.feature-metric-card .big{font-size:clamp(68px,18vw,112px)}.tour-live-card .tour-live-gauge{min-height:190px}.tour-live-card .tour-live-gauge svg{max-height:220px}}
+
 .pipe{display:grid;grid-template-columns:repeat(6,1fr);gap:6px}.pipe div{padding:10px;background:var(--l)}.pipe b{font-family:'Archivo Black';font-size:22px;display:block}.pipe .on{background:var(--k);color:var(--y)}
 .sc{overflow-x:auto}table{border-collapse:collapse;width:100%;font-size:14px}th{font:12px 'Fragment Mono',monospace;color:var(--g);text-align:left;padding:8px;border-bottom:1px solid var(--k);white-space:nowrap}td{padding:8px;border-bottom:1px solid var(--l);white-space:nowrap}tr.t td{background:var(--l);font-weight:600}
 .bar{height:8px;background:var(--l)}.bar i{display:block;height:100%;background:var(--k)}
@@ -306,12 +313,12 @@ R.sm=()=>{const a=sel(),yr=Y==='All'?Math.max(...years()):Y,ya=D.rows.filter(r=>
  <div class="c s12"><h2>Monthly breakdown ${yr}</h2>${tbl(['Month',...TY,'Total','Bunches','Avg days'],mr.map((m,i)=>[MF[i],...m.v.map(n),`<b>${n(m.t)}</b>`,m.b,f1(m.d)]),['Year total',...TY.map((t,j)=>n(sum(mr,m=>m.v[j]))),n(sum(mr,m=>m.t)),sum(mr,m=>m.b),f1(avg(ya))])}</div>
  <div class="c s12"><h2>Yearly overview</h2>${tbl(['Year',...TY,'Total','Bunches','Avg days'],years().map(y=>{const z=D.rows.filter(r=>r.y===y);return[y,...TY.map(t=>n(sum(z.filter(r=>r.t===t),r=>r.q))),`<b>${n(sum(z,r=>r.q))}</b>`,z.length,f1(avg(z))]}),['Grand total',...TY.map(t=>n(sum(D.rows.filter(r=>r.t===t),r=>r.q))),n(sum(D.rows,r=>r.q)),D.rows.length,f1(avg(D.rows))])}</div></div>`};
 R.hw=()=>{const yr=Y==='All'?new Date().getFullYear():Y,ms=MF.map((_,i)=>({i,...mdays(yr,i)}));
- return`<div class="grid"><div class="c k s4"><div class="m">Working days ${yr}</div><div class="big" style="color:var(--y)">${sum(ms,m=>m.w)}</div><div class="m">${sum(ms,m=>m.h)} holidays, ${sum(ms,m=>m.s)} Saturdays off</div></div>
+ return`<div class="grid"><div class="c k s4 feature-metric-card"><div class="m">Working days ${yr}</div><div class="big" style="color:var(--y)">${sum(ms,m=>m.w)}</div><div class="m">${sum(ms,m=>m.h)} holidays, ${sum(ms,m=>m.s)} Saturdays off</div></div>
  <div class="c s8"><h2>Holidays ${yr}</h2>${tbl(['Holiday','From','To','Days'],D.hol.filter(h=>h.f.startsWith(yr)).map(h=>[h.n,h.f,h.t||h.f,Math.round((new Date((h.t||h.f)+'T00:00')-new Date(h.f+'T00:00'))/864e5)+1]))||''}</div>
  <div class="c s12"><h2>Month by month</h2>${tbl(['Month','Days','Saturdays','Holidays','Total off','Working days'],ms.map(m=>[MF[m.i],m.nd,m.s,m.h,m.s+m.h,`<b>${m.w}</b>`]),['Total',sum(ms,m=>m.nd),sum(ms,m=>m.s),sum(ms,m=>m.h),sum(ms,m=>m.s+m.h),sum(ms,m=>m.w)])}</div>
  ${MF.map((x,i)=>`<div class="c s3"><h2>${x}</h2>${cal(yr,i)}</div>`).join('')}</div>`};
 R.vt=()=>{const t=D.tour,q=document.getElementById('q')?.value?.toLowerCase()||'',L=t.filter(r=>!q||[r.c,r.b,r.l,r.o].join(' ').toLowerCase().includes(q)),live=t.filter(r=>r.s).length,by={};t.forEach(r=>{const y=(r.d||'').slice(0,4)||'n/a';by[y]=(by[y]||0)+1});
- return`<div class="grid"><div class="c y s4"><div class="m" style="color:#000">Factories covered</div><div class="big">${t.length}</div><div class="m" style="color:#000">${live} live on NITEX website</div></div><div class="c s4"><div style="text-align:center">${gauge(t.length?Math.round(live/t.length*100):0,'live')}</div></div>
+ return`<div class="grid"><div class="c y s4 feature-metric-card"><div class="m" style="color:#000">Factories covered</div><div class="big">${t.length}</div><div class="m" style="color:#000">${live} live on NITEX website</div></div><div class="c s4 tour-live-card"><div class="tour-live-gauge">${gauge(t.length?Math.round(live/t.length*100):0,'live')}</div></div>
  <div class="c s4"><h2>Shot per year</h2>${Object.entries(by).sort().map(([y,c])=>`<div style="display:flex;justify-content:space-between;margin-bottom:6px"><span>${y}</span><b>${c}</b></div><div class="bar" style="margin-bottom:8px"><i style="width:${c/t.length*100}%"></i></div>`).join('')}</div>
  <div class="c s12"><div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap"><h2>Virtual tour list (${L.length})</h2><input id="q" value="${q}" placeholder="Search factory, brand, location" style="max-width:280px;background:var(--l);color:#000;border-color:var(--line)" aria-label="Search"></div>
  ${tbl(['#','Factory','Setup','Brand','Location','Shot on','Status','Tour'],L.map(r=>[r.n,r.c,r.o||'',r.b||'',r.l||'',r.d||'',`<span class="pill ${r.s?'':'g'}">${r.s?'Live':'Pending'}</span>`,r.k?`<a href="${r.k}" target="_blank" rel="noopener">Open</a>`:'']))}</div></div>`};
