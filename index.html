@@ -48,6 +48,21 @@ main{padding:22px 28px 40px;min-width:0}
 .c h2{font-size:15px;margin-bottom:12px}
 .s3{grid-column:span 3}.s4{grid-column:span 4}.s5{grid-column:span 5}.s6{grid-column:span 6}.s7{grid-column:span 7}.s8{grid-column:span 8}.s12{grid-column:span 12}
 .big{font-family:'Archivo Black',sans-serif;font-size:44px;line-height:1}
+.overview-type-card,.overview-tour-card{min-height:300px;display:flex;flex-direction:column}
+.overview-type-content{flex:1;display:flex;align-items:center;justify-content:space-around;gap:12px;min-width:0}
+.overview-type-content svg{width:clamp(150px,15vw,190px);flex:0 0 auto}
+.overview-type-content svg text:first-of-type{font-size:23px}
+.overview-type-legend{flex-direction:column;gap:13px;margin:0;min-width:0}
+.overview-type-legend span{font-size:13px;line-height:1.35}
+.overview-type-legend span b{font-family:'Archivo Black',sans-serif;font-size:20px;margin-left:4px}
+.overview-tour-card{justify-content:space-between}
+.overview-tour-gauge{flex:1;min-height:205px;display:grid;place-items:center;width:100%}
+.overview-tour-gauge svg{width:100%!important;max-width:none!important;height:auto}
+.overview-tour-gauge svg text:first-of-type{font-size:40px}
+.overview-tour-gauge svg text:last-of-type{font-size:12px}
+.overview-tour-caption{text-align:center;font-size:13px;padding-bottom:4px}
+@media(max-width:1050px){.overview-type-content{gap:8px}.overview-type-content svg{width:145px}.overview-type-legend span{font-size:12px}.overview-type-legend span b{font-size:18px}}
+@media(max-width:700px){.overview-type-card,.overview-tour-card{min-height:260px}.overview-type-content{justify-content:center;gap:14px}.overview-type-content svg{width:min(42vw,170px)}.overview-type-legend span{font-size:12px}.overview-type-legend span b{font-size:18px}.overview-tour-gauge{min-height:180px}}
 .feature-metric-card{min-height:280px;display:flex;flex-direction:column;justify-content:space-between;gap:22px;padding:26px}
 .feature-metric-card .m{font-size:clamp(15px,1.15vw,17px);line-height:1.55;letter-spacing:.01em}
 .feature-metric-card .big{font-size:clamp(82px,8vw,112px);line-height:.92;letter-spacing:-.045em}
@@ -296,10 +311,10 @@ R.ov=()=>{const a=sel(),q=sum(a,r=>r.q),inS=a.filter(r=>r.s!=='Uploaded'),yr=Y==
  <div class="c k s3"><div class="m">In studio now</div><div class="big" style="color:var(--y)">${n(sum(inS,r=>r.q))}</div><div class="m">${inS.length?inS.length+' bunches in progress':'all bunches uploaded'}</div></div>
  <div class="c s12"><h2>Pipeline right now</h2><div class="pipe">${ST.map(s=>{const z=a.filter(r=>r.s===s);return`<div class="${z.length&&s!=='Uploaded'?'on':''}"><span class="m">${s}</span><b>${n(sum(z,r=>r.q))}</b><span class="m">${z.length} bunches</span></div>`}).join('')}</div></div>
  <div class="c k s8 monthly-chart-card"><h2>Products received by month${Y==='All'?' (latest year)':''}</h2>${area(mv,M)}</div>
- <div class="c s4"><h2>By sample type</h2><div style="display:flex;gap:14px;align-items:center;flex-wrap:wrap">${donut(ty,n(q))}<div class="lg" style="flex-direction:column">${ty.map(t=>`<span style="--c:${t.c}">${t.l} <b>${n(t.v)}</b></span>`).join('')}</div></div></div>
+ <div class="c s4 overview-type-card"><h2>By sample type</h2><div class="overview-type-content">${donut(ty,n(q))}<div class="lg overview-type-legend">${ty.map(t=>`<span style="--c:${t.c}">${t.l} <b>${n(t.v)}</b></span>`).join('')}</div></div></div>
  <div class="c s4"><h2>${MF[now.getMonth()]} ${now.getFullYear()}</h2>${cal(now.getFullYear(),now.getMonth())}<div class="lg m"><span style="--c:#c9c9c9">Saturday</span><span style="--c:#000">Holiday</span><span style="--c:#D7FF00">Today</span></div></div>
  <div class="c s4"><h2>Turnaround by type</h2>${tb.map(x=>`<div style="margin-bottom:10px"><div style="display:flex;justify-content:space-between"><span>${x[0]}</span><b>${f1(x[1])} d</b></div><div class="bar"><i style="width:${x[1]/mx*100}%"></i></div></div>`).join('')||'<div class="empty">No data for this year.</div>'}</div>
- <div class="c s4"><h2>360 virtual tours</h2><div style="text-align:center">${gauge(D.tour.length?Math.round(live/D.tour.length*100):0,'live on website')}</div><div class="m" style="text-align:center">${live} of ${D.tour.length} factories live</div></div>
+ <div class="c s4 overview-tour-card"><h2>360 virtual tours</h2><div class="overview-tour-gauge">${gauge(D.tour.length?Math.round(live/D.tour.length*100):0,'live on website')}</div><div class="m overview-tour-caption">${live} of ${D.tour.length} factories live</div></div>
  <div class="c s12"><h2>Slowest bunches to watch</h2>${tbl(['Product in','Qty','Type','Days taken'],slow.map(r=>[r.i,r.q,r.t||'-',`<span class="pill ${r.d>10?'':'g'}">${r.d} d</span>`]))}</div></div>`};
 function tbl(h,rows,tot){return`<div class="sc"><table><tr>${h.map(x=>`<th>${x}</th>`).join('')}</tr>${rows.map(r=>`<tr>${r.map(c=>`<td>${c??''}</td>`).join('')}</tr>`).join('')}${tot?`<tr class="t">${tot.map(c=>`<td>${c}</td>`).join('')}</tr>`:''}</table></div>`}
 R.ss=()=>{const a=sel().sort((x,z)=>z.i.localeCompare(x.i)),q=document.getElementById('q')?.value?.toLowerCase()||'',from=statusFrom,to=statusTo,L=a.filter(r=>{const searchMatch=!q||[r.t,r.s,r.n,r.i,M[r.m],MF[r.m]].join(' ').toLowerCase().includes(q),dateMatch=(!from||r.i>=from)&&(!to||r.i<=to);return searchMatch&&dateMatch}),dots=r=>[r.sh,r.c,r.g,r.k,r.u].map(x=>`<span style="display:inline-block;width:14px;height:6px;margin-right:2px;background:${x?'#000':'#e6e6e6'}"></span>`).join('');
