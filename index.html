@@ -186,6 +186,46 @@ a{color:inherit}#toast{position:fixed;bottom:20px;right:20px;background:var(--k)
  .overview-tour-gauge svg{max-height:170px}
 }
 
+
+/* Overview sample-type chart: centered, larger and vertically ordered legend */
+.overview-type-card{min-height:490px}
+.overview-type-content{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:18px;min-width:0;width:100%}
+.overview-type-chart{width:100%;display:flex;justify-content:center;align-items:center}
+.overview-type-chart svg{display:block;width:min(100%,260px)!important;max-width:260px!important;height:auto;overflow:visible}
+.overview-type-chart svg text:first-of-type{font-size:25px}
+.overview-type-chart svg text:last-of-type{font-size:10px}
+.overview-type-legend{width:min(100%,310px);display:flex;flex-direction:column;gap:10px;margin:0 auto;padding:0}
+.overview-type-legend>span{display:grid;grid-template-columns:12px minmax(0,1fr) auto;align-items:center;gap:10px;font-size:15px;line-height:1.35;white-space:normal}
+.overview-type-legend>span:before{display:none}
+.overview-type-legend>span i{width:11px;height:11px;background:var(--c);display:block}
+.overview-type-legend>span span{min-width:0}
+.overview-type-legend>span b{font-family:'Archivo Black',sans-serif;font-size:17px;margin:0}
+.overview-tour-card{min-height:490px}
+.overview-tour-gauge{flex:1;min-height:300px;display:grid;place-items:center;width:100%;padding:12px 4px 0}
+.overview-tour-gauge svg{display:block;width:100%!important;max-width:100%!important;height:auto;max-height:310px}
+.overview-tour-gauge svg text:first-of-type{font-size:62px}
+.overview-tour-gauge svg text:last-of-type{font-size:19px}
+.overview-tour-caption{font-size:16px;line-height:1.45;padding:8px 4px 16px}
+@media(max-width:1050px){
+ .overview-type-card,.overview-tour-card{min-height:440px}
+ .overview-type-chart svg{max-width:235px!important}
+ .overview-tour-gauge{min-height:270px}
+ .overview-tour-gauge svg{max-height:280px}
+}
+@media(max-width:700px){
+ .overview-type-card,.overview-tour-card{min-height:0}
+ .overview-type-content{gap:14px}
+ .overview-type-chart svg{width:min(100%,250px)!important;max-width:250px!important}
+ .overview-type-legend{width:min(100%,360px)}
+ .overview-type-legend>span{font-size:15px}
+ .overview-type-legend>span b{font-size:18px}
+ .overview-tour-gauge{min-height:250px;padding-top:8px}
+ .overview-tour-gauge svg{max-height:260px}
+ .overview-tour-gauge svg text:first-of-type{font-size:58px}
+ .overview-tour-gauge svg text:last-of-type{font-size:18px}
+ .overview-tour-caption{font-size:15px}
+}
+
 </style></head><body>
 <div id="login"><div class="lens"></div><form id="lf"><h1 class="login-brand">NITEX<br>Studio Status</h1>
 <input id="lu" type="email" placeholder="Work email address" autocomplete="username" required aria-label="Email address"><input id="lp" type="password" placeholder="Password" autocomplete="current-password" aria-label="Password" required><button class="btn">Sign in</button><div id="err" class="m"></div></form></div>
@@ -340,7 +380,7 @@ R.ov=()=>{const a=sel(),q=sum(a,r=>r.q),inS=a.filter(r=>r.s!=='Uploaded'),yr=Y==
  <div class="c k s3"><div class="m">In studio now</div><div class="big" style="color:var(--y)">${n(sum(inS,r=>r.q))}</div><div class="m">${inS.length?inS.length+' bunches in progress':'all bunches uploaded'}</div></div>
  <div class="c s12"><h2>Pipeline right now</h2><div class="pipe">${ST.map(s=>{const z=a.filter(r=>r.s===s);return`<div class="${z.length&&s!=='Uploaded'?'on':''}"><span class="m">${s}</span><b>${n(sum(z,r=>r.q))}</b><span class="m">${z.length} bunches</span></div>`}).join('')}</div></div>
  <div class="c k s8 monthly-chart-card"><h2>Products received by month${Y==='All'?' (latest year)':''}</h2>${area(mv,M)}</div>
- <div class="c s4 overview-type-card"><h2>By sample type</h2><div class="overview-type-content">${donut(ty,n(q))}<div class="lg overview-type-legend">${ty.map(t=>`<span style="--c:${t.c}">${t.l} <b>${n(t.v)}</b></span>`).join('')}</div></div></div>
+ <div class="c s4 overview-type-card"><h2>By sample type</h2><div class="overview-type-content"><div class="overview-type-chart">${donut(ty,n(q))}</div><div class="lg overview-type-legend">${ty.map(t=>`<span style="--c:${t.c}"><i></i><span>${t.l}</span><b>${n(t.v)}</b></span>`).join('')}</div></div></div>
  <div class="c s4"><h2>${MF[now.getMonth()]} ${now.getFullYear()}</h2>${cal(now.getFullYear(),now.getMonth())}<div class="lg m"><span style="--c:#c9c9c9">Saturday</span><span style="--c:#000">Holiday</span><span style="--c:#D7FF00">Today</span></div></div>
  <div class="c s4"><h2>Turnaround by type</h2>${tb.map(x=>`<div style="margin-bottom:10px"><div style="display:flex;justify-content:space-between"><span>${x[0]}</span><b>${f1(x[1])} d</b></div><div class="bar"><i style="width:${x[1]/mx*100}%"></i></div></div>`).join('')||'<div class="empty">No data for this year.</div>'}</div>
  <div class="c s4 overview-tour-card"><h2>360 virtual tours</h2><div class="overview-tour-gauge">${gauge(D.tour.length?Math.round(live/D.tour.length*100):0,'live on website')}</div><div class="m overview-tour-caption">${live} of ${D.tour.length} factories live</div></div>
