@@ -300,8 +300,8 @@ R.ss=()=>{const a=sel().sort((x,z)=>z.i.localeCompare(x.i)),q=document.getElemen
 R.sm=()=>{const a=sel(),yr=Y==='All'?Math.max(...years()):Y,ya=D.rows.filter(r=>r.y===yr),mr=Array.from({length:12},(_,i)=>{const z=ya.filter(r=>r.m===i),v=TY.map(t=>sum(z.filter(r=>r.t===t),r=>r.q));return{l:M[i],v,t:sum(z,r=>r.q),b:z.length,d:avg(z)}});
  const quarterData=[0,1,2,3].map(k=>{const z=ya.filter(r=>Math.floor(r.m/3)===k),v=TY.map(t=>sum(z.filter(r=>r.t===t),r=>r.q));return{l:`Q${k+1}`,v,t:sum(z,r=>r.q),b:z.length,d:avg(z)}});
  const qs=quarterData.map(q=>[q.l,n(q.t),q.b,f1(q.d)]);
- return`<div class="grid"><div class="c s8"><h2>${yr} products by month and type</h2>${stack(mr)}<div class="lg m">${TY.map((t,i)=>`<span style="--c:${TC[i]}">${t}</span>`).join('')}</div></div>
- <div class="c s4"><h2>Products by quarter and type</h2>${stack(quarterData)}<div class="lg m">${TY.map((t,i)=>`<span style="--c:${TC[i]}">${t}</span>`).join('')}</div></div>
+ return`<div class="grid"><div class="c s6"><h2>${yr} products by month and type</h2>${stack(mr)}<div class="lg m">${TY.map((t,i)=>`<span style="--c:${TC[i]}">${t}</span>`).join('')}</div></div>
+ <div class="c s6"><h2>Products by quarter and type</h2>${stack(quarterData)}<div class="lg m">${TY.map((t,i)=>`<span style="--c:${TC[i]}">${t}</span>`).join('')}</div></div>
  <div class="c s12"><h2>Quarters</h2>${tbl(['Quarter','Products','Bunches','Avg days'],qs)}</div>
  <div class="c s12"><h2>Monthly breakdown ${yr}</h2>${tbl(['Month',...TY,'Total','Bunches','Avg days'],mr.map((m,i)=>[MF[i],...m.v.map(n),`<b>${n(m.t)}</b>`,m.b,f1(m.d)]),['Year total',...TY.map((t,j)=>n(sum(mr,m=>m.v[j]))),n(sum(mr,m=>m.t)),sum(mr,m=>m.b),f1(avg(ya))])}</div>
  <div class="c s12"><h2>Yearly overview</h2>${tbl(['Year',...TY,'Total','Bunches','Avg days'],years().map(y=>{const z=D.rows.filter(r=>r.y===y);return[y,...TY.map(t=>n(sum(z.filter(r=>r.t===t),r=>r.q))),`<b>${n(sum(z,r=>r.q))}</b>`,z.length,f1(avg(z))]}),['Grand total',...TY.map(t=>n(sum(D.rows.filter(r=>r.t===t),r=>r.q))),n(sum(D.rows,r=>r.q)),D.rows.length,f1(avg(D.rows))])}</div></div>`};
