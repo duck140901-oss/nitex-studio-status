@@ -227,6 +227,26 @@ a{color:inherit}#toast{position:fixed;bottom:20px;right:20px;background:var(--k)
  .overview-tour-caption{font-size:14px}
 }
 
+/* 360 virtual tour gauge: keep the full live indicator balanced */
+.overview-tour-gauge{flex:1;min-height:205px;display:grid;place-items:center;width:100%;padding:12px 12px 0}
+.overview-tour-gauge svg{display:block;width:min(100%,285px)!important;max-width:285px!important;height:auto;max-height:180px}
+.overview-tour-gauge svg path{stroke-width:14px}
+.overview-tour-gauge svg text:first-of-type{font-size:36px}
+.overview-tour-gauge svg text:last-of-type{font-size:12px}
+.overview-tour-caption{font-size:14px;line-height:1.45;padding:6px 8px 12px}
+@media(max-width:1050px){
+ .overview-tour-gauge{min-height:190px}
+ .overview-tour-gauge svg{max-width:265px!important;max-height:170px}
+ .overview-tour-caption{font-size:13px}
+}
+@media(max-width:700px){
+ .overview-tour-gauge{min-height:180px;padding-top:8px}
+ .overview-tour-gauge svg{width:min(100%,255px)!important;max-width:255px!important;max-height:160px}
+ .overview-tour-gauge svg text:first-of-type{font-size:35px}
+ .overview-tour-gauge svg text:last-of-type{font-size:11px}
+ .overview-tour-caption{font-size:13px;padding:4px 6px 10px}
+}
+
 </style></head><body>
 <div id="login"><div class="lens"></div><form id="lf"><h1 class="login-brand">NITEX<br>Studio Status</h1>
 <input id="lu" type="email" placeholder="Work email address" autocomplete="username" required aria-label="Email address"><input id="lp" type="password" placeholder="Password" autocomplete="current-password" aria-label="Password" required><button class="btn">Sign in</button><div id="err" class="m"></div></form></div>
