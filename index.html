@@ -270,6 +270,16 @@ a{color:inherit}#toast{position:fixed;bottom:20px;right:20px;background:var(--k)
 .overview-tour-gauge svg text:last-of-type,.tour-live-reference-card .tour-live-gauge svg text:last-of-type{font-size:13px}
 .overview-tour-caption,.tour-live-reference-card .tour-live-caption{text-align:center;font:12px "Fragment Mono",monospace;color:var(--g);line-height:1.5;padding:0 4px 8px}
 @media(max-width:700px){.overview-tour-card,.tour-live-reference-card{min-height:360px;padding:18px 16px}.overview-tour-gauge,.tour-live-reference-card .tour-live-gauge{min-height:250px}.overview-tour-gauge svg text:first-of-type,.tour-live-reference-card .tour-live-gauge svg text:first-of-type{font-size:39px}.overview-tour-gauge svg text:last-of-type,.tour-live-reference-card .tour-live-gauge svg text:last-of-type{font-size:12px}}
+
+/* Dashboard entrance and data-reveal motion */
+@keyframes dashboardCardReveal{from{opacity:0;transform:translate3d(0,18px,0)}to{opacity:1;transform:translate3d(0,0,0)}}
+.dashboard-intro-card{animation:dashboardCardReveal .62s cubic-bezier(.2,.75,.25,1) both;animation-delay:var(--intro-delay,0ms)}
+.dashboard-intro-card .bar i{transform-origin:left center;animation:dashboardBarReveal .9s cubic-bezier(.2,.75,.25,1) both;animation-delay:calc(var(--intro-delay,0ms) + .18s)}
+@keyframes dashboardBarReveal{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+.dashboard-intro-card svg rect{transform-box:fill-box;transform-origin:center bottom;animation:dashboardColumnReveal .9s cubic-bezier(.2,.75,.25,1) both;animation-delay:calc(var(--intro-delay,0ms) + .18s)}
+@keyframes dashboardColumnReveal{from{transform:scaleY(0);opacity:.35}to{transform:scaleY(1);opacity:1}}
+.dashboard-intro-card svg circle[stroke-dasharray],.dashboard-intro-card svg path[stroke-dasharray]{transition:stroke-dashoffset 1.15s cubic-bezier(.2,.75,.25,1)}
+@media(prefers-reduced-motion:reduce){.dashboard-intro-card,.dashboard-intro-card .bar i,.dashboard-intro-card svg rect{animation:none!important}.dashboard-intro-card svg circle[stroke-dasharray],.dashboard-intro-card svg path[stroke-dasharray]{transition:none!important}}
 </style></head><body>
 <div id="login"><div class="lens"></div><form id="lf"><h1 class="login-brand">NITEX<br>Studio Status</h1>
 <input id="lu" type="email" placeholder="Work email address" autocomplete="username" required aria-label="Email address"><input id="lp" type="password" placeholder="Password" autocomplete="current-password" aria-label="Password" required><button class="btn">Sign in</button><div id="err" class="m"></div></form></div>
@@ -452,10 +462,45 @@ R.vt=()=>{const t=D.tour,q=document.getElementById('q')?.value?.toLowerCase()||'
  <div class="c s4"><h2>Shot per year</h2>${Object.entries(by).sort().map(([y,c])=>`<div style="display:flex;justify-content:space-between;margin-bottom:6px"><span>${y}</span><b>${c}</b></div><div class="bar" style="margin-bottom:8px"><i style="width:${c/t.length*100}%"></i></div>`).join('')}</div>
  <div class="c s12"><div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap"><h2>Virtual tour list (${L.length})</h2><input id="q" value="${q}" placeholder="Search factory, brand, location" style="max-width:280px;background:var(--l);color:#000;border-color:var(--line)" aria-label="Search"></div>
  ${tbl(['#','Factory','Setup','Brand','Location','Shot on','Status','Tour'],L.map(r=>[r.n,r.c,r.o||'',r.b||'',r.l||'',r.d||'',`<span class="pill ${r.s?'':'g'}">${r.s?'Live':'Pending'}</span>`,r.k?`<a href="${r.k}" target="_blank" rel="noopener">Open</a>`:'']))}</div></div>`};
-let monthlyChartIntroPending=true;
+
+function animateDashboardIntro(){
+ const root=$('#pg');if(!root||window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+ const cards=[...root.querySelectorAll('.c')];
+ cards.forEach((card,i)=>{
+  card.classList.remove('dashboard-intro-card');
+  card.style.setProperty('--intro-delay',Math.min(i*65,455)+'ms');
+  void card.offsetWidth;
+  card.classList.add('dashboard-intro-card');
+ });
+ // Count key figures up from zero while preserving units and percentage signs.
+ const countTargets=[...root.querySelectorAll('.big,svg text')];
+ countTargets.forEach(el=>{
+  if(el.children.length)return;
+  const raw=(el.textContent||'').trim(),match=raw.match(/^([\d,]+(?:\.\d+)?)(.*)$/);
+  if(!match)return;
+  const target=Number(match[1].replace(/,/g,''));if(!Number.isFinite(target)||target<=0)return;
+  const suffix=match[2],decimals=(match[1].split('.')[1]||'').length;
+  const started=performance.now(),duration=1050;
+  const format=v=>v.toLocaleString('en-US',{minimumFractionDigits:decimals,maximumFractionDigits:decimals});
+  el.textContent='0'+suffix;
+  const tick=now=>{
+   const p=Math.min(1,(now-started)/duration),eased=1-Math.pow(1-p,3);
+   el.textContent=format(target*eased)+suffix;
+   if(p<1)requestAnimationFrame(tick);
+  };
+  requestAnimationFrame(tick);
+ });
+ // Draw donut arcs and the 360-tour gauge from their starting point.
+ root.querySelectorAll('svg circle[stroke-dasharray],svg path[stroke-dasharray]').forEach(shape=>{
+  const finalOffset=shape.getAttribute('stroke-dashoffset')||'0';
+  shape.style.strokeDashoffset='100';
+  requestAnimationFrame(()=>{shape.style.strokeDashoffset=finalOffset});
+ });
+}
+\nlet monthlyChartIntroPending=true;
 function go(){const ys=['All',...years()];$('#yr').innerHTML=ys.map(y=>`<option ${y===Y?'selected':''}>${y}</option>`).join('');document.querySelectorAll('.nav[data-p]').forEach(b=>b.classList.toggle('on',b.dataset.p===P));
  const pg=PAGES.find(p=>p[0]===P);$('#ttl').textContent=pg[1];$('#sub').textContent='NITEX STUDIO / data as of '+(D.at||'').slice(0,10);
- const rd=()=>{$('#pg').innerHTML=R[P]();if(P==='ov'&&monthlyChartIntroPending){const chart=$('#pg .monthly-chart-card');if(chart)chart.classList.add('is-intro');monthlyChartIntroPending=false}const q=$('#q');if(q){q.oninput=()=>{const p=q.selectionStart;rd();$('#q').focus();$('#q').setSelectionRange(p,p)}}const df=$('#statusFrom'),dt=$('#statusTo');if(df)df.onchange=()=>{statusFrom=df.value;rd()};if(dt)dt.onchange=()=>{statusTo=dt.value;rd()};const cf=$('#clearFilters');if(cf)cf.onclick=()=>{statusFrom='';statusTo='';rd();const search=$('#q');if(search)search.value=''};const m=$('#more');if(m)m.onclick=()=>{SH+=40;rd()}};rd()}
+ const rd=(animate=true)=>{$('#pg').innerHTML=R[P]();if(animate)animateDashboardIntro();if(P==='ov'&&monthlyChartIntroPending){const chart=$('#pg .monthly-chart-card');if(chart)chart.classList.add('is-intro');monthlyChartIntroPending=false}const q=$('#q');if(q){q.oninput=()=>{const p=q.selectionStart;rd(false);$('#q').focus();$('#q').setSelectionRange(p,p)}}const df=$('#statusFrom'),dt=$('#statusTo');if(df)df.onchange=()=>{statusFrom=df.value;rd(false)};if(dt)dt.onchange=()=>{statusTo=dt.value;rd(false)};const cf=$('#clearFilters');if(cf)cf.onclick=()=>{statusFrom='';statusTo='';rd(false);const search=$('#q');if(search)search.value=''};const m=$('#more');if(m)m.onclick=()=>{SH+=40;rd(false)}};rd()}
 /* ---- Excel sync: owner picks the updated .xlsx, every viewer gets it ---- */
 const D8=v=>v instanceof Date?iso(new Date(v.getTime()+12*36e5)):null;
 function parse(buf){const wb=XLSX.read(buf,{cellDates:true}),g=s=>XLSX.utils.sheet_to_json(wb.Sheets[s],{header:1,raw:true,defval:null}),rows=[];
