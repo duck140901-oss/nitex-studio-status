@@ -260,6 +260,16 @@ a{color:inherit}#toast{position:fixed;bottom:20px;right:20px;background:var(--k)
 .turnaround-type-card .bar i{min-width:2px}
 @media(max-width:1050px){.turnaround-type-card{min-height:380px}.turnaround-type-list{gap:19px}.turnaround-type-label{font-size:14px;gap:10px}.turnaround-type-label b{font-size:14px}}
 @media(max-width:600px){.turnaround-type-card{min-height:340px}.turnaround-type-card h2{margin-bottom:18px}.turnaround-type-list{gap:20px}.turnaround-type-label{font-size:14px}.turnaround-type-label b{font-size:14px}}
+
+/* 360 virtual tours: match the supplied reference layout */
+.overview-tour-card,.tour-live-reference-card{min-height:420px;display:flex;flex-direction:column;justify-content:flex-start;align-items:stretch;padding:22px 24px}
+.overview-tour-card h2,.tour-live-reference-card h2{margin-bottom:12px}
+.overview-tour-gauge,.tour-live-reference-card .tour-live-gauge{flex:1;min-height:300px;width:100%;display:grid;place-items:center;padding:0 8px}
+.overview-tour-gauge svg,.tour-live-reference-card .tour-live-gauge svg{display:block;width:100%!important;max-width:520px!important;height:auto;max-height:none!important}
+.overview-tour-gauge svg text:first-of-type,.tour-live-reference-card .tour-live-gauge svg text:first-of-type{font-size:42px}
+.overview-tour-gauge svg text:last-of-type,.tour-live-reference-card .tour-live-gauge svg text:last-of-type{font-size:13px}
+.overview-tour-caption,.tour-live-reference-card .tour-live-caption{text-align:center;font:12px "Fragment Mono",monospace;color:var(--g);line-height:1.5;padding:0 4px 8px}
+@media(max-width:700px){.overview-tour-card,.tour-live-reference-card{min-height:360px;padding:18px 16px}.overview-tour-gauge,.tour-live-reference-card .tour-live-gauge{min-height:250px}.overview-tour-gauge svg text:first-of-type,.tour-live-reference-card .tour-live-gauge svg text:first-of-type{font-size:39px}.overview-tour-gauge svg text:last-of-type,.tour-live-reference-card .tour-live-gauge svg text:last-of-type{font-size:12px}}
 </style></head><body>
 <div id="login"><div class="lens"></div><form id="lf"><h1 class="login-brand">NITEX<br>Studio Status</h1>
 <input id="lu" type="email" placeholder="Work email address" autocomplete="username" required aria-label="Email address"><input id="lp" type="password" placeholder="Password" autocomplete="current-password" aria-label="Password" required><button class="btn">Sign in</button><div id="err" class="m"></div></form></div>
@@ -438,7 +448,7 @@ R.hw=()=>{const yr=Y==='All'?new Date().getFullYear():Y,ms=MF.map((_,i)=>({i,...
  <div class="c s12"><h2>Month by month</h2>${tbl(['Month','Days','Saturdays','Holidays','Total off','Working days'],ms.map(m=>[MF[m.i],m.nd,m.s,m.h,m.s+m.h,`<b>${m.w}</b>`]),['Total',sum(ms,m=>m.nd),sum(ms,m=>m.s),sum(ms,m=>m.h),sum(ms,m=>m.s+m.h),sum(ms,m=>m.w)])}</div>
  ${MF.map((x,i)=>`<div class="c s3"><h2>${x}</h2>${cal(yr,i)}</div>`).join('')}</div>`};
 R.vt=()=>{const t=D.tour,q=document.getElementById('q')?.value?.toLowerCase()||'',L=t.filter(r=>!q||[r.c,r.b,r.l,r.o].join(' ').toLowerCase().includes(q)),live=t.filter(r=>r.s).length,by={};t.forEach(r=>{const y=(r.d||'').slice(0,4)||'n/a';by[y]=(by[y]||0)+1});
- return`<div class="grid"><div class="c y s4 feature-metric-card"><div class="m" style="color:#000">Factories covered</div><div class="big">${t.length}</div><div class="m" style="color:#000">${live} live on NITEX website</div></div><div class="c s4 tour-live-card"><div class="tour-live-gauge">${gauge(t.length?Math.round(live/t.length*100):0,'live')}</div></div>
+ return`<div class="grid"><div class="c y s4 feature-metric-card"><div class="m" style="color:#000">Factories covered</div><div class="big">${t.length}</div><div class="m" style="color:#000">${live} live on NITEX website</div></div><div class="c s4 tour-live-card tour-live-reference-card"><h2>360 virtual tours</h2><div class="tour-live-gauge">${gauge(t.length?Math.round(live/t.length*100):0,'live on website')}</div><div class="m tour-live-caption">${live} of ${t.length} factories live</div></div>
  <div class="c s4"><h2>Shot per year</h2>${Object.entries(by).sort().map(([y,c])=>`<div style="display:flex;justify-content:space-between;margin-bottom:6px"><span>${y}</span><b>${c}</b></div><div class="bar" style="margin-bottom:8px"><i style="width:${c/t.length*100}%"></i></div>`).join('')}</div>
  <div class="c s12"><div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap"><h2>Virtual tour list (${L.length})</h2><input id="q" value="${q}" placeholder="Search factory, brand, location" style="max-width:280px;background:var(--l);color:#000;border-color:var(--line)" aria-label="Search"></div>
  ${tbl(['#','Factory','Setup','Brand','Location','Shot on','Status','Tour'],L.map(r=>[r.n,r.c,r.o||'',r.b||'',r.l||'',r.d||'',`<span class="pill ${r.s?'':'g'}">${r.s?'Live':'Pending'}</span>`,r.k?`<a href="${r.k}" target="_blank" rel="noopener">Open</a>`:'']))}</div></div>`};
