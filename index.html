@@ -247,6 +247,19 @@ a{color:inherit}#toast{position:fixed;bottom:20px;right:20px;background:var(--k)
  .overview-tour-caption{font-size:13px;padding:4px 6px 10px}
 }
 
+
+/* Turnaround by type: improve spacing and use the full card height */
+.turnaround-type-card{min-height:400px;display:flex;flex-direction:column}
+.turnaround-type-card h2{margin-bottom:22px}
+.turnaround-type-list{display:grid;flex:1;align-content:space-evenly;gap:22px;min-width:0;padding:2px 0 8px}
+.turnaround-type-row{display:grid;gap:10px;min-width:0}
+.turnaround-type-label{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;min-width:0;font-size:15px;line-height:1.5}
+.turnaround-type-label span{min-width:0;overflow-wrap:anywhere}
+.turnaround-type-label b{flex:0 0 auto;white-space:nowrap;font-family:"Archivo Black",sans-serif;font-size:15px}
+.turnaround-type-card .bar{height:9px;overflow:hidden;border-radius:2px}
+.turnaround-type-card .bar i{min-width:2px}
+@media(max-width:1050px){.turnaround-type-card{min-height:380px}.turnaround-type-list{gap:19px}.turnaround-type-label{font-size:14px;gap:10px}.turnaround-type-label b{font-size:14px}}
+@media(max-width:600px){.turnaround-type-card{min-height:340px}.turnaround-type-card h2{margin-bottom:18px}.turnaround-type-list{gap:20px}.turnaround-type-label{font-size:14px}.turnaround-type-label b{font-size:14px}}
 </style></head><body>
 <div id="login"><div class="lens"></div><form id="lf"><h1 class="login-brand">NITEX<br>Studio Status</h1>
 <input id="lu" type="email" placeholder="Work email address" autocomplete="username" required aria-label="Email address"><input id="lp" type="password" placeholder="Password" autocomplete="current-password" aria-label="Password" required><button class="btn">Sign in</button><div id="err" class="m"></div></form></div>
@@ -403,7 +416,7 @@ R.ov=()=>{const a=sel(),q=sum(a,r=>r.q),inS=a.filter(r=>r.s!=='Uploaded'),yr=Y==
  <div class="c k s8 monthly-chart-card"><h2>Products received by month${Y==='All'?' (latest year)':''}</h2>${area(mv,M)}</div>
  <div class="c s4 overview-type-card"><h2>By sample type</h2><div class="overview-type-content"><div class="overview-type-chart">${donut(ty,n(q))}</div><div class="lg overview-type-legend">${ty.map(t=>`<span style="--c:${t.c}"><i></i><span>${t.l}</span><b>${n(t.v)}</b></span>`).join('')}</div></div></div>
  <div class="c s4"><h2>${MF[now.getMonth()]} ${now.getFullYear()}</h2>${cal(now.getFullYear(),now.getMonth())}<div class="lg m"><span style="--c:#c9c9c9">Saturday</span><span style="--c:#000">Holiday</span><span style="--c:#D7FF00">Today</span></div></div>
- <div class="c s4"><h2>Turnaround by type</h2>${tb.map(x=>`<div style="margin-bottom:10px"><div style="display:flex;justify-content:space-between"><span>${x[0]}</span><b>${f1(x[1])} d</b></div><div class="bar"><i style="width:${x[1]/mx*100}%"></i></div></div>`).join('')||'<div class="empty">No data for this year.</div>'}</div>
+ <div class="c s4 turnaround-type-card"><h2>Turnaround by type</h2><div class="turnaround-type-list">${tb.map(x=>`<div class="turnaround-type-row"><div class="turnaround-type-label"><span>${x[0]}</span><b>${f1(x[1])} d</b></div><div class="bar"><i style="width:${x[1]/mx*100}%"></i></div></div>`).join('')||'<div class="empty">No data for this year.</div>'}</div></div>
  <div class="c s4 overview-tour-card"><h2>360 virtual tours</h2><div class="overview-tour-gauge">${gauge(D.tour.length?Math.round(live/D.tour.length*100):0,'live on website')}</div><div class="m overview-tour-caption">${live} of ${D.tour.length} factories live</div></div>
  <div class="c s12"><h2>Slowest bunches to watch</h2>${tbl(['Product in','Qty','Type','Days taken'],slow.map(r=>[r.i,r.q,r.t||'-',`<span class="pill ${r.d>10?'':'g'}">${r.d} d</span>`]))}</div></div>`};
 function tbl(h,rows,tot){return`<div class="sc"><table><tr>${h.map(x=>`<th>${x}</th>`).join('')}</tr>${rows.map(r=>`<tr>${r.map(c=>`<td>${c??''}</td>`).join('')}</tr>`).join('')}${tot?`<tr class="t">${tot.map(c=>`<td>${c}</td>`).join('')}</tr>`:''}</table></div>`}
