@@ -497,7 +497,8 @@ function animateDashboardIntro(){
   requestAnimationFrame(()=>{shape.style.strokeDashoffset=finalOffset});
  });
 }
-\nlet monthlyChartIntroPending=true;
+
+let monthlyChartIntroPending=true;
 function go(){const ys=['All',...years()];$('#yr').innerHTML=ys.map(y=>`<option ${y===Y?'selected':''}>${y}</option>`).join('');document.querySelectorAll('.nav[data-p]').forEach(b=>b.classList.toggle('on',b.dataset.p===P));
  const pg=PAGES.find(p=>p[0]===P);$('#ttl').textContent=pg[1];$('#sub').textContent='NITEX STUDIO / data as of '+(D.at||'').slice(0,10);
  const rd=(animate=true)=>{$('#pg').innerHTML=R[P]();if(animate)animateDashboardIntro();if(P==='ov'&&monthlyChartIntroPending){const chart=$('#pg .monthly-chart-card');if(chart)chart.classList.add('is-intro');monthlyChartIntroPending=false}const q=$('#q');if(q){q.oninput=()=>{const p=q.selectionStart;rd(false);$('#q').focus();$('#q').setSelectionRange(p,p)}}const df=$('#statusFrom'),dt=$('#statusTo');if(df)df.onchange=()=>{statusFrom=df.value;rd(false)};if(dt)dt.onchange=()=>{statusTo=dt.value;rd(false)};const cf=$('#clearFilters');if(cf)cf.onclick=()=>{statusFrom='';statusTo='';rd(false);const search=$('#q');if(search)search.value=''};const m=$('#more');if(m)m.onclick=()=>{SH+=40;rd(false)}};rd()}
