@@ -145,17 +145,24 @@ a{color:inherit}#toast{position:fixed;bottom:20px;right:20px;background:var(--k)
 .team-profile-modal{position:fixed;inset:0;z-index:30;display:none;align-items:center;justify-content:center;padding:18px}
 .team-profile-modal.open{display:flex}
 .team-profile-backdrop{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:18px;background:rgba(0,0,0,.72);backdrop-filter:blur(3px)}
-.team-profile-dialog{position:relative;z-index:1;width:min(420px,100%);max-height:min(90vh,680px);overflow:auto;background:#fff;color:#000;border-top:5px solid var(--y);box-shadow:0 24px 80px rgba(0,0,0,.35);padding:26px}
-.team-profile-close{position:absolute;right:12px;top:10px;width:36px;height:36px;border:1px solid #ddd;background:#fff;color:#000;font-size:24px;line-height:1;cursor:pointer}
-.team-profile-photo{width:116px;height:116px;display:block;margin:8px auto 16px;border-radius:50%;object-fit:cover;background:#333;border:3px solid var(--y)}
-.team-profile-kicker{text-align:center;font:10px 'Fragment Mono',monospace;letter-spacing:.12em;color:#777;text-transform:uppercase}
-.team-profile-name{text-align:center;font:24px/1.15 'Archivo Black',sans-serif;text-transform:uppercase;margin:8px 0 5px;overflow-wrap:anywhere}
-.team-profile-role{text-align:center;font-size:14px;color:#555;margin-bottom:22px}
-.team-profile-details{display:grid;gap:0;border-top:1px solid #ddd}
-.team-profile-detail{display:grid;grid-template-columns:112px minmax(0,1fr);gap:12px;padding:12px 0;border-bottom:1px solid #e8e8e8}
-.team-profile-label{font:10px 'Fragment Mono',monospace;color:#888;text-transform:uppercase}
-.team-profile-value{font-size:14px;font-weight:600;overflow-wrap:anywhere}
-@media(max-width:600px){.team-profile-dialog{padding:22px 18px}.team-profile-photo{width:104px;height:104px}.team-profile-name{font-size:21px}.team-profile-detail{grid-template-columns:94px minmax(0,1fr)}}
+.team-profile-dialog{position:relative;z-index:1;width:min(440px,100%);max-height:min(92vh,760px);overflow:auto;border:1px solid rgba(255,255,255,.65);border-radius:28px;background:rgba(248,249,246,.88);color:#111;box-shadow:0 30px 100px rgba(0,0,0,.48);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);padding:0}
+.team-profile-close{position:absolute;z-index:4;right:16px;top:16px;width:38px;height:38px;border:1px solid rgba(255,255,255,.65);border-radius:50%;background:rgba(0,0,0,.34);color:#fff;font-size:23px;line-height:1;cursor:pointer;backdrop-filter:blur(12px)}
+.team-profile-hero{height:clamp(250px,42vh,350px);position:relative;overflow:hidden;background:#222;border-radius:27px 27px 0 0}
+.team-profile-photo{position:absolute;inset:0;width:100%;height:100%;display:block;object-fit:cover;object-position:center 34%;background:#333}
+.team-profile-hero:after{content:"";position:absolute;inset:38% 0 -1px;background:linear-gradient(180deg,rgba(248,249,246,0),rgba(248,249,246,.76) 47%,rgba(248,249,246,.98) 94%);pointer-events:none}
+.team-profile-kicker{position:absolute;z-index:2;left:24px;top:20px;padding:8px 11px;border:1px solid rgba(255,255,255,.36);border-radius:20px;background:rgba(14,14,14,.3);backdrop-filter:blur(16px);color:#fff;font:10px 'Fragment Mono',monospace;letter-spacing:.12em;text-transform:uppercase}
+.team-profile-content{position:relative;z-index:2;margin-top:-76px;padding:0 28px 30px}
+.team-profile-name{text-align:center;font:clamp(23px,6vw,31px)/1.05 'Archivo Black',sans-serif;text-transform:uppercase;margin:0 auto 10px;max-width:360px;overflow-wrap:anywhere;text-wrap:balance}
+.team-profile-role{text-align:center;font-size:15px;line-height:1.4;color:#52534e;margin:0 auto 23px;max-width:330px}
+.team-profile-details{display:grid;gap:10px}
+.team-profile-detail{display:grid;grid-template-columns:42px minmax(0,1fr);align-items:center;gap:12px;padding:13px 15px;border:1px solid rgba(0,0,0,.07);border-radius:14px;background:rgba(255,255,255,.58);box-shadow:inset 0 1px rgba(255,255,255,.7)}
+.team-profile-icon{width:34px;height:34px;display:grid;place-items:center;border-radius:50%;background:#dfff48;color:#17180f;font:15px Arial,sans-serif}
+.team-profile-detail-copy{min-width:0;display:grid;gap:3px}
+.team-profile-label{font:9px 'Fragment Mono',monospace;color:#81827b;text-transform:uppercase;letter-spacing:.08em}
+.team-profile-value{color:#171814;font-size:14px;font-weight:600;overflow-wrap:anywhere;text-decoration:none}
+.team-profile-value:hover{text-decoration:underline;text-decoration-color:#9db51b;text-underline-offset:3px}
+@media(max-width:600px){.team-profile-dialog{border-radius:24px}.team-profile-hero{height:clamp(220px,37vh,300px);border-radius:23px 23px 0 0}.team-profile-content{margin-top:-64px;padding:0 18px 20px}.team-profile-name{font-size:clamp(21px,7vw,28px)}.team-profile-role{font-size:14px;margin-bottom:18px}.team-profile-detail{padding:11px 12px}}
+@media(prefers-reduced-motion:reduce){.team-member{transition:none}}
 
 
 /* Overview cards: balanced chart scale and readable labels */
@@ -308,14 +315,13 @@ const ROLE_LABELS={team_lead:'Team Lead',studio_in_charge:'Studio In Charge',lea
 const AVATAR_FALLBACK='data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"%3E%3Crect width="64" height="64" fill="%23333"/%3E%3Ccircle cx="32" cy="23" r="12" fill="%23aaa"/%3E%3Cpath d="M8 62c2-16 11-24 24-24s22 8 24 24" fill="%23aaa"/%3E%3C/svg%3E';
 const safeText=v=>String(v??'').replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
 let teamProfiles=[];
-const TEAM_EMAILS={
- 'touhid rahman':'touhid@nitex.com',
- 'moru':'moru@nitex.com',
- 'shachi chowdhury':'shachi@nitex.com',
- 'al amin':'alamin@nitex.com',
- 'alamin':'alamin@nitex.com',
- 'sowrav':'sowrav@nitex.com'
-};
+const TEAM_DIRECTORY=[
+ {name:'Touhid Rahman',role:'Studio Team Lead & Head of Account Management',email:'touhid@nitex.com',phone:'+880 1684008038',match:n=>n.includes('touhid')},
+ {name:'Sotan Md. Rahmatullah',role:'Studio In Charge',email:'moru@nitex.com',phone:'+880 1970074686',match:n=>n.includes('sotan')||n.includes('moru')},
+ {name:'Mominul Haque Chowdhury Shachi',role:'Lead Visualizer',email:'shachi@nitex.com',phone:'+880 1713033913',match:n=>n.includes('mominul')||n.includes('shachi')},
+ {name:'Muhammad Al Amin',role:'Visualizer',email:'alamin@nitex.com',phone:'+880 1996800980',match:n=>n.includes('muhammad al amin')||n.includes('al amin')||n==='alamin'},
+ {name:'Sowrav Dewan',role:'Visualizer',email:'sowrav@nitex.com',phone:'+880 1309968063',match:n=>n.includes('sowrav')}
+];
 function closeTeamProfile(){
  const modal=$('#teamProfileModal');if(!modal)return;
  modal.classList.remove('open');modal.setAttribute('aria-hidden','true');
@@ -327,18 +333,17 @@ function openTeamProfile(index){
  let modal=$('#teamProfileModal');
  if(!modal){
   modal=document.createElement('div');modal.id='teamProfileModal';modal.className='team-profile-modal';modal.setAttribute('aria-hidden','true');
-  modal.innerHTML='<div class="team-profile-backdrop"><section class="team-profile-dialog" role="dialog" aria-modal="true" aria-labelledby="teamProfileName"><button type="button" class="team-profile-close" aria-label="Close profile">×</button><div class="team-profile-kicker">NITEX / PHOTO STUDIO</div><img class="team-profile-photo" alt=""><h2 class="team-profile-name" id="teamProfileName"></h2><div class="team-profile-role" id="teamProfileRole"></div><div class="team-profile-details"><div class="team-profile-detail"><span class="team-profile-label">Department</span><span class="team-profile-value">Photo Studio</span></div><div class="team-profile-detail"><span class="team-profile-label">Position</span><span class="team-profile-value" id="teamProfilePosition"></span></div><div class="team-profile-detail" id="teamProfileEmailRow"><span class="team-profile-label">Work email</span><span class="team-profile-value" id="teamProfileEmail"></span></div></div></section></div>';
+  modal.innerHTML='<div class="team-profile-backdrop"><section class="team-profile-dialog" role="dialog" aria-modal="true" aria-labelledby="teamProfileName"><button type="button" class="team-profile-close" aria-label="Close profile">×</button><div class="team-profile-hero"><img class="team-profile-photo" alt=""><div class="team-profile-kicker">NITEX / PHOTO STUDIO</div></div><div class="team-profile-content"><h2 class="team-profile-name" id="teamProfileName"></h2><div class="team-profile-role" id="teamProfileRole"></div><div class="team-profile-details"><div class="team-profile-detail"><span class="team-profile-icon" aria-hidden="true">✉</span><span class="team-profile-detail-copy"><span class="team-profile-label">Email</span><a class="team-profile-value" id="teamProfileEmail"></a></span></div><div class="team-profile-detail"><span class="team-profile-icon" aria-hidden="true">☎</span><span class="team-profile-detail-copy"><span class="team-profile-label">Phone</span><a class="team-profile-value" id="teamProfilePhone"></a></span></div></div></div></section></div>';
   document.body.appendChild(modal);
   modal.addEventListener('click',e=>{if(e.target===modal.querySelector('.team-profile-backdrop')||e.target.closest('.team-profile-close'))closeTeamProfile()});
  }
- const email=TEAM_EMAILS[(p.full_name||'').trim().toLowerCase()]||'';
+ const member=p.directory||teamEntry(p)||{};
  modal.querySelector('.team-profile-photo').src=p.avatar_url||AVATAR_FALLBACK;
- modal.querySelector('.team-profile-photo').alt=(p.full_name||'Team member')+' profile photo';
- $('#teamProfileName').textContent=p.full_name||'Team member';
- $('#teamProfileRole').textContent=ROLE_LABELS[p.role]||p.role||'Studio Team';
- $('#teamProfilePosition').textContent=ROLE_LABELS[p.role]||p.role||'—';
- $('#teamProfileEmail').textContent=email;
- $('#teamProfileEmailRow').style.display=email?'grid':'none';
+ modal.querySelector('.team-profile-photo').alt=(member.name||p.full_name||'Team member')+' profile photo';
+ $('#teamProfileName').textContent=member.name||p.full_name||'Team member';
+ $('#teamProfileRole').textContent=member.role||ROLE_LABELS[p.role]||p.role||'Studio Team';
+ const email=$('#teamProfileEmail');email.textContent=member.email||'';email.href=member.email?'mailto:'+member.email:'';
+ const phone=$('#teamProfilePhone');phone.textContent=member.phone||'';phone.href=member.phone?'tel:'+member.phone.replace(/[^+\d]/g,''):'';
  modal.classList.add('open');modal.setAttribute('aria-hidden','false');
  document.addEventListener('keydown',teamProfileKeydown);
  modal.querySelector('.team-profile-close').focus();
@@ -347,9 +352,9 @@ async function loadTeamProfiles(){
  const box=$('#teamList');if(!box)return;
  const result=await sb.from('profiles').select('full_name,role,avatar_url');
  if(result.error){box.innerHTML='<div class="team-loading">Team profiles unavailable</div>';return}
- const order={team_lead:0,studio_in_charge:1,lead_visualizer:2,visualizer:3};
- teamProfiles=(result.data||[]).sort((a,b)=>(order[a.role]??9)-(order[b.role]??9)||a.full_name.localeCompare(b.full_name));
- box.innerHTML=teamProfiles.map((p,i)=>'<button type="button" class="team-member" data-team-index="'+i+'" aria-label="View profile of '+safeText(p.full_name)+'"><img src="'+safeText(p.avatar_url||AVATAR_FALLBACK)+'" alt="" loading="lazy"><span class="team-member-meta"><span class="team-member-name">'+safeText(p.full_name)+'</span><span class="team-member-role">'+safeText(ROLE_LABELS[p.role]||p.role)+'</span></span></button>').join('')||'<div class="team-loading">No team profiles found</div>';
+ const profiles=result.data||[];
+ teamProfiles=TEAM_DIRECTORY.map(member=>{const profile=profiles.find(p=>member.match((p.full_name||'').toLowerCase()));return{...profile,full_name:member.name,role:profile?.role||'',avatar_url:profile?.avatar_url||'',directory:member}});
+ box.innerHTML=teamProfiles.map((p,i)=>'<button type="button" class="team-member" data-team-index="'+i+'" aria-label="View profile of '+safeText(p.full_name)+'"><img src="'+safeText(p.avatar_url||AVATAR_FALLBACK)+'" alt="" loading="lazy"><span class="team-member-meta"><span class="team-member-name">'+safeText(p.full_name)+'</span><span class="team-member-role">'+safeText(p.directory.role)+'</span></span></button>').join('');
  box.querySelectorAll('.team-member[data-team-index]').forEach(button=>{button.addEventListener('click',()=>openTeamProfile(Number(button.dataset.teamIndex)))});
 }
 async function getProfile(authUser){
