@@ -389,6 +389,39 @@ tr.t td{background:rgba(215,255,0,.13);color:#f4ffd0}
 @supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){#app>aside,.top,.c,.team-profile-dialog,.photo-crop-dialog{background:rgba(27,30,34,.94)}}
 @media(max-width:900px){#app>aside{height:auto;min-height:0;margin:12px 12px 0;border-radius:22px}main{padding:16px 18px 32px}}
 @media(max-width:600px){#app>aside{top:0;margin:0;border-radius:0 0 20px 20px;border-top:0;padding:10px 14px;backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px)}main{padding:14px 12px 28px}.top{padding:14px;border-radius:17px}.top h1{font-size:clamp(24px,7vw,32px)}.tools select{min-height:42px}.grid{gap:11px}.c{border-radius:17px;padding:14px}.photo-crop-dialog{background:rgba(27,30,34,.96)}}
+@media(max-width:700px){
+ #app,main,#pg,.grid{width:100%;min-width:0}
+ main{overflow:visible}
+ #pg .grid{grid-template-columns:minmax(0,1fr);gap:12px}
+ #pg .grid>.c{grid-column:1/-1;width:100%;min-width:0;min-height:0!important;height:auto;padding:16px;border-radius:17px}
+ #pg .feature-metric-card,#pg .tour-live-card{min-height:0!important;gap:14px}
+ #pg .overview-type-card,#pg .overview-tour-card,#pg .tour-live-reference-card,#pg .turnaround-type-card{min-height:0!important}
+ #pg .overview-type-content{gap:12px}
+ #pg .overview-type-chart svg{width:min(100%,220px)!important;max-width:220px!important}
+ #pg .overview-type-legend{width:min(100%,360px)}
+ #pg .overview-tour-gauge,#pg .tour-live-gauge{min-height:0;padding:10px 4px 4px}
+ #pg .overview-tour-gauge svg,#pg .tour-live-gauge svg{width:min(100%,280px)!important;max-width:280px!important;max-height:none;height:auto}
+ #pg .pipe{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+ #pg .pipe div{min-width:0;overflow-wrap:anywhere}
+ #pg .pipe b{font-size:clamp(18px,6vw,22px)}
+ #pg .turnaround-type-list{gap:16px}
+ #pg .sc{width:100%;max-width:100%;overflow-x:auto;overscroll-behavior-x:contain;scrollbar-color:rgba(215,255,0,.55) rgba(255,255,255,.08)}
+ #pg .sc table{min-width:620px}
+}
+@media(max-width:600px){
+ #app>aside{width:100%;max-width:100%}
+ main{padding:13px 10px 26px}
+ .top{width:100%;margin-bottom:13px;gap:10px}
+ .top>div:first-child{min-width:0}
+ .top h1{overflow-wrap:anywhere}
+ .tools{grid-template-columns:minmax(0,1fr) auto}
+ #pg .grid{gap:10px}
+ #pg .grid>.c{padding:14px}
+ #pg .overview-type-legend>span{grid-template-columns:11px minmax(0,1fr) auto;gap:8px;font-size:14px}
+ #pg .overview-type-legend>span b{font-size:16px}
+ #pg .feature-metric-card .big{font-size:clamp(56px,15vw,80px)}
+ #pg .sc table{min-width:600px}
+}
 @media(prefers-reduced-transparency:reduce){#app>aside,.top,.c,.team-profile-dialog,.photo-crop-dialog{backdrop-filter:none;-webkit-backdrop-filter:none;background:rgba(24,27,31,.96)}}
 </style></head><body>
 <div id="login"><div class="lens"></div><form id="lf"><h1 class="login-brand">NITEX<br>Studio Status</h1>
