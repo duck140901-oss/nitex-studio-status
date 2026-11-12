@@ -149,8 +149,7 @@ a{color:inherit}#toast{position:fixed;bottom:20px;right:20px;background:var(--k)
 .team-profile-close{position:absolute;z-index:4;right:16px;top:16px;width:38px;height:38px;border:1px solid rgba(255,255,255,.65);border-radius:50%;background:rgba(0,0,0,.34);color:#fff;font-size:23px;line-height:1;cursor:pointer;backdrop-filter:blur(12px)}
 .team-profile-hero{height:clamp(360px,58vh,520px);position:relative;overflow:hidden;background:#222;border-radius:27px 27px 0 0}
 .team-profile-photo{position:absolute;inset:0;width:100%;height:100%;display:block;object-fit:contain;object-position:center;background:#222}
-.team-profile-hero:after{content:"";position:absolute;inset:38% 0 -1px;background:linear-gradient(180deg,rgba(248,249,246,0),rgba(248,249,246,.76) 47%,rgba(248,249,246,.98) 94%);pointer-events:none}
-.team-profile-content{position:relative;z-index:2;margin-top:-70px;padding:0 28px 30px}
+.team-profile-content{position:relative;z-index:2;padding:24px 28px 30px}
 .team-profile-name{text-align:center;font:clamp(23px,6vw,31px)/1.05 'Archivo Black',sans-serif;text-transform:uppercase;margin:0 auto 10px;max-width:360px;overflow-wrap:anywhere;text-wrap:balance}
 .team-profile-role{text-align:center;font-size:15px;line-height:1.4;color:#52534e;margin:0 auto 23px;max-width:330px}
 .team-profile-details{display:grid;gap:10px}
@@ -160,8 +159,23 @@ a{color:inherit}#toast{position:fixed;bottom:20px;right:20px;background:var(--k)
 .team-profile-label{font:9px 'Fragment Mono',monospace;color:#81827b;text-transform:uppercase;letter-spacing:.08em}
 .team-profile-value{color:#171814;font-size:14px;font-weight:600;overflow-wrap:anywhere;text-decoration:none}
 .team-profile-value:hover{text-decoration:underline;text-decoration-color:#9db51b;text-underline-offset:3px}
-@media(max-width:600px){.team-profile-dialog{border-radius:24px}.team-profile-hero{height:clamp(300px,48vh,430px);border-radius:23px 23px 0 0}.team-profile-content{margin-top:-64px;padding:0 18px 20px}.team-profile-name{font-size:clamp(21px,7vw,28px)}.team-profile-role{font-size:14px;margin-bottom:18px}.team-profile-detail{padding:11px 12px}}
+@media(max-width:600px){.team-profile-dialog{border-radius:24px}.team-profile-hero{height:clamp(300px,48vh,430px);border-radius:23px 23px 0 0}.team-profile-content{margin-top:0;padding:18px 18px 20px}.team-profile-name{font-size:clamp(21px,7vw,28px)}.team-profile-role{font-size:14px;margin-bottom:18px}.team-profile-detail{padding:11px 12px}}
 @media(prefers-reduced-motion:reduce){.team-member{transition:none}}
+
+.photo-crop-modal{position:fixed;inset:0;z-index:50;display:none;align-items:center;justify-content:center;padding:16px;background:rgba(0,0,0,.76);backdrop-filter:blur(8px)}
+.photo-crop-modal.open{display:flex}
+.photo-crop-dialog{width:min(480px,100%);max-height:95vh;overflow:auto;padding:22px;border:1px solid rgba(255,255,255,.6);border-radius:22px;background:#f8f9f6;color:#111;box-shadow:0 28px 90px rgba(0,0,0,.5)}
+.photo-crop-title{font:20px 'Archivo Black',sans-serif;text-transform:uppercase}
+.photo-crop-hint{margin:6px 0 16px;color:#666;font-size:13px}
+.photo-crop-frame{position:relative;width:min(100%,420px);aspect-ratio:1;margin:auto;overflow:hidden;border:2px solid #d7ff00;border-radius:14px;background:#222;touch-action:none;cursor:grab;user-select:none}
+.photo-crop-frame.dragging{cursor:grabbing}
+.photo-crop-image{position:absolute;max-width:none;max-height:none;pointer-events:none;user-select:none}
+.photo-crop-zoom{display:grid;grid-template-columns:auto minmax(100px,1fr) auto;align-items:center;gap:10px;margin:16px 0 18px;font:11px 'Fragment Mono',monospace;color:#555}
+.photo-crop-zoom input{accent-color:#222;padding:0;background:transparent}
+.photo-crop-actions{display:flex;justify-content:flex-end;gap:10px}
+.photo-crop-actions .btn{min-width:120px}
+.photo-crop-cancel{background:transparent;color:#111;border:1px solid #aaa}
+@media(max-width:600px){.photo-crop-dialog{padding:18px}.photo-crop-frame{width:min(100%,calc(100vw - 72px))}.photo-crop-actions .btn{min-width:0;flex:1;padding:12px 8px}}
 
 
 /* Overview cards: balanced chart scale and readable labels */
@@ -291,6 +305,7 @@ a{color:inherit}#toast{position:fixed;bottom:20px;right:20px;background:var(--k)
 <input id="lu" type="email" placeholder="Work email address" autocomplete="username" required aria-label="Email address"><input id="lp" type="password" placeholder="Password" autocomplete="current-password" aria-label="Password" required><button class="btn">Sign in</button><div id="err" class="m"></div></form></div>
 <div id="app"><aside><div class="logo"><span class="sym"></span><span class="h" style="font-size:36px;line-height:1;white-space:nowrap">NITEX</span></div><button type="button" id="mobileNavToggle" aria-label="Open navigation" aria-expanded="false">☰</button><div id="nav" style="display:contents"></div><section class="team-panel" aria-label="Studio team"><div class="team-heading">STUDIO TEAM / 05</div><div id="teamList" class="team-list"><div class="team-loading">Loading team…</div></div></section><div class="profile" id="profile"><button type="button" id="avatarBtn" class="avatar-btn" title="Change profile photo"><img id="avatar" alt="Profile photo"></button><div class="profile-meta"><div id="who"></div><div id="role"></div><label for="avatarFile" class="change-photo">Change photo</label><input type="file" id="avatarFile" accept="image/png,image/jpeg,image/webp" hidden></div></div><button class="nav" id="out" style="padding:8px 8px">Sign out</button></aside>
 <main><div class="top"><div><div class="m" id="sub"></div><h1 id="ttl"></h1></div><div class="tools"><select id="yr" aria-label="Year"></select><button class="btn" id="up" title="Connect to OneDrive and refresh the shared Studio Status workbook">Update from Excel</button><input type="file" id="fi" accept=".xlsx" hidden></div></div><div id="pg"></div></main></div><div id="toast" class="m"></div>
+<div id="photoCropModal" class="photo-crop-modal" aria-hidden="true"><section class="photo-crop-dialog" role="dialog" aria-modal="true" aria-labelledby="photoCropTitle"><h2 id="photoCropTitle" class="photo-crop-title">Adjust your photo</h2><p class="photo-crop-hint">Drag the photo to position it, then use the slider to zoom.</p><div id="photoCropFrame" class="photo-crop-frame" aria-label="Photo crop frame"><img id="photoCropImage" class="photo-crop-image" alt="Photo crop preview"></div><label class="photo-crop-zoom"><span>−</span><input id="photoCropZoom" type="range" min="1" max="3" step="0.01" value="1" aria-label="Zoom photo"><span>＋</span></label><div class="photo-crop-actions"><button type="button" id="photoCropCancel" class="btn photo-crop-cancel">Cancel</button><button type="button" id="photoCropConfirm" class="btn">Use photo</button></div></section></div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
@@ -384,21 +399,61 @@ $('#lf').onsubmit=async e=>{
 };
 $('#out').onclick=async()=>{await sb.auth.signOut();location.reload()};
 $('#avatarBtn').onclick=()=>$('#avatarFile').click();
-$('#avatarFile').onchange=async e=>{
+let cropFile=null,cropUrl='',cropZoom=1,cropOffsetX=0,cropOffsetY=0,cropDragging=false,cropDragStart=null;
+const cropModal=$('#photoCropModal'),cropFrame=$('#photoCropFrame'),cropImage=$('#photoCropImage'),cropZoomInput=$('#photoCropZoom');
+function clamp(v,min,max){return Math.min(max,Math.max(min,v))}
+function closePhotoCropper(){
+ cropModal.classList.remove('open');cropModal.setAttribute('aria-hidden','true');cropDragging=false;cropFrame.classList.remove('dragging');
+ if(cropUrl){URL.revokeObjectURL(cropUrl);cropUrl=''}
+ cropFile=null;$('#avatarFile').value='';
+}
+function renderPhotoCrop(){
+ if(!cropImage.naturalWidth)return;
+ const size=cropFrame.getBoundingClientRect().width,scale=Math.max(size/cropImage.naturalWidth,size/cropImage.naturalHeight)*cropZoom;
+ const width=cropImage.naturalWidth*scale,height=cropImage.naturalHeight*scale;
+ const baseLeft=(size-width)/2,baseTop=(size-height)/2;
+ const left=clamp(baseLeft+cropOffsetX,size-width,0),top=clamp(baseTop+cropOffsetY,size-height,0);
+ cropOffsetX=left-baseLeft;cropOffsetY=top-baseTop;
+ Object.assign(cropImage.style,{width:width+'px',height:height+'px',left:left+'px',top:top+'px'});
+}
+function showPhotoCropper(file){
+ if(cropUrl)URL.revokeObjectURL(cropUrl);
+ cropFile=file;cropUrl=URL.createObjectURL(file);cropZoom=1;cropOffsetX=0;cropOffsetY=0;cropZoomInput.value='1';
+ cropImage.onload=()=>{cropModal.classList.add('open');cropModal.setAttribute('aria-hidden','false');requestAnimationFrame(()=>{renderPhotoCrop();$('#photoCropCancel').focus()})};
+ cropImage.onerror=()=>{toast('Could not open that photo. Try another image.');closePhotoCropper()};
+ cropImage.src=cropUrl;
+}
+cropZoomInput.oninput=()=>{cropZoom=Number(cropZoomInput.value);renderPhotoCrop()};
+cropFrame.onpointerdown=e=>{if(!cropFile)return;cropDragging=true;cropDragStart={x:e.clientX,y:e.clientY,offsetX:cropOffsetX,offsetY:cropOffsetY};cropFrame.classList.add('dragging');cropFrame.setPointerCapture(e.pointerId)};
+cropFrame.onpointermove=e=>{if(!cropDragging||!cropDragStart)return;cropOffsetX=cropDragStart.offsetX+e.clientX-cropDragStart.x;cropOffsetY=cropDragStart.offsetY+e.clientY-cropDragStart.y;renderPhotoCrop()};
+cropFrame.onpointerup=cropFrame.onpointercancel=()=>{cropDragging=false;cropDragStart=null;cropFrame.classList.remove('dragging')};
+$('#photoCropCancel').onclick=closePhotoCropper;
+cropModal.onclick=e=>{if(e.target===cropModal)closePhotoCropper()};
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&cropModal.classList.contains('open'))closePhotoCropper()});
+window.addEventListener('resize',renderPhotoCrop);
+async function uploadCroppedPhoto(){
+ if(!cropFile||!me)return;
+ const button=$('#photoCropConfirm');button.disabled=true;button.textContent='Uploading…';
+ try{
+  const size=cropFrame.getBoundingClientRect().width,scale=Math.max(size/cropImage.naturalWidth,size/cropImage.naturalHeight)*cropZoom;
+  const cropSize=size/scale,sourceX=clamp((cropImage.naturalWidth-cropSize)/2-cropOffsetX/scale,0,cropImage.naturalWidth-cropSize),sourceY=clamp((cropImage.naturalHeight-cropSize)/2-cropOffsetY/scale,0,cropImage.naturalHeight-cropSize);
+  const canvas=document.createElement('canvas');canvas.width=1024;canvas.height=1024;
+  canvas.getContext('2d').drawImage(cropImage,sourceX,sourceY,cropSize,cropSize,0,0,1024,1024);
+  const blob=await new Promise(resolve=>canvas.toBlob(resolve,'image/jpeg',.92));if(!blob)throw new Error('Could not prepare this photo');
+  const path=me.id+'/avatar-'+Date.now()+'.jpg',file=new File([blob],path.split('/').pop(),{type:'image/jpeg'});
+  const upload=await sb.storage.from('team-avatars').upload(path,file,{contentType:'image/jpeg',upsert:false});if(upload.error)throw upload.error;
+  const url=sb.storage.from('team-avatars').getPublicUrl(path).data.publicUrl;
+  const update=await sb.from('profiles').update({avatar_url:url}).eq('id',me.id);if(update.error)throw update.error;
+  me.avatar_url=url;$('#avatar').src=url;loadTeamProfiles();closePhotoCropper();toast('Profile photo updated');
+ }catch(err){toast('Photo upload failed: '+(err.message||'Please try again'))}
+ finally{button.disabled=false;button.textContent='Use photo'}
+}
+$('#photoCropConfirm').onclick=uploadCroppedPhoto;
+$('#avatarFile').onchange=e=>{
  const f=e.target.files[0];if(!f||!me)return;
  const valid=['image/png','image/jpeg','image/webp'].includes(f.type);
  if(!valid||f.size>3145728){toast('Use PNG, JPG or WEBP up to 3 MB');e.target.value='';return}
- try{
-  const ext=f.type==='image/png'?'png':f.type==='image/webp'?'webp':'jpg';
-  const path=me.id+'/avatar-'+Date.now()+'.'+ext;
-  const upload=await sb.storage.from('team-avatars').upload(path,f,{contentType:f.type,upsert:false});
-  if(upload.error)throw upload.error;
-  const url=sb.storage.from('team-avatars').getPublicUrl(path).data.publicUrl;
-  const update=await sb.from('profiles').update({avatar_url:url}).eq('id',me.id);
-  if(update.error)throw update.error;
-  me.avatar_url=url;$('#avatar').src=url;loadTeamProfiles();toast('Profile photo updated');
- }catch(err){toast('Photo upload failed: '+(err.message||'Please try again'))}
- e.target.value='';
+ showPhotoCropper(f);
 };
 async function restoreSession(){
  const result=await sb.auth.getSession();
