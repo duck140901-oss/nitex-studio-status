@@ -445,11 +445,72 @@ tr.t td{background:rgba(215,255,0,.13);color:#f4ffd0}
 .messaging-thread-item{grid-template-columns:minmax(0,1fr) 38px}.messaging-thread-menu-trigger{width:36px;height:36px;border:0;border-radius:50%;background:rgba(255,255,255,.17);color:#e8eaed;font-size:12px;letter-spacing:1.5px}.messaging-thread-menu-trigger:hover{background:rgba(255,255,255,.26)}
 .messaging-chat-context{color:#e9edf2!important;font-weight:500;text-shadow:0 1px 2px rgba(0,0,0,.5)}.messaging-create>label,.messaging-create>div>label{color:#f2f4f7!important}.messaging-create input,.messaging-create select{color:#f7f8fa!important;background-color:rgba(255,255,255,.1)!important}.messaging-create select option{color:#202327;background:#f4f5f6}
 .messaging-notification-banner{padding:9px 13px;margin:8px 12px 2px;border:1px solid rgba(215,255,0,.24);border-radius:12px;background:rgba(215,255,0,.1);color:#efffc4;font-size:12px;font-weight:600}.messaging-thread-meta{display:grid;justify-items:end;gap:5px}.messaging-unread-badge,.nav-unread-badge{min-width:19px;height:19px;padding:0 5px;display:inline-flex;align-items:center;justify-content:center;border-radius:12px;background:var(--y);color:#171a0a;font:10px 'Fragment Mono',monospace;font-weight:700}.messaging-unread-badge[hidden],.nav-unread-badge[hidden],.messaging-notification-banner[hidden]{display:none!important}.nav-unread-badge{margin-left:auto}
+.logo{margin-bottom:26px}
+#app>aside{gap:10px}
+#app aside #nav{display:flex!important;flex-direction:column;align-items:stretch;gap:7px;min-height:0;overflow-y:auto;overflow-x:hidden;padding:0 2px 6px}
+#app aside #nav .nav{width:100%;min-height:56px;padding:8px 12px;border-radius:999px;display:flex;gap:13px;white-space:normal;background:transparent}
+#app aside #nav .nav:hover{background:rgba(255,255,255,.1);transform:translateX(2px)}
+#app aside #nav .nav.on{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.12);box-shadow:inset 0 1px rgba(255,255,255,.08);color:#fff;transform:none}
+.nav-icon{width:40px;height:40px;flex:0 0 40px;border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.13);border:1px solid rgba(255,255,255,.12);color:rgba(245,247,250,.76);transition:background .2s,color .2s,box-shadow .2s}
+.nav-icon svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.nav.on .nav-icon{background:linear-gradient(140deg,#e5ff38,#c8ed00);border-color:rgba(255,255,255,.35);color:#1b1e0c;box-shadow:0 0 20px rgba(215,255,0,.2)}
+.nav-label{font-size:14px;font-weight:600;line-height:1.2}
+.team-panel,.profile{display:none!important}
+#app aside #out{display:none!important}
+.top{align-items:center;flex-wrap:nowrap;gap:18px}
+.page-heading{min-width:150px}
+.top-controls{min-width:0;display:flex;align-items:center;justify-content:flex-end;gap:16px;flex:1}
+.top-controls .tools{flex-wrap:nowrap}
+.header-actions{display:flex;align-items:center;gap:10px;flex:0 0 auto}
+.header-icon-button{position:relative;width:46px;height:46px;display:grid;place-items:center;border:1px solid rgba(255,255,255,.2);border-radius:50%;background:rgba(255,255,255,.11);color:#f6f8fa;cursor:pointer;box-shadow:inset 0 1px rgba(255,255,255,.12);transition:background .18s,border-color .18s,transform .18s}
+.header-icon-button:hover,.profile-trigger:hover{background:rgba(255,255,255,.18);border-color:rgba(255,255,255,.35);transform:translateY(-1px)}
+.header-icon-button.active{border-color:rgba(215,255,0,.55);background:rgba(215,255,0,.14);color:var(--y)}
+.header-icon-button svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.header-count{position:absolute;right:-3px;top:-4px;min-width:19px;height:19px;padding:0 5px;display:grid;place-items:center;border:2px solid #25292d;border-radius:20px;background:var(--y);color:#171a0a;font:10px 'Fragment Mono',monospace;font-weight:700}
+.header-count[hidden]{display:none}
+.header-popover-wrap{position:relative}
+.header-popover{position:absolute;z-index:20;right:0;top:calc(100% + 12px);width:min(350px,calc(100vw - 28px));padding:10px;border:1px solid rgba(255,255,255,.2);border-radius:18px;background:rgba(26,29,33,.96);color:#f5f7fa;box-shadow:0 20px 60px rgba(0,0,0,.4),inset 0 1px rgba(255,255,255,.1);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px)}
+.header-popover[hidden]{display:none!important}
+.popover-heading{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:8px 9px 12px;border-bottom:1px solid rgba(255,255,255,.1)}
+.popover-heading strong{font-size:14px}.popover-heading span{font-size:11px;color:rgba(245,247,250,.55)}
+.notification-items{max-height:min(420px,60vh);overflow:auto;padding-top:5px}
+.notification-empty{padding:18px 10px;color:rgba(245,247,250,.58);font-size:13px;text-align:center}
+.notification-item{width:100%;display:grid;grid-template-columns:36px minmax(0,1fr) auto;align-items:center;gap:10px;padding:10px 8px;border:0;border-radius:12px;background:transparent;color:inherit;text-align:left;cursor:pointer}
+.notification-item:hover{background:rgba(255,255,255,.09)}
+.notification-icon{width:34px;height:34px;display:grid;place-items:center;border-radius:50%;background:rgba(215,255,0,.14);color:var(--y);font-size:15px}
+.notification-copy{min-width:0;display:grid;gap:3px}.notification-copy strong,.notification-copy span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.notification-copy strong{font-size:12px}.notification-copy span{color:rgba(245,247,250,.62);font-size:11px}.notification-item-count{min-width:20px;height:20px;display:grid;place-items:center;border-radius:50%;background:var(--y);color:#171a0a;font:10px 'Fragment Mono',monospace;font-weight:700}
+.profile-trigger{min-width:190px;max-width:260px;height:50px;display:flex;align-items:center;gap:10px;padding:5px 11px 5px 5px;border:1px solid rgba(255,255,255,.2);border-radius:999px;background:rgba(255,255,255,.1);color:#fff;text-align:left;cursor:pointer;transition:background .18s,border-color .18s,transform .18s}
+.profile-trigger>img,.profile-popover-person>img{width:38px;height:38px;flex:0 0 38px;object-fit:cover;border:1px solid rgba(255,255,255,.34);border-radius:50%;background:#333}
+.profile-trigger-copy{min-width:0;flex:1;display:grid;gap:1px}.profile-trigger-copy strong{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:12px}.profile-trigger-copy small{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:rgba(245,247,250,.62);font-size:10px}.profile-chevron{font-size:18px;color:rgba(245,247,250,.68)}
+.profile-popover{width:min(310px,calc(100vw - 28px));padding:12px}
+.profile-popover-person{display:grid;grid-template-columns:48px minmax(0,1fr);align-items:center;gap:11px;padding:6px 5px 13px;border-bottom:1px solid rgba(255,255,255,.1)}
+.profile-popover-person>img{width:46px;height:46px}.profile-popover-person>div{min-width:0;display:grid;gap:3px}.profile-popover-person strong,.profile-popover-person small{overflow-wrap:anywhere}.profile-popover-person strong{font-size:13px}.profile-popover-person small{color:rgba(245,247,250,.62);font-size:11px}
+.profile-popover>button{width:100%;padding:10px 9px;border:0;border-radius:9px;background:transparent;color:#f5f7fa;text-align:left;cursor:pointer;font-size:12px}.profile-popover>button:hover{background:rgba(255,255,255,.09)}.profile-popover>#out{display:block!important;margin:0;color:#ffb5b5}
+.team-directory{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;align-items:start}
+.team-directory-card{min-width:0;overflow:hidden;border:1px solid rgba(255,255,255,.2);border-radius:23px;background:rgba(255,255,255,.075);box-shadow:0 20px 48px rgba(0,0,0,.24),inset 0 1px rgba(255,255,255,.12);backdrop-filter:blur(22px) saturate(130%);-webkit-backdrop-filter:blur(22px) saturate(130%);animation:teamCardEnter .55s cubic-bezier(.2,.7,.25,1) both}
+.team-directory-card:nth-child(2){animation-delay:.05s}.team-directory-card:nth-child(3){animation-delay:.1s}.team-directory-card:nth-child(4){animation-delay:.15s}.team-directory-card:nth-child(5){animation-delay:.2s}
+@keyframes teamCardEnter{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.team-directory-photo-wrap{position:relative;aspect-ratio:1/1.02;overflow:hidden;background:rgba(0,0,0,.2)}
+.team-directory-photo{width:100%;height:100%;display:block;object-fit:cover;object-position:center;background:#111}
+.team-directory-index{position:absolute;left:13px;top:13px;z-index:2;width:34px;height:34px;display:grid;place-items:center;border:1px solid rgba(255,255,255,.35);border-radius:50%;background:rgba(18,21,24,.52);color:var(--y);font:11px 'Fragment Mono',monospace;backdrop-filter:blur(10px)}
+.team-directory-caption{position:absolute;right:0;bottom:0;left:0;padding:16px 15px 14px;border-top:1px solid rgba(255,255,255,.2);background:rgba(13,16,19,.55);text-align:center;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.team-directory-name{font:clamp(16px,1.3vw,21px)/1.15 'Archivo Black',sans-serif;color:#fff;text-transform:uppercase;text-wrap:balance;overflow-wrap:anywhere}
+.team-directory-role{margin-top:5px;color:rgba(245,247,250,.82);font-size:13px;line-height:1.35;text-wrap:balance}
+.team-directory-contact{display:grid;gap:8px;padding:13px}
+.team-directory-link{min-width:0;display:flex;align-items:center;gap:10px;padding:9px 11px;border:1px solid rgba(255,255,255,.12);border-radius:12px;background:rgba(255,255,255,.07);color:#f5f7fa;text-decoration:none;transition:background .18s,border-color .18s}
+.team-directory-link:hover{background:rgba(255,255,255,.13);border-color:rgba(255,255,255,.23)}
+.team-directory-link-icon{width:30px;height:30px;flex:0 0 30px;display:grid;place-items:center;border-radius:50%;background:var(--y);color:#171a0a;font-size:13px}
+.team-directory-link span:last-child{min-width:0;overflow-wrap:anywhere;font-size:12px;font-weight:600}
+@media(max-width:1200px){.team-directory{grid-template-columns:repeat(2,minmax(0,1fr))}.top{flex-wrap:wrap}.top-controls{flex-basis:100%;justify-content:space-between}}
+@media(max-width:900px){#app>aside{flex-wrap:wrap;overflow:visible;align-content:flex-start}.logo{flex:1 1 100%}#app aside #nav{display:grid!important;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));flex:1 1 100%;width:100%;overflow:visible}.nav-label{white-space:normal}.team-directory{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:700px){.top-controls{align-items:flex-start;flex-wrap:wrap;gap:12px}.top-controls .tools{flex:1 1 100%;justify-content:flex-start}.top-controls .tools #yr{width:110px}.header-actions{width:100%;justify-content:flex-end}.header-icon-button{width:42px;height:42px}.profile-trigger{min-width:0;max-width:min(220px,60vw);height:44px}.profile-trigger>img{width:34px;height:34px;flex-basis:34px}.team-directory{grid-template-columns:minmax(0,1fr);gap:14px}.team-directory-card{width:min(100%,480px);margin-inline:auto}.team-directory-photo-wrap{aspect-ratio:1/1}.team-directory-name{font-size:clamp(20px,6vw,26px)}.team-directory-role{font-size:15px}.team-directory-contact{padding:15px}.team-directory-link{padding:11px 12px}.team-directory-link span:last-child{font-size:14px}}
+@media(max-width:600px){#app>aside{flex-wrap:wrap;overflow:visible}.logo{flex:1 1 auto}#app>aside #nav{display:none!important;flex:1 0 100%;width:100%;max-height:calc(100dvh - 100px);overflow-y:auto;padding:8px 0 2px;border-top:1px solid rgba(255,255,255,.14)}#app>aside.mobile-open #nav{display:grid!important;grid-template-columns:minmax(0,1fr);gap:6px}.nav-label{white-space:normal}.top{align-items:flex-start;flex-wrap:wrap}.top-controls{flex-basis:100%;gap:9px}.top-controls .tools{width:100%;display:flex;align-items:center;justify-content:space-between}.top-controls .tools select{flex:1}.top-controls .tools #up{width:auto;flex:0 0 auto;padding:10px 12px}.header-actions{justify-content:space-between}.header-popover-wrap:last-child{margin-left:auto}.header-popover{right:0}.profile-trigger{max-width:60vw}.header-actions .header-popover-wrap:nth-child(1) .header-popover{right:auto;left:50%;transform:translateX(-50%)}}
+@media(prefers-reduced-motion:reduce){.team-directory-card{animation:none}}
 </style></head><body>
 <div id="login"><div class="lens"></div><form id="lf"><h1 class="login-brand">NITEX<br>Studio Status</h1>
 <input id="lu" type="email" placeholder="Work email address" autocomplete="username" required aria-label="Email address"><input id="lp" type="password" placeholder="Password" autocomplete="current-password" aria-label="Password" required><button class="btn">Sign in</button><div id="err" class="m"></div></form></div>
-<div id="app"><aside><div class="logo"><span class="sym"></span><span class="h" style="font-size:36px;line-height:1;white-space:nowrap">NITEX</span></div><button type="button" id="mobileNavToggle" aria-label="Open navigation" aria-expanded="false">☰</button><div id="nav" style="display:contents"></div><section class="team-panel" aria-label="Studio team"><div class="team-heading">STUDIO TEAM / 05</div><div id="teamList" class="team-list"><div class="team-loading">Loading team…</div></div></section><div class="profile" id="profile"><button type="button" id="avatarBtn" class="avatar-btn" title="Change profile photo"><img id="avatar" alt="Profile photo"></button><div class="profile-meta"><div id="who"></div><div id="role"></div><label for="avatarFile" class="change-photo">Change photo</label><input type="file" id="avatarFile" accept="image/png,image/jpeg,image/webp" hidden></div></div><button class="nav" id="out" style="padding:8px 8px">Sign out</button></aside>
-<main><div class="top"><div><div class="m" id="sub"></div><h1 id="ttl"></h1></div><div class="tools"><select id="yr" aria-label="Year"></select><button class="btn" id="up" title="Connect to OneDrive and refresh the shared Studio Status workbook">Update from Excel</button><input type="file" id="fi" accept=".xlsx" hidden></div></div><div id="pg"></div></main></div><div id="toast" class="m"></div>
+<div id="app"><aside><div class="logo"><span class="sym"></span><span class="h" style="font-size:36px;line-height:1;white-space:nowrap">NITEX</span></div><button type="button" id="mobileNavToggle" aria-label="Open navigation" aria-expanded="false">☰</button><div id="nav" style="display:contents"></div><input type="file" id="avatarFile" accept="image/png,image/jpeg,image/webp" hidden></aside>
+<main><div class="top"><div class="page-heading"><div class="m" id="sub"></div><h1 id="ttl"></h1></div><div class="top-controls"><div class="tools"><select id="yr" aria-label="Year"></select><button class="btn" id="up" title="Connect to OneDrive and refresh the shared Studio Status workbook">Update from Excel</button><input type="file" id="fi" accept=".xlsx" hidden></div><div class="header-actions"><button class="header-icon-button" id="headerMessages" type="button" aria-label="Open Direct messages" title="Direct messages"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11.5a7.5 7.5 0 0 1-7.5 7.5H7l-4 2 1.2-4.1A7.5 7.5 0 1 1 20 11.5Z"/><path d="M8 11.5h.01M12 11.5h.01M16 11.5h.01"/></svg><span class="header-count" id="headerMessagesCount" hidden></span></button><div class="header-popover-wrap"><button class="header-icon-button" id="headerNotifications" type="button" aria-label="Notifications" aria-expanded="false" title="Notifications"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9ZM10 21h4"/></svg><span class="header-count" id="headerNotificationCount" hidden></span></button><section class="header-popover notification-popover" id="headerNotificationPopover" aria-label="Unread message notifications" hidden><div class="popover-heading"><strong>Notifications</strong><span id="notificationSummary">All caught up</span></div><div id="notificationItems" class="notification-items"><div class="notification-empty">You're all caught up.</div></div></section></div><div class="header-popover-wrap"><button class="profile-trigger" id="profileTrigger" type="button" aria-expanded="false" aria-label="Open your profile"><img id="avatar" alt=""><span class="profile-trigger-copy"><strong id="who"></strong><small id="profileEmail"></small></span><span class="profile-chevron" aria-hidden="true">⌄</span></button><section class="header-popover profile-popover" id="profilePopover" aria-label="Your profile" hidden><div class="profile-popover-person"><img id="profilePopoverAvatar" alt=""><div><strong id="profilePopoverName"></strong><small id="profilePopoverRole"></small><small id="profilePopoverEmail"></small></div></div><button type="button" id="changePhotoAction">Change photo</button><button type="button" id="out">Sign out</button></section></div></div></div></div><div id="pg"></div></main></div><div id="toast" class="m"></div>
 <div id="photoCropModal" class="photo-crop-modal" aria-hidden="true"><section class="photo-crop-dialog" role="dialog" aria-modal="true" aria-labelledby="photoCropTitle"><h2 id="photoCropTitle" class="photo-crop-title">Adjust your photo</h2><p class="photo-crop-hint">Drag the photo to position it, then use the slider to zoom.</p><div id="photoCropFrame" class="photo-crop-frame" aria-label="Photo crop frame"><img id="photoCropImage" class="photo-crop-image" alt="Photo crop preview"></div><label class="photo-crop-zoom"><span>−</span><input id="photoCropZoom" type="range" min="1" max="3" step="0.01" value="1" aria-label="Zoom photo"><span>＋</span></label><div class="photo-crop-actions"><button type="button" id="photoCropCancel" class="btn photo-crop-cancel">Cancel</button><button type="button" id="photoCropConfirm" class="btn">Use photo</button></div></section></div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -461,7 +522,7 @@ const ST=['Shoot on going','Shoot pending','Color pending','Graphic pending','Co
 const $=s=>document.querySelector(s),n=v=>Math.round(v).toLocaleString('en-US'),f1=v=>(+v||0).toFixed(1);
 const sum=(a,f)=>a.reduce((s,r)=>s+f(r),0),avg=a=>a.length?sum(a,r=>r.d||0)/a.length:0;
 let Y,P='ov',me=null,SH=40,statusFrom='',statusTo='';
-const PAGES=[['ov','Overview'],['ss','Studio Status'],['sm','Summary'],['hw','Holidays & Weekends'],['vt','360 Virtual Tour'],['msg','Direct messages']];
+const PAGES=[['ov','Dashboard'],['ss','Studio Status'],['sm','Summary'],['hw','Holidays & Weekends'],['vt','360 Virtual Tour'],['team','Studio Team'],['msg','Direct messages']];
 const prep=()=>{D.rows.forEach(r=>{r.y=+r.i.slice(0,4);r.m=+r.i.slice(5,7)-1});};prep();
 const years=()=>[...new Set(D.rows.map(r=>r.y))].sort();
 const sel=()=>D.rows.filter(r=>Y==='All'||r.y===Y);
@@ -473,7 +534,7 @@ const sb=window.supabase.createClient(SUPABASE_URL,SUPABASE_PUBLISHABLE_KEY);
 const ROLE_LABELS={team_lead:'Team Lead',studio_in_charge:'Studio In Charge',lead_visualizer:'Lead Visualizer',visualizer:'Visualizer'};
 const AVATAR_FALLBACK='data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"%3E%3Crect width="64" height="64" fill="%23333"/%3E%3Ccircle cx="32" cy="23" r="12" fill="%23aaa"/%3E%3Cpath d="M8 62c2-16 11-24 24-24s22 8 24 24" fill="%23aaa"/%3E%3C/svg%3E';
 const safeText=v=>String(v??'').replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
-let teamProfiles=[];
+let teamProfiles=[],teamProfilesError=false;
 const TEAM_DIRECTORY=[
  {name:'Touhid Rahman',role:'Studio Team Lead & Head of Account Management',email:'touhid@nitex.com',phone:'+880 1684008038',match:n=>n.includes('touhid')},
  {name:'Sotan Md. Rahmatullah',role:'Studio In Charge',email:'moru@nitex.com',phone:'+880 1970074686',match:n=>n.includes('sotan')||n.includes('moru')},
@@ -487,6 +548,7 @@ function closeTeamProfile(){
  document.removeEventListener('keydown',teamProfileKeydown);
 }
 function teamProfileKeydown(e){if(e.key==='Escape')closeTeamProfile()}
+function closeProfilePopover(){const panel=$('#profilePopover'),trigger=$('#profileTrigger');if(panel)panel.hidden=true;if(trigger)trigger.setAttribute('aria-expanded','false')}
 function openTeamProfile(index){
  const p=teamProfiles[index];if(!p)return;
  let modal=$('#teamProfileModal');
@@ -508,13 +570,12 @@ function openTeamProfile(index){
  modal.querySelector('.team-profile-close').focus();
 }
 async function loadTeamProfiles(){
- const box=$('#teamList');if(!box)return;
  const result=await sb.from('profiles').select('full_name,role,avatar_url');
- if(result.error){box.innerHTML='<div class="team-loading">Team profiles unavailable</div>';return}
+ if(result.error){teamProfiles=[];teamProfilesError=true;if(P==='team')go();return}
  const profiles=result.data||[];
+ teamProfilesError=false;
  teamProfiles=TEAM_DIRECTORY.map(member=>{const profile=profiles.find(p=>member.match((p.full_name||'').toLowerCase()));return{...profile,full_name:member.name,role:profile?.role||'',avatar_url:profile?.avatar_url||'',directory:member}});
- box.innerHTML=teamProfiles.map((p,i)=>'<button type="button" class="team-member" data-team-index="'+i+'" aria-label="View profile of '+safeText(p.full_name)+'"><img src="'+safeText(p.avatar_url||AVATAR_FALLBACK)+'" alt="" loading="lazy"><span class="team-member-meta"><span class="team-member-name">'+safeText(p.full_name)+'</span><span class="team-member-role">'+safeText(p.directory.role)+'</span></span></button>').join('');
- box.querySelectorAll('.team-member[data-team-index]').forEach(button=>{button.addEventListener('click',()=>openTeamProfile(Number(button.dataset.teamIndex)))});
+ if(P==='team')go();
 }
 async function getProfile(authUser){
  const result=await sb.from('profiles').select('full_name,role,avatar_url').eq('id',authUser.id).single();
@@ -523,16 +584,26 @@ async function getProfile(authUser){
 function enter(authUser,profile){
  me={id:authUser.id,email:authUser.email,name:profile.full_name,role:ROLE_LABELS[profile.role]||profile.role,avatar_url:profile.avatar_url||''};
  $('#login').style.display='none';$('#app').style.display='grid';
- $('#who').textContent=me.name;$('#role').textContent=me.role;
+ $('#who').textContent=me.name;
  $('#avatar').src=me.avatar_url||AVATAR_FALLBACK;
+ $('#profileEmail').textContent=me.email||'';$('#profilePopoverAvatar').src=me.avatar_url||AVATAR_FALLBACK;$('#profilePopoverName').textContent=me.name;$('#profilePopoverRole').textContent=me.role;$('#profilePopoverEmail').textContent=me.email||'';
  $('#up').style.display=['alamin@nitex.com','sowrav@nitex.com'].includes((me.email||'').toLowerCase())?'':'none';
  Y=Math.max(...years());
- $('#nav').innerHTML=PAGES.map(p=>'<button class="nav" data-p="'+p[0]+'"><span class="sym"></span>'+p[1]+(p[0]==='msg'?'<span class="nav-unread-badge" id="directMessagesBadge" hidden></span>':'')+'</button>').join('');
+ const navIcons={ov:'<path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1Z"/>',ss:'<path d="M4 19V5m0 14h17M7 15l4-4 3 2 6-7"/>',sm:'<path d="M4 19h16M6 16v-5m6 5V5m6 11V9"/>',hw:'<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/>',vt:'<circle cx="12" cy="12" r="9"/><path d="M3 12s3-5 9-5 9 5 9 5-3 5-9 5-9-5-9-5Z"/><circle cx="12" cy="12" r="2"/>',team:'<circle cx="9" cy="8" r="3"/><path d="M3 20v-1a6 6 0 0 1 12 0v1M16 5a3 3 0 0 1 0 6m2 3a5 5 0 0 1 3 5v1"/>'};
+ $('#nav').innerHTML=PAGES.filter(p=>p[0]!=='msg').map(p=>'<button class="nav" data-p="'+p[0]+'" aria-current="false"><span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24">'+navIcons[p[0]]+'</svg></span><span class="nav-label">'+p[1]+'</span></button>').join('');
  $('#nav').onclick=e=>{const el=e.target.closest('.nav');if(el){P=el.dataset.p;go();const side=$('#app aside');side.classList.remove('mobile-open');$('#mobileNavToggle').setAttribute('aria-expanded','false');$('#mobileNavToggle').setAttribute('aria-label','Open navigation');$('#mobileNavToggle').textContent='☰'}};
   $('#mobileNavToggle').onclick=()=>{const side=$('#app aside'),open=side.classList.toggle('mobile-open');$('#mobileNavToggle').setAttribute('aria-expanded',String(open));$('#mobileNavToggle').setAttribute('aria-label',open?'Close navigation':'Open navigation');$('#mobileNavToggle').textContent=open?'×':'☰'};
+ $('#headerMessages').onclick=()=>{P='msg';messagingState.creating=false;go()};
+ $('#headerNotifications').onclick=()=>{const panel=$('#headerNotificationPopover'),opening=panel.hidden;closeProfilePopover();panel.hidden=!opening;$('#headerNotifications').setAttribute('aria-expanded',String(opening))};
+ $('#profileTrigger').onclick=()=>{const panel=$('#profilePopover'),opening=panel.hidden;$('#headerNotificationPopover').hidden=true;$('#headerNotifications').setAttribute('aria-expanded','false');panel.hidden=!opening;$('#profileTrigger').setAttribute('aria-expanded',String(opening))};
+ $('#notificationItems').onclick=e=>{const item=e.target.closest('[data-notification-conversation]');if(!item)return;$('#headerNotificationPopover').hidden=true;$('#headerNotifications').setAttribute('aria-expanded','false');P='msg';messagingState.activeId=item.dataset.notificationConversation;messagingState.creating=false;go()};
+ $('#changePhotoAction').onclick=()=>{closeProfilePopover();$('#avatarFile').click()};
+ document.addEventListener('click',e=>{if(!e.target.closest('.header-popover-wrap')){closeProfilePopover();$('#headerNotificationPopover').hidden=true;$('#headerNotifications').setAttribute('aria-expanded','false')}});
+ document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeProfilePopover();$('#headerNotificationPopover').hidden=true;$('#headerNotifications').setAttribute('aria-expanded','false')}});
  $('#yr').onchange=e=>{Y=e.target.value==='All'?'All':+e.target.value;go()};
  go();
  loadTeamProfiles();
+ initMessaging();
 }
 $('#lf').onsubmit=async e=>{
  e.preventDefault();$('#err').textContent='Signing in…';
@@ -543,7 +614,6 @@ $('#lf').onsubmit=async e=>{
  catch(err){await sb.auth.signOut();$('#err').textContent='Profile not found. Please contact the dashboard administrator.'}
 };
 $('#out').onclick=async()=>{await sb.auth.signOut();location.reload()};
-$('#avatarBtn').onclick=()=>$('#avatarFile').click();
 let cropFile=null,cropUrl='',cropZoom=1,cropOffsetX=0,cropOffsetY=0,cropDragging=false,cropDragStart=null;
 const cropModal=$('#photoCropModal'),cropFrame=$('#photoCropFrame'),cropImage=$('#photoCropImage'),cropZoomInput=$('#photoCropZoom');
 function clamp(v,min,max){return Math.min(max,Math.max(min,v))}
@@ -589,7 +659,7 @@ async function uploadCroppedPhoto(){
   const upload=await sb.storage.from('team-avatars').upload(path,file,{contentType:'image/jpeg',upsert:false});if(upload.error)throw upload.error;
   const url=sb.storage.from('team-avatars').getPublicUrl(path).data.publicUrl;
   const update=await sb.from('profiles').update({avatar_url:url}).eq('id',me.id);if(update.error)throw update.error;
-  me.avatar_url=url;$('#avatar').src=url;loadTeamProfiles();closePhotoCropper();toast('Profile photo updated');
+  me.avatar_url=url;$('#avatar').src=url;$('#profilePopoverAvatar').src=url;loadTeamProfiles();closePhotoCropper();toast('Profile photo updated');
  }catch(err){toast('Photo upload failed: '+(err.message||'Please try again'))}
  finally{button.disabled=false;button.textContent='Use photo'}
 }
@@ -631,12 +701,13 @@ function mdays(y,m){const H=hols(),nd=new Date(y,m+1,0).getDate();let s=0,h=0;fo
 const R={};
 let messagingTimer=null,messagingState={conversations:[],members:[],previews:{},profiles:{},unreadCounts:{},activeId:null,messages:[],hiddenIds:new Set(),creating:false,loading:false,error:''};
 R.msg=()=>'<section class="messaging-shell" id="messagingShell"><div class="messaging-list"><header class="messaging-list-head"><h2>Direct messages</h2><button class="messaging-new" id="messagingNew" type="button">＋ New chat</button></header><div class="messaging-notification-banner" id="messagingNotification" role="status" hidden></div><div class="messaging-threads" id="messagingThreads"><div class="messaging-notice">Loading conversations…</div></div></div><section class="messaging-main" id="messagingMain"><div class="messaging-empty"><div class="messaging-empty-mark">✉</div><strong>Your team, in sync.</strong><p style="margin-top:7px">Choose a conversation or start a chat about a bunch.</p></div></section></section>';
+R.team=()=>teamProfiles.length?'<section class="team-directory" aria-label="Studio Team profiles">'+teamProfiles.map((p,index)=>{const person=p.directory;return'<article class="team-directory-card"><div class="team-directory-photo-wrap"><img class="team-directory-photo" src="'+safeText(p.avatar_url||AVATAR_FALLBACK)+'" alt="'+safeText(person.name)+' profile photo" loading="lazy"><span class="team-directory-index">'+String(index+1).padStart(2,'0')+'</span><div class="team-directory-caption"><h2 class="team-directory-name">'+safeText(person.name)+'</h2><p class="team-directory-role">'+safeText(person.role)+'</p></div></div><div class="team-directory-contact"><a class="team-directory-link" href="mailto:'+safeText(person.email)+'"><span class="team-directory-link-icon" aria-hidden="true">✉</span><span>'+safeText(person.email)+'</span></a><a class="team-directory-link" href="tel:'+safeText(person.phone.replace(/[^+\d]/g,''))+'"><span class="team-directory-link-icon" aria-hidden="true">☎</span><span>'+safeText(person.phone)+'</span></a></div></article>'}).join('')+'</section>':teamProfilesError?'<div class="messaging-notice">Studio Team profiles could not be loaded. Please reload and try again.</div>':'<div class="messaging-notice">Loading Studio Team profiles…</div>';
 const chatWhen=value=>{const d=new Date(value);return Number.isNaN(d.getTime())?'':d.toLocaleString([],{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'})};
 function messagingNotice(text){const el=$('#messagingThreads');if(el)el.innerHTML='<div class="messaging-notice">'+safeText(text)+'</div>'}
 function messagingContextOptions(){return D.rows.map((row,index)=>({row,index})).filter(({row})=>row.i).map(({row,index})=>'<option value="'+index+'">'+safeText(['Bunch #'+(index+1),row.t||'Bunch',row.i,'Qty '+n(row.q),row.s].filter(Boolean).join(' · '))+'</option>').join('')}
 function renderMessagingThreads(){
- const box=$('#messagingThreads');if(!box)return;
  updateMessagingIndicators();
+ const box=$('#messagingThreads');if(!box)return;
  if(!messagingState.conversations.length){box.innerHTML='<div class="messaging-notice">No conversations yet. Start a one-to-one chat or add the whole team.</div>';return}
  box.innerHTML=messagingState.conversations.map(conversation=>{
   const members=messagingState.members.filter(member=>member.conversation_id===conversation.id),names=members.map(member=>messagingState.profiles[member.user_id]?.full_name||TEAM_DIRECTORY.find(person=>person.email===messagingState.profiles[member.user_id]?.email)?.name).filter(Boolean),preview=messagingState.previews[conversation.id],unread=messagingState.unreadCounts[conversation.id]||0;
@@ -644,7 +715,8 @@ function renderMessagingThreads(){
  }).join('');
  box.onclick=event=>{const trigger=event.target.closest('[data-thread-menu]');if(trigger){const id=trigger.dataset.threadMenu,panel=box.querySelector('[data-thread-menu-panel="'+CSS.escape(id)+'"]');if(!panel)return;const opening=panel.hidden;box.querySelectorAll('.messaging-menu').forEach(menu=>menu.hidden=true);box.querySelectorAll('[data-thread-menu]').forEach(button=>button.setAttribute('aria-expanded','false'));panel.hidden=!opening;trigger.setAttribute('aria-expanded',String(opening));return}const action=event.target.closest('[data-chat-action]');if(action){const id=action.dataset.conversation,type=action.dataset.chatAction;box.querySelectorAll('.messaging-menu').forEach(menu=>menu.hidden=true);box.querySelectorAll('[data-thread-menu]').forEach(button=>button.setAttribute('aria-expanded','false'));handleMessagingConversationAction(type,id);return}const conversation=event.target.closest('.messaging-thread[data-conversation]');box.querySelectorAll('.messaging-menu').forEach(menu=>menu.hidden=true);box.querySelectorAll('[data-thread-menu]').forEach(button=>button.setAttribute('aria-expanded','false'));if(conversation)openMessagingConversation(conversation.dataset.conversation)};
 }
-function updateMessagingIndicators(){const total=Object.values(messagingState.unreadCounts).reduce((sum,count)=>sum+(Number(count)||0),0),navBadge=$('#directMessagesBadge'),banner=$('#messagingNotification');if(navBadge){navBadge.textContent=total>99?'99+':String(total);navBadge.hidden=total===0}if(banner){banner.textContent=total===1?'You have 1 unread message':`You have ${total} unread messages`;banner.hidden=total===0}}
+function renderHeaderNotifications(){const items=$('#notificationItems');if(!items)return;const unread=messagingState.conversations.filter(conversation=>(messagingState.unreadCounts[conversation.id]||0)>0),total=Object.values(messagingState.unreadCounts).reduce((sum,count)=>sum+(Number(count)||0),0),summary=$('#notificationSummary');if(summary)summary.textContent=total?`${total} unread message${total===1?'':'s'} in ${unread.length} chat${unread.length===1?'':'s'}`:'All caught up';items.innerHTML=unread.length?unread.map(conversation=>{const count=messagingState.unreadCounts[conversation.id]||0,preview=messagingState.previews[conversation.id];return'<button type="button" class="notification-item" data-notification-conversation="'+safeText(conversation.id)+'"><span class="notification-icon" aria-hidden="true">✉</span><span class="notification-copy"><strong>'+safeText(conversation.title)+'</strong><span>'+safeText(preview?.body||conversation.context_label||'New message')+'</span></span><span class="notification-item-count">'+safeText(count>99?'99+':count)+'</span></button>'}).join(''):'<div class="notification-empty">You\'re all caught up.</div>'}
+function updateMessagingIndicators(){const total=Object.values(messagingState.unreadCounts).reduce((sum,count)=>sum+(Number(count)||0),0),navBadge=$('#directMessagesBadge'),messageBadge=$('#headerMessagesCount'),notificationBadge=$('#headerNotificationCount'),banner=$('#messagingNotification');for(const badge of [navBadge,messageBadge,notificationBadge])if(badge){badge.textContent=total>99?'99+':String(total);badge.hidden=total===0}if(banner){banner.textContent=total===1?'You have 1 unread message':`You have ${total} unread messages`;banner.hidden=total===0}renderHeaderNotifications()}
 async function refreshMessaging(){
  const links=await sb.from('studio_conversation_members').select('conversation_id,user_id').eq('user_id',me.id);
  if(links.error)throw links.error;
@@ -689,10 +761,10 @@ async function sendMessagingMessage(event){event.preventDefault();const form=eve
 async function handleMessagingConversationAction(action,conversationId){if(!conversationId)return;const conversation=messagingState.conversations.find(item=>item.id===conversationId);if(!conversation)return;if(action==='delete'){if(!confirm('Delete This conversation from your chat list? This only removes it from your list. Other members keep the conversation and its messages.'))return;try{const result=await sb.from('studio_conversation_hidden').insert({conversation_id:conversationId,user_id:me.id});if(result.error)throw result.error;if(messagingState.activeId===conversationId){messagingState.activeId=null;messagingState.creating=false}await refreshMessaging();renderMessagingChat();toast('Conversation removed from your chat list. Other members are unchanged.')}catch(error){toast('Could not remove this conversation from your list.');console.error('Studio conversation hide failed',error)}return}if(action==='clear'){if(!confirm('Clear Chat for everyone? This permanently deletes all messages for every member. The conversation itself stays in the chat list.'))return;try{const result=await sb.rpc('studio_clear_conversation',{p_conversation_id:conversationId});if(result.error)throw result.error;await Promise.all([refreshMessaging(),messagingState.activeId===conversationId?loadMessagingMessages(conversationId):Promise.resolve()]);toast('Chat cleared for all members.')}catch(error){toast('Could not clear this chat. The database migration may need to be applied.');console.error('Studio clear chat failed',error)}}}
 async function createMessagingConversation(event){event.preventDefault();const form=event.currentTarget,error=$('#messagingCreateError'),data=new FormData(form),emails=data.getAll('member');if(!emails.length){error.textContent='Choose at least one teammate.';return}let context='';const selected=data.get('context');if(selected!==''){const index=Number(selected),row=D.rows[index];if(row)context=['Bunch #'+(index+1),row.t||'Bunch',row.i,'Qty '+n(row.q),row.s].filter(Boolean).join(' · ')}const button=form.querySelector('[type=submit]');button.disabled=true;error.textContent='Creating chat…';try{const result=await sb.rpc('studio_create_conversation',{p_title:String(data.get('title')||'').trim(),p_context_label:context,p_member_emails:emails});if(result.error)throw result.error;messagingState.activeId=result.data;messagingState.creating=false;await refreshMessaging();renderMessagingChat()}catch(err){error.textContent=err.message?.includes('studio_create_conversation')?'Messaging setup is not complete yet. Please contact the dashboard administrator.':err.message||'Could not create this conversation.'}finally{button.disabled=false}}
 async function initMessaging(){
- $('#messagingNew').onclick=()=>{messagingState.creating=true;messagingState.activeId=null;renderMessagingChat()};
- try{await refreshMessaging();if(messagingState.activeId&&messagingState.conversations.some(item=>item.id===messagingState.activeId))renderMessagingChat();else{messagingState.activeId=null;renderMessagingChat()}}
+ const newChat=$('#messagingNew');if(newChat)newChat.onclick=()=>{messagingState.creating=true;messagingState.activeId=null;renderMessagingChat()};
+ try{await refreshMessaging();if(P==='msg'){if(messagingState.activeId&&messagingState.conversations.some(item=>item.id===messagingState.activeId))renderMessagingChat();else{messagingState.activeId=null;renderMessagingChat()}}}
  catch(error){messagingNotice(error.message?.includes('studio_')?'Messaging database setup is required before the team can start chatting.':'Could not connect to team messages. Please reload and try again.');console.error('Studio messaging load failed',error);return}
- if(messagingTimer)clearInterval(messagingTimer);messagingTimer=setInterval(async()=>{if(P!=='msg')return;try{await refreshMessaging();if(messagingState.activeId)await loadMessagingMessages(messagingState.activeId)}catch(error){console.error('Studio messaging refresh failed',error)}},8000);
+ if(!messagingTimer)messagingTimer=setInterval(async()=>{try{await refreshMessaging();if(P==='msg'&&messagingState.activeId)await loadMessagingMessages(messagingState.activeId)}catch(error){console.error('Studio messaging refresh failed',error)}},8000);
 }
 R.ov=()=>{const a=sel(),q=sum(a,r=>r.q),inS=a.filter(r=>r.s!=='Uploaded'),yr=Y==='All'?Math.max(...years()):Y,mv=Array.from({length:12},(_,i)=>sum(a.filter(r=>r.m===i&&(Y!=='All'?1:r.y===yr)),r=>r.q));
  const ty=TY.map((t,i)=>({l:t,v:sum(a.filter(r=>r.t===t),r=>r.q),c:TC[i]})),slow=[...a].sort((x,z)=>z.d-x.d).slice(0,5),now=new Date(),live=D.tour.filter(t=>t.s).length;
@@ -768,7 +840,7 @@ function animateDashboardIntro(){
 }
 
 let monthlyChartIntroPending=true;
-function go(){if(P!=='msg'&&messagingTimer){clearInterval(messagingTimer);messagingTimer=null}const ys=['All',...years()];$('#yr').innerHTML=ys.map(y=>`<option ${y===Y?'selected':''}>${y}</option>`).join('');document.querySelectorAll('.nav[data-p]').forEach(b=>b.classList.toggle('on',b.dataset.p===P));
+function go(){const ys=['All',...years()];$('#yr').innerHTML=ys.map(y=>`<option ${y===Y?'selected':''}>${y}</option>`).join('');document.querySelectorAll('.nav[data-p]').forEach(b=>{const active=b.dataset.p===P;b.classList.toggle('on',active);b.setAttribute('aria-current',active?'page':'false')});$('#headerMessages').classList.toggle('active',P==='msg');
  const pg=PAGES.find(p=>p[0]===P);$('#ttl').textContent=pg[1];$('#sub').textContent='NITEX STUDIO / data as of '+(D.at||'').slice(0,10);
  const rd=(animate=true)=>{$('#pg').innerHTML=R[P]();if(animate)animateDashboardIntro();if(P==='ov'&&monthlyChartIntroPending){const chart=$('#pg .monthly-chart-card');if(chart)chart.classList.add('is-intro');monthlyChartIntroPending=false}const q=$('#q');if(q){q.oninput=()=>{const p=q.selectionStart;rd(false);$('#q').focus();$('#q').setSelectionRange(p,p)}}const df=$('#statusFrom'),dt=$('#statusTo');if(df)df.onchange=()=>{statusFrom=df.value;rd(false)};if(dt)dt.onchange=()=>{statusTo=dt.value;rd(false)};const cf=$('#clearFilters');if(cf)cf.onclick=()=>{statusFrom='';statusTo='';rd(false);const search=$('#q');if(search)search.value=''};const m=$('#more');if(m)m.onclick=()=>{SH+=40;rd(false)}};rd();if(P==='msg'){ $('#yr').style.display='none';$('#up').style.display='none';$('#sub').textContent='DIRECT MESSAGES / NITEX STUDIO';initMessaging()}else{$('#yr').style.display='';$('#up').style.display=['alamin@nitex.com','sowrav@nitex.com'].includes((me?.email||'').toLowerCase())?'':'none'} }
 /* ---- Excel sync: owner picks the updated .xlsx, every viewer gets it ---- */
