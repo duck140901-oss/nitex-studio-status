@@ -79,7 +79,7 @@ begin
   values (trim(p_title), case when cardinality(member_ids) > 2 then 'group' else 'direct' end, left(trim(coalesce(p_context_label, '')), 180), auth.uid())
   returning id into conversation_id;
   insert into public.studio_conversation_members(conversation_id, user_id)
-    select conversation_id, member_id from unnest(member_ids) member_id;
+    select conversation_id, selected.member_id from unnest(member_ids) as selected(member_id);
   return conversation_id;
 end;
 $$;
