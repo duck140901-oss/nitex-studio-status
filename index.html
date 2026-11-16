@@ -160,6 +160,19 @@ a{color:inherit}#toast{position:fixed;bottom:20px;right:20px;background:var(--k)
 .team-profile-label{font:12px 'Fragment Mono',monospace;color:#73756d;text-transform:uppercase;letter-spacing:.08em}
 .team-profile-value{color:#171814;font-size:14px;font-weight:600;overflow-wrap:anywhere;text-decoration:none}
 .team-profile-value:hover{text-decoration:underline;text-decoration-color:#9db51b;text-underline-offset:3px}
+.team-directory-edit{margin-top:14px;display:inline-flex;align-items:center;gap:7px;border:1px solid rgba(215,255,0,.55);border-radius:999px;padding:8px 13px;background:rgba(215,255,0,.1);color:inherit;font:11px 'Fragment Mono',monospace;text-transform:uppercase;cursor:pointer;transition:background .18s ease,color .18s ease}
+.team-directory-edit:hover{background:var(--y);color:#111}
+.team-profile-edit{margin-top:18px;padding-top:16px;border-top:1px solid rgba(0,0,0,.1)}
+.team-profile-edit-trigger,.team-profile-save,.team-profile-cancel{border:0;border-radius:999px;padding:10px 16px;font:600 13px 'Inter Tight',sans-serif;cursor:pointer}
+.team-profile-edit-trigger,.team-profile-save{background:#d7ff00;color:#111}
+.team-profile-edit-form{display:grid;gap:9px;margin-top:12px}
+.team-profile-edit-form[hidden],.team-profile-edit[hidden]{display:none}
+.team-profile-edit-form label{font:11px 'Fragment Mono',monospace;color:#73756d;text-transform:uppercase;letter-spacing:.06em}
+.team-profile-edit-form input{background:rgba(255,255,255,.85);color:#171814;border:1px solid rgba(0,0,0,.18);border-radius:10px;padding:12px 13px;width:100%;font:600 15px 'Inter Tight',sans-serif}
+.team-profile-edit-actions{display:flex;gap:8px;flex-wrap:wrap}
+.team-profile-cancel{background:rgba(0,0,0,.07);color:#171814}
+.team-profile-edit-status{min-height:16px;color:#64665e;font-size:12px}
+.team-profile-save:disabled{opacity:.55;cursor:wait}
 @media(max-width:600px){.team-profile-dialog{border-radius:24px}.team-profile-hero{border-radius:23px 23px 0 0}.team-profile-caption{padding:14px 17px 16px}.team-profile-name{font-size:clamp(21px,7vw,28px)}.team-profile-role{font-size:16px}.team-profile-content{padding:18px 18px 20px}.team-profile-detail{padding:11px 12px}}
 @media(prefers-reduced-motion:reduce){.team-member{transition:none}}
 
@@ -564,14 +577,15 @@ function openTeamProfile(index){
  let modal=$('#teamProfileModal');
  if(!modal){
   modal=document.createElement('div');modal.id='teamProfileModal';modal.className='team-profile-modal';modal.setAttribute('aria-hidden','true');
-  modal.innerHTML='<div class="team-profile-backdrop"><section class="team-profile-dialog" role="dialog" aria-modal="true" aria-labelledby="teamProfileName"><button type="button" class="team-profile-close" aria-label="Close profile">×</button><div class="team-profile-hero"><img class="team-profile-photo" alt=""><div class="team-profile-caption"><h2 class="team-profile-name" id="teamProfileName"></h2><div class="team-profile-role" id="teamProfileRole"></div></div></div><div class="team-profile-content"><div class="team-profile-details"><div class="team-profile-detail"><span class="team-profile-icon" aria-hidden="true">✉</span><span class="team-profile-detail-copy"><span class="team-profile-label">Email</span><a class="team-profile-value" id="teamProfileEmail"></a></span></div><div class="team-profile-detail"><span class="team-profile-icon" aria-hidden="true">☎</span><span class="team-profile-detail-copy"><span class="team-profile-label">Phone</span><a class="team-profile-value" id="teamProfilePhone"></a></span></div></div></div></section></div>';
+  modal.innerHTML='<div class="team-profile-backdrop"><section class="team-profile-dialog" role="dialog" aria-modal="true" aria-labelledby="teamProfileName"><button type="button" class="team-profile-close" aria-label="Close profile">×</button><div class="team-profile-hero"><img class="team-profile-photo" alt=""><div class="team-profile-caption"><h2 class="team-profile-name" id="teamProfileName"></h2><div class="team-profile-role" id="teamProfileRole"></div></div></div><div class="team-profile-content"><div class="team-profile-details"><div class="team-profile-detail"><span class="team-profile-icon" aria-hidden="true">✉</span><span class="team-profile-detail-copy"><span class="team-profile-label">Email</span><a class="team-profile-value" id="teamProfileEmail"></a></span></div><div class="team-profile-detail"><span class="team-profile-icon" aria-hidden="true">☎</span><span class="team-profile-detail-copy"><span class="team-profile-label">Phone</span><a class="team-profile-value" id="teamProfilePhone"></a></span></div></div><div class="team-profile-edit" id="teamProfileEdit" hidden><button type="button" class="team-profile-edit-trigger" id="teamProfileEditTrigger">✎ Edit Name</button><form class="team-profile-edit-form" id="teamProfileEditForm" hidden><label for="teamProfileNameInput">Your display name</label><input id="teamProfileNameInput" name="display_name" type="text" maxlength="80" autocomplete="name" required><div class="team-profile-edit-actions"><button type="submit" class="team-profile-save" id="teamProfileSave">Save Name</button><button type="button" class="team-profile-cancel" id="teamProfileCancel">Cancel</button></div><p class="team-profile-edit-status" id="teamProfileEditStatus" role="status" aria-live="polite"></p></form></div></div></section></div>';
   document.body.appendChild(modal);
-  modal.addEventListener('click',e=>{if(e.target===modal.querySelector('.team-profile-backdrop')||e.target.closest('.team-profile-close'))closeTeamProfile()});
+  modal.addEventListener('click',e=>{if(e.target===modal.querySelector('.team-profile-backdrop')||e.target.closest('.team-profile-close'))closeTeamProfile();if(e.target.closest('#teamProfileEditTrigger')){const form=$('#teamProfileEditForm');form.hidden=false;$('#teamProfileEditTrigger').hidden=true;$('#teamProfileNameInput').focus()}if(e.target.closest('#teamProfileCancel')){const form=$('#teamProfileEditForm');form.reset();form.hidden=true;$('#teamProfileEditTrigger').hidden=false;$('#teamProfileEditStatus').textContent=''}});modal.querySelector('#teamProfileEditForm').addEventListener('submit',saveTeamDisplayName);
  }
  const member=p.directory||teamEntry(p)||{};
  modal.querySelector('.team-profile-photo').src=p.avatar_url||AVATAR_FALLBACK;
  modal.querySelector('.team-profile-photo').alt=(member.name||p.full_name||'Team member')+' profile photo';
- $('#teamProfileName').textContent=member.name||p.full_name||'Team member';
+ $('#teamProfileName').textContent=p.display_name||member.name||p.full_name||'Team member';
+ const editor=$('#teamProfileEdit'),editTrigger=$('#teamProfileEditTrigger'),editForm=$('#teamProfileEditForm');editor.hidden=p.id!==me?.id;editTrigger.hidden=false;editForm.hidden=true;editForm.reset();$('#teamProfileNameInput').value=p.display_name||member.name||p.full_name||'';$('#teamProfileEditStatus').textContent='';
  $('#teamProfileRole').textContent=member.role||ROLE_LABELS[p.role]||p.role||'Studio Team';
  const email=$('#teamProfileEmail');email.textContent=member.email||'';email.href=member.email?'mailto:'+member.email:'';
  const phone=$('#teamProfilePhone');phone.textContent=member.phone||'';phone.href=member.phone?'tel:'+member.phone.replace(/[^+\d]/g,''):'';
@@ -579,12 +593,26 @@ function openTeamProfile(index){
  document.addEventListener('keydown',teamProfileKeydown);
  modal.querySelector('.team-profile-close').focus();
 }
+async function saveTeamDisplayName(event){
+ event.preventDefault();const input=$('#teamProfileNameInput'),status=$('#teamProfileEditStatus'),button=$('#teamProfileSave'),name=input.value.trim();
+ const current=teamProfiles.find(profile=>profile.id===me?.id);
+ if(!current||current.id!==me.id){status.textContent='You can only edit your own profile name.';return}
+ if(name.length<2||name.length>80){status.textContent='Enter a name between 2 and 80 characters.';return}
+ button.disabled=true;button.textContent='Saving…';status.textContent='';
+ try{const result=await sb.from('profiles').update({display_name:name}).eq('id',me.id);if(result.error)throw result.error;
+  current.display_name=name;$('#teamProfileName').textContent=name;$('#teamProfileNameInput').value=name;
+  const cardName=document.querySelectorAll('.team-directory-name')[teamProfiles.indexOf(current)];if(cardName)cardName.textContent=name;
+  const sidebarName=document.querySelectorAll('.team-member-name')[teamProfiles.indexOf(current)];if(sidebarName)sidebarName.textContent=name;
+  $('#teamProfileEditForm').hidden=true;$('#teamProfileEditTrigger').hidden=false;status.textContent='';toast('Your profile name has been saved');
+ }catch(error){status.textContent=error.message?.includes('display_name')?'Name editing needs the profile-name database update. Please contact the dashboard administrator.':'Could not save your name. Please try again.';console.error('Studio profile name update failed',error)}
+ finally{button.disabled=false;button.textContent='Save Name'}
+}
 async function loadTeamProfiles(){
- const result=await sb.from('profiles').select('full_name,role,avatar_url');
+ const result=await sb.from('profiles').select('id,full_name,display_name,role,avatar_url');
  if(result.error){teamProfiles=[];teamProfilesError=true;if(P==='team')go();return}
  const profiles=result.data||[];
  teamProfilesError=false;
- teamProfiles=TEAM_DIRECTORY.map(member=>{const profile=profiles.find(p=>member.match((p.full_name||'').toLowerCase()));return{...profile,full_name:member.name,role:profile?.role||'',avatar_url:profile?.avatar_url||'',directory:member}});
+ teamProfiles=TEAM_DIRECTORY.map(member=>{const profile=profiles.find(p=>member.match((p.full_name||'').toLowerCase()));return{...profile,full_name:member.name,display_name:profile?.display_name||'',role:profile?.role||'',avatar_url:profile?.avatar_url||'',directory:member}});
  if(P==='team')go();
 }
 async function getProfile(authUser){
@@ -711,7 +739,7 @@ function mdays(y,m){const H=hols(),nd=new Date(y,m+1,0).getDate();let s=0,h=0;fo
 const R={};
 let messagingTimer=null,messagingState={conversations:[],members:[],previews:{},profiles:{},unreadCounts:{},activeId:null,messages:[],hiddenIds:new Set(),creating:false,loading:false,error:''};
 R.msg=()=>'<section class="messaging-shell" id="messagingShell"><div class="messaging-list"><header class="messaging-list-head"><h2>Direct messages</h2><button class="messaging-new" id="messagingNew" type="button">＋ New chat</button></header><div class="messaging-notification-banner" id="messagingNotification" role="status" hidden></div><div class="messaging-threads" id="messagingThreads"><div class="messaging-notice">Loading conversations…</div></div></div><section class="messaging-main" id="messagingMain"><div class="messaging-empty"><div class="messaging-empty-mark">✉</div><strong>Your team, in sync.</strong><p style="margin-top:7px">Choose a conversation or start a chat about a bunch.</p></div></section></section>';
-R.team=()=>teamProfiles.length?'<section class="team-directory" aria-label="Studio Team profiles">'+teamProfiles.map((p,index)=>{const person=p.directory;return'<article class="team-directory-card"><div class="team-directory-photo-wrap"><img class="team-directory-photo" src="'+safeText(p.avatar_url||AVATAR_FALLBACK)+'" alt="'+safeText(person.name)+' profile photo" loading="lazy"><span class="team-directory-index">'+String(index+1).padStart(2,'0')+'</span><div class="team-directory-caption"><h2 class="team-directory-name">'+safeText(person.name)+'</h2><p class="team-directory-role">'+safeText(person.role)+'</p></div></div><div class="team-directory-contact"><a class="team-directory-link" href="mailto:'+safeText(person.email)+'"><span class="team-directory-link-icon" aria-hidden="true">✉</span><span>'+safeText(person.email)+'</span></a><a class="team-directory-link" href="tel:'+safeText(person.phone.replace(/[^+\d]/g,''))+'"><span class="team-directory-link-icon" aria-hidden="true">☎</span><span>'+safeText(person.phone)+'</span></a></div></article>'}).join('')+'</section>':teamProfilesError?'<div class="messaging-notice">Studio Team profiles could not be loaded. Please reload and try again.</div>':'<div class="messaging-notice">Loading Studio Team profiles…</div>';
+R.team=()=>teamProfiles.length?'<section class="team-directory" aria-label="Studio Team profiles">'+teamProfiles.map((p,index)=>{const person=p.directory;return'<article class="team-directory-card"><div class="team-directory-photo-wrap"><img class="team-directory-photo" src="'+safeText(p.avatar_url||AVATAR_FALLBACK)+'" alt="'+safeText(person.name)+' profile photo" loading="lazy"><span class="team-directory-index">'+String(index+1).padStart(2,'0')+'</span><div class="team-directory-caption"><h2 class="team-directory-name">'+safeText(p.display_name||person.name)+'</h2><p class="team-directory-role">'+safeText(person.role)+'</p></div></div><div class="team-directory-contact"><a class="team-directory-link" href="mailto:'+safeText(person.email)+'"><span class="team-directory-link-icon" aria-hidden="true">✉</span><span>'+safeText(person.email)+'</span></a><a class="team-directory-link" href="tel:'+safeText(person.phone.replace(/[^+\d]/g,''))+'"><span class="team-directory-link-icon" aria-hidden="true">☎</span><span>'+safeText(person.phone)+'</span></a>'+(p.id===me?.id?'<button type="button" class="team-directory-edit" onclick="openTeamProfile('+index+')" aria-label="Edit your profile name">✎ Edit Name</button>':'')+'</div></article>'}).join('')+'</section>':teamProfilesError?'<div class="messaging-notice">Studio Team profiles could not be loaded. Please reload and try again.</div>':'<div class="messaging-notice">Loading Studio Team profiles…</div>';
 const chatWhen=value=>{const d=new Date(value);return Number.isNaN(d.getTime())?'':d.toLocaleString([],{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'})};
 function messagingNotice(text){const el=$('#messagingThreads');if(el)el.innerHTML='<div class="messaging-notice">'+safeText(text)+'</div>'}
 function messagingContextOptions(){return D.rows.map((row,index)=>({row,index})).filter(({row})=>row.i).map(({row,index})=>'<option value="'+index+'">'+safeText(['Bunch #'+(index+1),row.t||'Bunch',row.i,'Qty '+n(row.q),row.s].filter(Boolean).join(' · '))+'</option>').join('')}
