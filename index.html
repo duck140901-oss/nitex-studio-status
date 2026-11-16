@@ -599,12 +599,12 @@ async function saveTeamDisplayName(event){
  if(!current||current.id!==me.id){status.textContent='You can only edit your own profile name.';return}
  if(name.length<2||name.length>80){status.textContent='Enter a name between 2 and 80 characters.';return}
  button.disabled=true;button.textContent='Saving…';status.textContent='';
- try{const result=await sb.from('profiles').update({display_name:name}).eq('id',me.id);if(result.error)throw result.error;
+ try{const result=await sb.from('profiles').update({display_name:name}).eq('id',me.id).select('id').maybeSingle();if(result.error)throw result.error;if(!result.data)throw new Error('No profile row was updated. The profile update policy may be blocking this account.');
   current.display_name=name;$('#teamProfileName').textContent=name;$('#teamProfileNameInput').value=name;
   const cardName=document.querySelectorAll('.team-directory-name')[teamProfiles.indexOf(current)];if(cardName)cardName.textContent=name;
   const sidebarName=document.querySelectorAll('.team-member-name')[teamProfiles.indexOf(current)];if(sidebarName)sidebarName.textContent=name;
   $('#teamProfileEditForm').hidden=true;$('#teamProfileEditTrigger').hidden=false;status.textContent='';toast('Your profile name has been saved');
- }catch(error){status.textContent=error.message?.includes('display_name')?'Name editing needs the profile-name database update. Please contact the dashboard administrator.':'Could not save your name. Please try again.';console.error('Studio profile name update failed',error)}
+ }catch(error){status.textContent=error.message?.includes('display_name')?'Name editing needs the profile-name database update. Please contact the dashboard administrator.':(error.message||'Could not save your name. Please try again.');console.error('Studio profile name update failed',error)}
  finally{button.disabled=false;button.textContent='Save Name'}
 }
 async function loadTeamProfiles(){
