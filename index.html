@@ -958,7 +958,7 @@ R.ov=()=>{const a=sel(),q=sum(a,r=>r.q),inS=a.filter(r=>r.s!=='Uploaded'),upload
  <div class="c s4 overview-tour-card"><h2>360 virtual tours</h2><div class="overview-tour-gauge">${gauge(D.tour.length?Math.round(live/D.tour.length*100):0,'live on website')}</div><div class="m overview-tour-caption">${live} of ${D.tour.length} factories live</div></div>
  <div class="c s12"><h2>Slowest bunches to watch</h2>${tbl(['Product in','Qty','Type','Days taken'],slow.map(r=>[r.i,r.q,r.t||'-',`<span class="pill ${r.d>10?'':'g'}">${r.d} d</span>`]))}</div></div>`};
 function tbl(h,rows,tot){
- const cell=c=>{const value=c??'',plain=String(value).replace(/<[^>]*>/g,'').replace(/&nbsp;/g,' ').trim(),numeric=/^-?[\\d,]+(?:\\.\\d+)?$/.test(plain);return`<td${numeric?' class="is-number"':''}>${value}</td>`};
+ const cell=c=>{const value=c??'',plain=String(value).replace(/<[^>]*>/g,'').replace(/&nbsp;/g,' ').trim(),numeric=/^-?[\d,]+(?:\.\d+)?$/.test(plain);return`<td${numeric?' class="is-number"':''}>${value}</td>`};
  return`<div class="sc table-shell"><table class="data-table" aria-label="Sortable data table"><thead><tr>${h.map((x,i)=>`<th scope="col" aria-sort="none"><button type="button" class="table-sort" data-sort-col="${i}"><span>${x}</span><span class="sort-indicator" aria-hidden="true">↕</span></button></th>`).join('')}</tr></thead><tbody>${rows.map(r=>`<tr>${r.map(cell).join('')}</tr>`).join('')}</tbody>${tot?`<tfoot><tr class="t">${tot.map(cell).join('')}</tr></tfoot>`:''}</table></div>`
 }
 document.addEventListener('click',event=>{
