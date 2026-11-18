@@ -584,6 +584,32 @@ main>.top{position:sticky;top:10px;z-index:15;background:rgba(20,23,27,.86);back
  #pg.motion-page-enter>.grid>.c,.team-profile-modal.open .team-profile-dialog,.photo-crop-modal.open .photo-crop-dialog,#toast{animation:none!important}
  #nav .nav,.btn,button,.c,.header-icon-button,.profile-trigger,input,select,textarea{transition:none!important}
 }
+
+/* NITEX balanced motion — phase 3: overview hero and KPI progress */
+.overview-hero-card{grid-column:span 8;min-height:290px;padding:clamp(22px,3vw,34px);display:flex;align-items:center;justify-content:space-between;gap:24px;overflow:hidden;isolation:isolate;border:1px solid rgba(255,255,255,.25)!important;border-radius:26px;background:linear-gradient(112deg,#D7FF00 0%,#D7FF00 58%,#C7F000 100%)!important;color:#101216!important;box-shadow:0 20px 48px rgba(0,0,0,.22),inset 0 1px rgba(255,255,255,.38)}
+.overview-hero-card:before,.overview-hero-card:after{content:"";position:absolute;z-index:-1;border:1px solid rgba(16,18,22,.09);border-radius:50%;pointer-events:none}
+.overview-hero-card:before{width:330px;height:330px;right:20px;top:-115px}
+.overview-hero-card:after{width:250px;height:250px;right:60px;top:-75px}
+.overview-hero-copy{min-width:0;position:relative;z-index:1}
+.overview-hero-eyebrow{font:10px 'Fragment Mono',monospace;letter-spacing:.13em;color:rgba(16,18,22,.66);margin-bottom:25px}
+.overview-hero-copy>.m{font-size:14px;font-weight:600}
+.overview-hero-number{font-size:clamp(54px,7vw,88px);letter-spacing:-.055em;line-height:.98;margin:8px 0 17px;color:#080a0c}
+.overview-hero-foot{display:flex;align-items:center;gap:10px;flex-wrap:wrap;font:11px 'Fragment Mono',monospace;color:rgba(16,18,22,.72)}
+.overview-hero-dot{width:4px;height:4px;border-radius:50%;background:rgba(16,18,22,.5)}
+.overview-hero-progress{position:relative;z-index:1;flex:0 0 min(34%,210px);display:flex;flex-direction:column;align-items:center;gap:10px}
+.overview-hero-ring{width:min(100%,190px);aspect-ratio:1;position:relative;display:grid;place-items:center}
+.overview-hero-ring svg{width:100%;height:100%;overflow:visible;transform:rotate(-90deg)}
+.overview-hero-ring-track,.overview-hero-ring-value{fill:none;stroke-width:8;stroke-linecap:round}
+.overview-hero-ring-track{stroke:rgba(16,18,22,.13)}
+.overview-hero-ring-value{stroke:#101216;transition:stroke-dasharray 1s cubic-bezier(.2,.75,.25,1),filter .25s ease;filter:drop-shadow(0 0 4px rgba(16,18,22,.12))}
+.overview-hero-ring-label{position:absolute;display:flex;flex-direction:column;align-items:center;gap:3px;color:#101216}
+.overview-hero-ring-label strong{font:clamp(25px,3vw,35px) 'Archivo Black',sans-serif;letter-spacing:-.04em}
+.overview-hero-ring-label span{font:10px 'Fragment Mono',monospace;text-transform:uppercase;letter-spacing:.08em;opacity:.7}
+.overview-hero-progress-caption{font:10px 'Fragment Mono',monospace;text-align:center;color:rgba(16,18,22,.7)}
+@media(hover:hover) and (prefers-reduced-motion:no-preference){.overview-hero-card:hover{box-shadow:0 24px 56px rgba(0,0,0,.25),inset 0 1px rgba(255,255,255,.45)}.overview-hero-ring-value:hover{filter:drop-shadow(0 0 7px rgba(16,18,22,.25))}}
+@media(max-width:900px){.overview-hero-card{grid-column:span 12;min-height:250px}.overview-hero-progress{flex-basis:180px}.overview-hero-ring{width:150px}}
+@media(max-width:560px){.overview-hero-card{min-height:220px;padding:20px;gap:12px}.overview-hero-eyebrow{font-size:9px;margin-bottom:17px}.overview-hero-number{font-size:clamp(45px,13vw,65px)}.overview-hero-progress{flex-basis:112px}.overview-hero-ring{width:108px}.overview-hero-ring-label strong{font-size:23px}.overview-hero-progress-caption{font-size:8px;max-width:115px}.overview-hero-foot{font-size:9px;gap:6px}}
+@media(prefers-reduced-motion:reduce){.overview-hero-ring-value{transition:none}}
 </style></head><body>
 <div id="login"><div class="lens"></div><form id="lf"><h1 class="login-brand">NITEX<br>Studio Status</h1>
 <input id="lu" type="email" placeholder="Work email address" autocomplete="username" required aria-label="Email address"><input id="lp" type="password" placeholder="Password" autocomplete="current-password" aria-label="Password" required><button class="btn">Sign in</button><div id="err" class="m"></div></form></div>
@@ -869,11 +895,11 @@ async function initMessaging(){
  catch(error){messagingNotice(error.message?.includes('studio_')?'Messaging database setup is required before the team can start chatting.':'Could not connect to team messages. Please reload and try again.');console.error('Studio messaging load failed',error);return}
  if(!messagingTimer)messagingTimer=setInterval(async()=>{try{await refreshMessaging();if(P==='msg'&&messagingState.activeId)await loadMessagingMessages(messagingState.activeId)}catch(error){console.error('Studio messaging refresh failed',error)}},8000);
 }
-R.ov=()=>{const a=sel(),q=sum(a,r=>r.q),inS=a.filter(r=>r.s!=='Uploaded'),yr=Y==='All'?Math.max(...years()):Y,mv=Array.from({length:12},(_,i)=>sum(a.filter(r=>r.m===i&&(Y!=='All'?1:r.y===yr)),r=>r.q));
+R.ov=()=>{const a=sel(),q=sum(a,r=>r.q),inS=a.filter(r=>r.s!=='Uploaded'),uploadedBunches=a.filter(r=>r.s==='Uploaded').length,uploadedPct=a.length?Math.round(uploadedBunches/a.length*100):0,yr=Y==='All'?Math.max(...years()):Y,mv=Array.from({length:12},(_,i)=>sum(a.filter(r=>r.m===i&&(Y!=='All'?1:r.y===yr)),r=>r.q));
  const ty=TY.map((t,i)=>({l:t,v:sum(a.filter(r=>r.t===t),r=>r.q),c:TC[i]})),slow=[...a].sort((x,z)=>z.d-x.d).slice(0,5),now=new Date(),live=D.tour.filter(t=>t.s).length;
  const tb=TY.map(t=>[t,avg(a.filter(r=>r.t===t))]).filter(x=>x[1]),mx=Math.max(...tb.map(x=>x[1]),1);
- return`<div class="grid"><div class="c y s3"><div class="m" style="color:#000">Products handled</div><div class="big" data-n="${q}">${n(q)}</div><div class="m" style="color:#000">${Y==='All'?'all years':Y}</div></div>
- <div class="c s3"><div class="m">Bunches</div><div class="big" data-n="${a.length}">${n(a.length)}</div><div class="m">batches received</div></div>
+ return`<div class="grid"><div class="c y s8 overview-hero-card"><div class="overview-hero-copy"><div class="overview-hero-eyebrow">NITEX STUDIO / PRODUCTION OVERVIEW</div><div class="m" style="color:#101216">Products handled</div><div class="big overview-hero-number" data-n="${q}">${n(q)}</div><div class="overview-hero-foot"><span>${Y==='All'?'All years':Y}</span><span class="overview-hero-dot"></span><span>${n(a.length)} bunches received</span></div></div><div class="overview-hero-progress"><div class="overview-hero-ring" role="img" aria-label="${uploadedPct}% of bunches uploaded"><svg viewBox="0 0 120 120" aria-hidden="true"><circle class="overview-hero-ring-track" cx="60" cy="60" r="49" pathLength="100"/><circle class="overview-hero-ring-value" cx="60" cy="60" r="49" pathLength="100" stroke-dasharray="${uploadedPct} 100"/></svg><div class="overview-hero-ring-label"><strong>${uploadedPct}%</strong><span>Uploaded</span></div></div><div class="overview-hero-progress-caption">${uploadedBunches} of ${a.length} bunches completed</div></div></div>
+ <div class="c s4"><div class="m">Bunches</div><div class="big" data-n="${a.length}">${n(a.length)}</div><div class="m">batches received</div></div>
  <div class="c s3"><div class="m">Avg turnaround</div><div class="big">${f1(avg(a))}<small style="font-size:16px"> days</small></div><div class="m">working days only</div></div>
  <div class="c k s3"><div class="m">In studio now</div><div class="big" style="color:var(--y)">${n(sum(inS,r=>r.q))}</div><div class="m">${inS.length?inS.length+' bunches in progress':'all bunches uploaded'}</div></div>
  <div class="c s12"><h2>Pipeline right now</h2><div class="pipe">${ST.map(s=>{const z=a.filter(r=>r.s===s);return`<div class="${z.length&&s!=='Uploaded'?'on':''}"><span class="m">${s}</span><b>${n(sum(z,r=>r.q))}</b><span class="m">${z.length} bunches</span></div>`}).join('')}</div></div>
