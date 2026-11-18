@@ -48,21 +48,41 @@ main{padding:22px 28px 40px;min-width:0}
 .c h2{font-size:15px;margin-bottom:12px}
 .s3{grid-column:span 3}.s4{grid-column:span 4}.s5{grid-column:span 5}.s6{grid-column:span 6}.s7{grid-column:span 7}.s8{grid-column:span 8}.s12{grid-column:span 12}
 .big{font-family:'Archivo Black',sans-serif;font-size:44px;line-height:1}
-.overview-type-card,.overview-tour-card{min-height:280px;display:flex;flex-direction:column}
-.overview-type-content{flex:1;display:grid;grid-template-columns:minmax(120px,150px) minmax(0,1fr);align-items:center;justify-content:center;gap:14px;min-width:0}
-.overview-type-content svg{width:100%;max-width:150px;flex:0 0 auto}
-.overview-type-content svg text:first-of-type{font-size:19px}
-.overview-type-legend{display:flex;flex-direction:column;gap:9px;margin:0;min-width:0}
-.overview-type-legend span{font-size:12px;line-height:1.3;white-space:normal}
-.overview-type-legend span b{font-family:'Archivo Black',sans-serif;font-size:16px;margin-left:4px}
-.overview-tour-card{justify-content:flex-start}
+.overview-type-card.st-card{min-height:0;display:flex;flex-direction:column;gap:22px;padding:22px}
+.st-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+.st-head h2{margin:0 0 4px;font-family:'Plus Jakarta Sans','Inter Tight',sans-serif;font-size:16px;font-weight:700;letter-spacing:-.02em;color:#fff}
+.st-head .m{font-size:12.5px;color:#8d918a}
+.st-chip{flex:0 0 auto;padding:6px 12px;border:1px solid rgba(217,255,51,.28);border-radius:999px;background:rgba(217,255,51,.08);color:#d9ff33;font:600 12px 'Inter Tight',sans-serif;white-space:nowrap}
+.st-body{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:24px;min-width:0}
+.st-ring{position:relative;width:min(100%,232px);aspect-ratio:1;flex:0 0 auto}
+.st-ring svg{display:block;width:100%;height:100%;overflow:visible;animation:stRingIn .8s cubic-bezier(.22,1,.36,1) both}
+.st-seg{outline:none;cursor:pointer;transition:opacity .2s ease,stroke-width .2s ease,filter .2s ease}
+.st-seg.is-top{filter:drop-shadow(0 0 9px rgba(217,255,51,.3))}
+.st-seg:hover,.st-seg:focus-visible{stroke-width:17}
+.st-center{position:absolute;inset:0;display:grid;place-content:center;gap:3px;text-align:center;pointer-events:none;padding:0 22%}
+.st-center .big{font-family:'Plus Jakarta Sans','Inter Tight',sans-serif;font-size:clamp(30px,3.2vw,38px);line-height:1;font-weight:800;letter-spacing:-.045em;color:#fff;font-variant-numeric:tabular-nums}
+.st-center span{font-size:12.5px;font-weight:500;color:#8d918a;line-height:1.25}
+.st-legend{list-style:none;margin:0;padding:0;width:100%;display:grid;gap:14px}
+.st-row{display:grid;grid-template-columns:10px minmax(0,1fr) auto 50px;align-items:center;column-gap:10px;row-gap:8px;border-radius:10px;outline:none;transition:opacity .2s ease}
+.st-row:focus-visible{box-shadow:0 0 0 2px rgba(217,255,51,.55);padding:2px 4px}
+.st-dot{width:10px;height:10px;border-radius:50%;background:var(--c);box-shadow:0 0 0 3px color-mix(in srgb,var(--c),transparent 84%)}
+.st-name{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:14px;font-weight:500;color:#dcdfd8}
+.st-val{font-family:'Plus Jakarta Sans','Inter Tight',sans-serif;font-size:15px;font-weight:800;letter-spacing:-.02em;color:#fff;font-variant-numeric:tabular-nums}
+.st-pct{text-align:right;font-size:12px;font-weight:600;color:#8d918a;font-variant-numeric:tabular-nums}
+.st-track{grid-column:2/-1;height:4px;border-radius:99px;background:rgba(255,255,255,.07);overflow:hidden}
+.st-track i{display:block;height:100%;width:var(--w);min-width:2px;border-radius:99px;background:var(--c)}
+.st-row.is-zero{opacity:.45}
+.st-seg.is-dim,.st-row.is-dim{opacity:.28}
+@keyframes stRingIn{from{opacity:0;transform:rotate(-24deg) scale(.94)}to{opacity:1;transform:none}}
+@media(prefers-reduced-motion:reduce){.st-ring svg{animation:none}.st-seg,.st-row{transition:none}}
+@media(max-width:600px){.st-ring{width:min(100%,210px)}.st-body{gap:20px}.overview-type-card.st-card{padding:18px}}
+.overview-tour-card{min-height:280px;display:flex;flex-direction:column;justify-content:flex-start}
 .overview-tour-gauge{flex:1;min-height:170px;display:grid;place-items:center;width:100%;padding:8px 12px 0}
 .overview-tour-gauge svg{width:100%!important;max-width:250px!important;height:auto;max-height:165px}
 .overview-tour-gauge svg text:first-of-type{font-size:34px}
 .overview-tour-gauge svg text:last-of-type{font-size:10px}
 .overview-tour-caption{text-align:center;font-size:12px;padding:0 4px 8px}
-@media(max-width:1050px){.overview-type-content{grid-template-columns:minmax(105px,130px) minmax(0,1fr);gap:10px}.overview-type-content svg{max-width:130px}.overview-type-legend{gap:8px}.overview-type-legend span{font-size:11px}.overview-type-legend span b{font-size:15px}}
-@media(max-width:700px){.overview-type-card,.overview-tour-card{min-height:250px}.overview-type-content{grid-template-columns:minmax(110px,140px) minmax(0,1fr);gap:12px}.overview-type-content svg{max-width:140px}.overview-type-legend span{font-size:12px}.overview-type-legend span b{font-size:16px}.overview-tour-gauge{min-height:155px}.overview-tour-gauge svg{max-height:150px}}
+@media(max-width:700px){.overview-tour-card{min-height:250px}.overview-tour-gauge{min-height:155px}.overview-tour-gauge svg{max-height:150px}}
 .feature-metric-card{min-height:280px;display:flex;flex-direction:column;justify-content:space-between;gap:22px;padding:26px}
 .feature-metric-card .m{font-size:clamp(15px,1.15vw,17px);line-height:1.55;letter-spacing:.01em}
 .feature-metric-card .big{font-size:clamp(82px,8vw,112px);line-height:.92;letter-spacing:-.045em}
@@ -1157,7 +1177,48 @@ function stack(rows,w=640,h=230){
  ${[0,.5,1].map(t=>{const yy=base-(base-top)*t;return`<line class="chart-gridline" x1="${left}" x2="${right}" y1="${yy}" y2="${yy}"/>`}).join('')}
  ${rows.map((r,i)=>{let yy=base;return r.v.map((a,j)=>{const hh=a/max*(base-top);yy-=hh;return hh>0?`<rect class="stack-chart-bar" tabindex="0" role="img" aria-label="${r.l} ${TY[j]}: ${n(a)} products" style="--bar-index:${i*TY.length+j}" x="${left+i*bw+3}" y="${yy}" width="${Math.max(2,bw-6)}" height="${hh}" rx="3" fill="url(#stackTone${j})"><title>${r.l} · ${TY[j]}: ${n(a)} products</title></rect>`:''}).join('')+`<text x="${left+i*bw+bw/2}" y="${h-8}" font-size="10" text-anchor="middle" fill="#92989e" font-family="Fragment Mono">${r.l}</text>`}).join('')}</svg>`
 }
-function donut(it,c){const t=sum(it,a=>a.v)||1,active=it.filter(a=>a.v>0);let o=0,boundary=0;const rings=active.map(a=>{const d=a.v/t*100,s=`<circle cx="60" cy="60" r="44" fill="none" stroke="${a.c}" stroke-width="18" pathLength="100" stroke-dasharray="${d} ${100-d}" stroke-dashoffset="${-o}" transform="rotate(-90 60 60)"><title>${a.l}: ${n(a.v)}</title></circle>`;o+=d;return s}).join(''),defs=[],mixes=active.slice(0,-1).map((a,i)=>{boundary+=a.v/t*100;const next=active[i+1],blend=Math.min(1.1,a.v/t*40,next.v/t*40),point=p=>{const rad=(p*3.6-90)*Math.PI/180;return[60+44*Math.cos(rad),60+44*Math.sin(rad)]},[x1,y1]=point(boundary-blend),[x2,y2]=point(boundary+blend);defs.push(`<linearGradient id="donutBlend${i}" gradientUnits="userSpaceOnUse" x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}"><stop stop-color="${a.c}"/><stop offset="1" stop-color="${next.c}"/></linearGradient>`);return`<circle cx="60" cy="60" r="44" fill="none" stroke="url(#donutBlend${i})" stroke-width="18" pathLength="100" stroke-dasharray="${blend*2} ${100-blend*2}" stroke-dashoffset="${-(boundary-blend)}" transform="rotate(-90 60 60)"/>`}).join('');return`<svg viewBox="0 0 120 120" width="150" role="img" aria-label="Share by sample type"><defs>${defs.join('')}</defs><circle cx="60" cy="60" r="44" fill="none" stroke="rgba(255,255,255,.12)" stroke-width="18"/>${rings}${mixes}<text x="60" y="58" text-anchor="middle" font-family="Archivo Black" font-size="17" textLength="62" lengthAdjust="spacingAndGlyphs">${c}</text><text x="60" y="73" text-anchor="middle" font-size="8" font-family="Fragment Mono" fill="#808080">products</text></svg>`}
+function donut(it,c){
+ const total=sum(it,a=>a.v)||1,active=it.filter(a=>a.v>0),R=80,SW=13,GAP=1.1;
+ const top=active.length?active.reduce((m,a)=>a.v>m.v?a:m,active[0]):null;
+ const pct=v=>{const p=v/total*100;return(p>=10?Math.round(p):p>=1?p.toFixed(1).replace(/\\.0$/,''):p.toFixed(1))+'%'};
+ let offset=0;
+ const segs=active.map(a=>{
+  const d=a.v/total*100,dash=Math.max(d-GAP,Math.min(d,.6)),start=offset+(d-dash)/2;
+  offset+=d;
+  const i=it.indexOf(a);
+  return `<circle class="st-seg${a===top?' is-top':''}" cx="100" cy="100" r="${R}" fill="none" stroke="${a.c}" stroke-width="${SW}" pathLength="100" stroke-dasharray="${dash} ${100-dash}" stroke-dashoffset="${-start}" transform="rotate(-90 100 100)" tabindex="0" role="img" aria-label="${a.l}: ${n(a.v)} products, ${pct(a.v)}" data-st-i="${i}" data-st-n="${n(a.v)}" data-st-l="${a.l}" data-st-p="${pct(a.v)}"><title>${a.l}: ${n(a.v)} (${pct(a.v)})</title></circle>`;
+ }).join('');
+ const rows=it.map((a,i)=>`<li class="st-row${a.v?'':' is-zero'}" tabindex="0" style="--c:${a.c};--w:${(a.v/total*100).toFixed(2)}%" data-st-i="${i}" data-st-n="${n(a.v)}" data-st-l="${a.l}" data-st-p="${pct(a.v)}"><span class="st-dot"></span><span class="st-name">${a.l}</span><b class="st-val">${n(a.v)}</b><span class="st-pct">${pct(a.v)}</span><span class="st-track"><i></i></span></li>`).join('');
+ return `<div class="st-body"><div class="st-ring"><svg viewBox="0 0 200 200" role="img" aria-label="Share of products by sample type"><circle cx="100" cy="100" r="${R}" fill="none" stroke="rgba(255,255,255,.06)" stroke-width="${SW}"/>${segs}</svg><div class="st-center" data-n="${c}" data-l="products"><strong class="big">${c}</strong><span>products</span></div></div><ul class="st-legend">${rows}</ul></div>`;
+}
+(function(){
+ const activate=(target)=>{
+  const card=target.closest('.st-card');
+  if(!card)return;
+  const center=card.querySelector('.st-center'),all=card.querySelectorAll('[data-st-i]');
+  const value=target.dataset;
+  all.forEach(el=>el.classList.toggle('is-dim',el.dataset.stI!==value.stI));
+  center.querySelector('strong').textContent=value.stN;
+  center.querySelector('span').textContent=value.stL+' · '+value.stP;
+ };
+ const reset=card=>{
+  if(!card)return;
+  const center=card.querySelector('.st-center'),all=card.querySelectorAll('[data-st-i]');
+  all.forEach(el=>el.classList.remove('is-dim'));
+  center.querySelector('strong').textContent=center.dataset.n;
+  center.querySelector('span').textContent=center.dataset.l;
+ };
+ document.addEventListener('mouseover',e=>{const t=e.target.closest?.('[data-st-i]');if(t)activate(t)});
+ document.addEventListener('mouseout',e=>{
+  const t=e.target.closest?.('[data-st-i]'),card=t?.closest('.st-card');
+  if(card&&!card.contains(e.relatedTarget))reset(card);
+ });
+ document.addEventListener('focusin',e=>{const t=e.target.closest?.('[data-st-i]');if(t)activate(t)});
+ document.addEventListener('focusout',e=>{
+  const card=e.target.closest?.('.st-card');
+  if(card&&!card.contains(e.relatedTarget))reset(card);
+ });
+})();
 function gauge(p,l){const v=Math.max(0,Math.min(100,p));return`<svg class="tour-gauge-svg" viewBox="0 0 240 178" width="100%" role="img" aria-label="${l} ${v}%"><defs><linearGradient id="tourGaugeGradient" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#a6df00"/><stop offset="100%" stop-color="#d7ff00"/></linearGradient></defs><path d="M24 116A96 96 0 0 1 216 116" fill="none" stroke="rgba(255,255,255,.09)" stroke-width="17" stroke-linecap="round" pathLength="100"/><path d="M24 116A96 96 0 0 1 216 116" fill="none" stroke="url(#tourGaugeGradient)" stroke-width="17" stroke-linecap="round" pathLength="100" stroke-dasharray="${v} 100"/><text x="120" y="157" text-anchor="middle" fill="#f5f6f4" font-family="Archivo Black" font-size="31">${v}%</text><text x="120" y="174" text-anchor="middle" fill="#858b91" font-family="Fragment Mono" font-size="9">${l}</text></svg>`}
 /* ---- calendar & working days ---- */
 const iso=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
@@ -1244,7 +1305,7 @@ R.ov=()=>{const a=sel(),q=sum(a,r=>r.q),inS=a.filter(r=>r.s!=='Uploaded'),upload
  <div class="c k s6"><div class="m">In studio now</div><div class="big" style="color:var(--y)">${n(sum(inS,r=>r.q))}</div><div class="m">${inS.length?inS.length+' bunches in progress':'all bunches uploaded'}</div></div>
  <div class="c s12"><h2>Pipeline right now</h2><div class="pipe">${ST.map(s=>{const z=a.filter(r=>r.s===s);return`<div class="${z.length&&s!=='Uploaded'?'on':''}"><span class="m">${s}</span><b>${n(sum(z,r=>r.q))}</b><span class="m">${z.length} bunches</span></div>`}).join('')}</div></div>
  <div class="c k s8 monthly-chart-card"><div class="monthly-chart-heading"><div><div class="monthly-chart-total">${n(sum(mv,v=>v))} <span>products</span></div><h2>Products received by month</h2><div class="monthly-chart-subtitle">${Y==='All'?'Latest year':'Production overview · '+Y}</div></div><div class="monthly-chart-period">${Y==='All'?'LATEST YEAR':Y}</div></div>${area(mv,M)}</div>
- <div class="c s4 overview-type-card"><h2>By sample type</h2><div class="overview-type-content"><div class="overview-type-chart">${donut(ty,n(q))}</div><div class="lg overview-type-legend">${ty.map(t=>`<span style="--c:${t.c}"><i></i><span>${t.l}</span><b>${n(t.v)}</b></span>`).join('')}</div></div></div>
+ <div class="c s4 overview-type-card st-card"><div class="st-head"><div><h2>By sample type</h2><div class="m">Share of products received</div></div><span class="st-chip">${ty.filter(t=>t.v>0).length} types</span></div>${donut(ty,n(q))}</div>
  <div class="c s4"><h2>${MF[now.getMonth()]} ${now.getFullYear()}</h2>${cal(now.getFullYear(),now.getMonth())}<div class="lg m"><span style="--c:#c9c9c9">Saturday</span><span style="--c:#000">Holiday</span><span style="--c:#D7FF00">Today</span></div></div>
  <div class="c s4 turnaround-type-card"><h2>Turnaround by type</h2><div class="turnaround-type-list">${tb.map(x=>`<div class="turnaround-type-row"><div class="turnaround-type-label"><span>${x[0]}</span><b>${f1(x[1])} d</b></div><div class="bar"><i style="width:${x[1]/mx*100}%"></i></div></div>`).join('')||'<div class="empty">No data for this year.</div>'}</div></div>
  <div class="c s4 overview-tour-card"><h2>360 virtual tours</h2><div class="overview-tour-gauge">${gauge(D.tour.length?Math.round(live/D.tour.length*100):0,'factories live')}</div><div class="tour-gauge-legend"><span><i class="live-dot"></i><b>${n(live)}</b> live</span><span><i class="pending-dot"></i><b>${n(D.tour.length-live)}</b> pending</span></div></div>
