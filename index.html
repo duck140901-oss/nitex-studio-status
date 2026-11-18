@@ -1204,6 +1204,76 @@ tr.t td{background:rgba(217,255,51,.1);color:#f3ffc4}
   }
 }
 
+
+/* Studio profile modal layout guard: keep identity on photo, contacts below */
+.team-profile-dialog{
+ display:flex!important;
+ flex-direction:column!important;
+ align-items:stretch!important;
+}
+.team-profile-hero{
+ position:relative!important;
+ display:block!important;
+ flex:0 0 auto!important;
+ width:100%!important;
+ aspect-ratio:1/1!important;
+ overflow:hidden!important;
+ isolation:isolate;
+}
+.team-profile-photo{
+ position:absolute!important;
+ inset:0!important;
+ width:100%!important;
+ height:100%!important;
+ object-fit:cover!important;
+}
+.team-profile-caption{
+ position:absolute!important;
+ inset:auto 0 0 0!important;
+ z-index:3!important;
+ display:flex!important;
+ flex-direction:column!important;
+ align-items:center!important;
+ justify-content:center!important;
+ width:100%!important;
+ min-height:104px;
+ margin:0!important;
+ padding:18px 24px 20px!important;
+ transform:none!important;
+ text-align:center!important;
+ background:linear-gradient(180deg,rgba(15,18,21,.24),rgba(15,18,21,.72))!important;
+ border-top:1px solid rgba(255,255,255,.28)!important;
+ backdrop-filter:blur(18px) saturate(145%)!important;
+ -webkit-backdrop-filter:blur(18px) saturate(145%)!important;
+}
+.team-profile-name,.team-profile-role{
+ position:relative!important;
+ display:block!important;
+ width:100%!important;
+ margin-left:auto!important;
+ margin-right:auto!important;
+ text-align:center!important;
+}
+.team-profile-name{margin-top:0!important;margin-bottom:7px!important}
+.team-profile-role{margin-top:0!important;margin-bottom:0!important}
+.team-profile-content{
+ position:relative!important;
+ inset:auto!important;
+ display:block!important;
+ flex:0 0 auto!important;
+ width:100%!important;
+ margin:0!important;
+ padding:22px 28px 28px!important;
+ clear:both!important;
+ transform:none!important;
+}
+.team-profile-details{position:relative!important;display:grid!important;width:100%!important;margin:0!important}
+.team-profile-edit{position:relative!important;display:block!important;width:100%!important;margin:18px 0 0!important}
+@media(max-width:600px){
+ .team-profile-caption{min-height:92px;padding:14px 17px 16px!important}
+ .team-profile-content{padding:18px 18px 20px!important}
+}
+
 </style></head><body>
 <div id="login"><div class="lens"></div><form id="lf"><h1 class="login-brand">NITEX<br>Studio Status</h1>
 <input id="lu" type="email" placeholder="Work email address" autocomplete="username" required aria-label="Email address"><input id="lp" type="password" placeholder="Password" autocomplete="current-password" aria-label="Password" required><button class="btn">Sign in</button><div id="err" class="m"></div></form></div>
