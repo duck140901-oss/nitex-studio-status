@@ -632,6 +632,32 @@ main>.top{position:sticky;top:10px;z-index:15;background:rgba(20,23,27,.86);back
 .analytics-trend-card .monthly-chart-line{stroke-width:3.2}
 .analytics-trend-card .monthly-chart-point{r:4.5}
 @media(max-width:700px){.analytics-trend-card{grid-column:span 12}.analytics-trend-total{font-size:29px}}
+/* NITEX analytics — phase 6: premium sortable data tables */
+.table-shell{position:relative;max-width:100%;overflow:auto;border:1px solid rgba(22,26,29,.1);border-radius:14px;background:#fff;box-shadow:0 8px 24px rgba(16,20,24,.045);scrollbar-width:thin;scrollbar-color:#b8c1a0 #f1f2ed}
+.table-shell::-webkit-scrollbar{height:8px;width:8px}
+.table-shell::-webkit-scrollbar-track{background:#f1f2ed;border-radius:99px}
+.table-shell::-webkit-scrollbar-thumb{background:#b8c1a0;border-radius:99px}
+.data-table{width:100%;min-width:680px;border-collapse:separate;border-spacing:0;font-size:13px;font-variant-numeric:tabular-nums}
+.data-table thead{position:sticky;top:0;z-index:2}
+.data-table thead th{height:43px;padding:0 12px;border:0;border-bottom:1px solid #dfe3d8;background:#f3f5ef;color:#62685c;font:10px 'Fragment Mono',monospace;letter-spacing:.045em;text-transform:uppercase;white-space:nowrap}
+.data-table .table-sort{width:100%;min-height:42px;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:0;border:0;background:transparent;color:inherit;text-align:left;font:inherit;letter-spacing:inherit;text-transform:inherit;cursor:pointer}
+.data-table .table-sort:focus-visible{outline:2px solid #a7c900;outline-offset:-3px;border-radius:5px}
+.data-table .sort-indicator{color:#9aa18d;font-size:13px;transition:color .16s ease,transform .16s ease}
+.data-table th[aria-sort="ascending"] .sort-indicator,.data-table th[aria-sort="descending"] .sort-indicator{color:#596d00}
+.data-table tbody td,.data-table tfoot td{height:42px;padding:10px 12px;border:0;border-bottom:1px solid #edf0e9;color:#343932;white-space:nowrap;transition:background .16s ease}
+.data-table tbody tr:nth-child(even){background:#fafbf8}
+.data-table tbody tr:hover td{background:#f2f8dc}
+.data-table tbody tr:last-child td{border-bottom:0}
+.data-table td.is-number{text-align:right;font-family:'Fragment Mono',monospace;font-size:12px}
+.data-table td b{color:#141811;font-weight:800}
+.data-table tfoot .t td{height:46px;border-top:1px solid rgba(215,255,0,.32);border-bottom:0;background:#171b18;color:#eaffad;font-weight:700}
+.data-table tfoot .t td:first-child{border-radius:0 0 0 12px}
+.data-table tfoot .t td:last-child{border-radius:0 0 12px 0}
+.data-table tfoot .t td b{color:#eaffad}
+.data-table tbody tr:focus-within td{background:#f2f8dc}
+@media(hover:hover) and (prefers-reduced-motion:no-preference){.data-table tbody tr{transition:background .16s ease}.data-table .table-sort:hover .sort-indicator{color:#718b00;transform:translateY(-1px)}}
+@media(max-width:600px){.table-shell{border-radius:11px}.data-table{min-width:640px;font-size:12px}.data-table thead th{height:40px;padding:0 10px}.data-table .table-sort{min-height:39px}.data-table tbody td,.data-table tfoot td{height:39px;padding:9px 10px}}
+@media(prefers-reduced-motion:reduce){.data-table tbody td,.data-table .sort-indicator{transition:none}}
 </style></head><body>
 <div id="login"><div class="lens"></div><form id="lf"><h1 class="login-brand">NITEX<br>Studio Status</h1>
 <input id="lu" type="email" placeholder="Work email address" autocomplete="username" required aria-label="Email address"><input id="lp" type="password" placeholder="Password" autocomplete="current-password" aria-label="Password" required><button class="btn">Sign in</button><div id="err" class="m"></div></form></div>
@@ -931,7 +957,27 @@ R.ov=()=>{const a=sel(),q=sum(a,r=>r.q),inS=a.filter(r=>r.s!=='Uploaded'),upload
  <div class="c s4 turnaround-type-card"><h2>Turnaround by type</h2><div class="turnaround-type-list">${tb.map(x=>`<div class="turnaround-type-row"><div class="turnaround-type-label"><span>${x[0]}</span><b>${f1(x[1])} d</b></div><div class="bar"><i style="width:${x[1]/mx*100}%"></i></div></div>`).join('')||'<div class="empty">No data for this year.</div>'}</div></div>
  <div class="c s4 overview-tour-card"><h2>360 virtual tours</h2><div class="overview-tour-gauge">${gauge(D.tour.length?Math.round(live/D.tour.length*100):0,'live on website')}</div><div class="m overview-tour-caption">${live} of ${D.tour.length} factories live</div></div>
  <div class="c s12"><h2>Slowest bunches to watch</h2>${tbl(['Product in','Qty','Type','Days taken'],slow.map(r=>[r.i,r.q,r.t||'-',`<span class="pill ${r.d>10?'':'g'}">${r.d} d</span>`]))}</div></div>`};
-function tbl(h,rows,tot){return`<div class="sc"><table><tr>${h.map(x=>`<th>${x}</th>`).join('')}</tr>${rows.map(r=>`<tr>${r.map(c=>`<td>${c??''}</td>`).join('')}</tr>`).join('')}${tot?`<tr class="t">${tot.map(c=>`<td>${c}</td>`).join('')}</tr>`:''}</table></div>`}
+function tbl(h,rows,tot){
+ const cell=c=>{const value=c??'',plain=String(value).replace(/<[^>]*>/g,'').replace(/&nbsp;/g,' ').trim(),numeric=/^-?[\d,]+(?:\.\d+)?$/.test(plain);return`<td${numeric?' class="is-number"':''}>${value}</td>`};
+ return`<div class="sc table-shell"><table class="data-table" aria-label="Sortable data table"><thead><tr>${h.map((x,i)=>`<th scope="col" aria-sort="none"><button type="button" class="table-sort" data-sort-col="${i}"><span>${x}</span><span class="sort-indicator" aria-hidden="true">↕</span></button></th>`).join('')}</tr></thead><tbody>${rows.map(r=>`<tr>${r.map(cell).join('')}</tr>`).join('')}</tbody>${tot?`<tfoot><tr class="t">${tot.map(cell).join('')}</tr></tfoot>`:''}</table></div>`
+}
+document.addEventListener('click',event=>{
+ const control=event.target.closest('.table-sort');if(!control)return;
+ const table=control.closest('table'),body=table?.tBodies[0];if(!body)return;
+ const column=Number(control.dataset.sortCol),same=table.dataset.sortColumn===String(column),direction=same&&table.dataset.sortDirection==='asc'?'desc':'asc';
+ table.dataset.sortColumn=String(column);table.dataset.sortDirection=direction;
+ const rows=[...body.rows];
+ rows.sort((a,b)=>{
+  const av=(a.cells[column]?.textContent||'').trim(),bv=(b.cells[column]?.textContent||'').trim();
+  const an=Number(av.replace(/,/g,'')),bn=Number(bv.replace(/,/g,''));
+  const numeric=av!==''&&bv!==''&&Number.isFinite(an)&&Number.isFinite(bn);
+  const comparison=numeric?an-bn:av.localeCompare(bv,undefined,{numeric:true,sensitivity:'base'});
+  return direction==='asc'?comparison:-comparison;
+ });
+ rows.forEach(row=>body.appendChild(row));
+ table.querySelectorAll('thead th').forEach((th,index)=>{th.setAttribute('aria-sort',index===column?(direction==='asc'?'ascending':'descending'):'none')});
+ table.querySelectorAll('.sort-indicator').forEach((indicator,index)=>{indicator.textContent=index!==column?'↕':direction==='asc'?'↑':'↓'});
+});
 R.ss=()=>{const a=sel().sort((x,z)=>z.i.localeCompare(x.i)),q=document.getElementById('q')?.value?.toLowerCase()||'',from=statusFrom,to=statusTo,L=a.filter(r=>{const searchMatch=!q||[r.t,r.s,r.n,r.i,M[r.m],MF[r.m]].join(' ').toLowerCase().includes(q),dateMatch=(!from||r.i>=from)&&(!to||r.i<=to);return searchMatch&&dateMatch}),dots=r=>[r.sh,r.c,r.g,r.k,r.u].map(x=>`<span style="display:inline-block;width:14px;height:6px;margin-right:2px;background:${x?'#000':'#e6e6e6'}"></span>`).join('');
  return`<div class="grid"><div class="c s12"><h2>Stage tracker</h2><div class="pipe">${ST.map(s=>{const z=a.filter(r=>r.s===s);return`<div class="${z.length&&s!=='Uploaded'?'on':''}"><span class="m">${s}</span><b>${n(sum(z,r=>r.q))}</b><span class="m">${z.length} bunches</span></div>`}).join('')}</div></div>
  <div class="c s12"><div style="display:flex;align-items:flex-end;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:14px"><h2 style="margin:0">All bunches (${L.length})</h2><div style="display:flex;align-items:flex-end;gap:8px;flex-wrap:wrap"><label style="display:grid;gap:4px;font:11px 'Fragment Mono',monospace;color:var(--g)">FROM<input id="statusFrom" type="date" value="${from}" aria-label="From date" style="width:150px;max-width:42vw;background:var(--l);color:#000;border-color:var(--line);padding:9px"></label><label style="display:grid;gap:4px;font:11px 'Fragment Mono',monospace;color:var(--g)">TO<input id="statusTo" type="date" value="${to}" aria-label="To date" style="width:150px;max-width:42vw;background:var(--l);color:#000;border-color:var(--line);padding:9px"></label><input id="q" value="${q}" placeholder="Search type, month, note" style="width:220px;max-width:70vw;background:var(--l);color:#000;border-color:var(--line);padding:9px" aria-label="Search"><button class="btn o" id="clearFilters" type="button" style="padding:9px 12px">Clear</button></div></div>
