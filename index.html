@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>NITEX Studio Status</title><link rel="icon" type="image/png" sizes="128x128" href="/favicon.png"><meta name="theme-color" content="#000000">
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>NITEX Studio Status</title><link rel="icon" type="image/png" sizes="128x128" href="/favicon.png"><meta name="theme-color" content="#080808">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Fragment+Mono&family=Inter+Tight:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -677,6 +677,279 @@ main>.top{position:sticky;top:10px;z-index:15;background:rgba(20,23,27,.86);back
 .overview-bunches-caption{font:12px 'Fragment Mono',monospace;letter-spacing:.04em;color:#aab1a3;text-transform:uppercase}
 @media(max-width:700px){.overview-bunches-card{min-height:190px;padding:20px;gap:10px}.overview-bunches-value{font-size:clamp(62px,15vw,82px)!important}}
 @media(prefers-reduced-motion:reduce){.overview-bunches-value{text-shadow:none}}
+</style>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style id="pulse-theme">
+/* ==========================================================================
+   PULSE THEME — near-black pro dashboard with lime accent.
+   Layered on top of the existing NITEX liquid-glass system (kept: blur,
+   inset highlights, popovers, motion). Remove this whole <style> block
+   to return to the previous look.
+   ========================================================================== */
+:root{
+  --y:#d9ff33;
+  --p-ink:#0d1100;
+  --p-bg:#080808;
+  --p-card:linear-gradient(160deg,rgba(23,23,23,.9),rgba(14,14,14,.92));
+  --p-solid:#131313;
+  --p-solid-2:#1a1a1a;
+  --p-line:rgba(255,255,255,.075);
+  --p-line-2:rgba(255,255,255,.13);
+  --p-text:#f5f6f4;
+  --p-muted:#8d918a;
+  --p-display:'Plus Jakarta Sans','Inter Tight',-apple-system,'Segoe UI',Arial,sans-serif;
+  --p-body:'Inter Tight',-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;
+  --p-radius:24px;
+}
+
+/* ---- Canvas: pure black with a soft lime glow from the top-right ---- */
+html{background:var(--p-bg)}
+body{
+  background:
+    radial-gradient(ellipse 52% 46% at 100% 0%,rgba(217,255,51,.13),transparent 70%),
+    radial-gradient(ellipse 38% 38% at 0% 100%,rgba(217,255,51,.045),transparent 72%),
+    var(--p-bg);
+  background-attachment:fixed;
+  font-family:var(--p-body);
+  color:var(--p-text);
+}
+::selection{background:var(--y);color:var(--p-ink)}
+*{scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.16) transparent}
+
+/* ---- Type: bold geometric display, quiet sentence-case labels ---- */
+.h,h1,h2,.big,.top h1,.monthly-chart-total,.pipe b,.overview-type-legend span b,
+.overview-hero-number,.overview-hero-ring-label strong{
+  font-family:var(--p-display);
+  text-transform:none;
+  font-weight:800;
+  letter-spacing:-.035em;
+}
+.m,th,.pill,.cal i,.team-heading,.team-loading,.header-count,.notification-item-count,
+.monthly-chart-period,.tour-gauge-legend b,.messaging-day,.messaging-unread-badge,
+.nav-unread-badge,.overview-hero-eyebrow,.overview-hero-foot,.overview-hero-progress-caption,
+.overview-hero-ring-label span{
+  font-family:var(--p-body);
+  letter-spacing:0;
+  text-transform:none;
+}
+.m{font-size:12.5px}
+.c h2{font-size:16px;font-weight:700;letter-spacing:-.02em;margin-bottom:14px;color:#fff}
+
+/* ---- Brand ---- */
+.logo{gap:12px;margin-bottom:28px}
+.logo .h{font-size:25px!important;font-weight:800;letter-spacing:-.04em;text-shadow:none}
+.logo .sym,#app aside .logo .sym{
+  position:relative;width:38px;height:38px;flex:0 0 38px;transform:none;border-radius:12px;
+  background:linear-gradient(145deg,#e4ff4d,#cdf400);
+  box-shadow:0 0 28px rgba(217,255,51,.28),inset 0 1px rgba(255,255,255,.55);
+}
+.logo .sym::after{
+  content:"";position:absolute;inset:9px;background:var(--p-ink);
+  clip-path:polygon(60% 0,12% 57%,46% 57%,36% 100%,88% 40%,54% 40%);
+}
+
+/* ---- Sidebar: flat full-height rail (desktop), glass drawer stays on mobile ---- */
+@media(min-width:901px){
+  #app{grid-template-columns:272px minmax(0,1fr)}
+  #app>aside{
+    margin:0;height:100vh;min-height:0;padding:26px 16px 20px;border:0;
+    border-right:1px solid var(--p-line);border-radius:0;
+    background:rgba(9,9,9,.72);box-shadow:none;overflow-y:auto;
+    backdrop-filter:blur(26px) saturate(130%);-webkit-backdrop-filter:blur(26px) saturate(130%);
+  }
+}
+#app aside #nav{gap:4px}
+#app aside #nav .nav{
+  min-height:46px;padding:8px 14px;gap:13px;border-radius:14px;border:1px solid transparent;
+  background:transparent;color:#9a9e96;box-shadow:none;
+}
+#app aside #nav .nav:hover{background:rgba(255,255,255,.055);color:#fff;transform:none}
+#app aside #nav .nav.on,#app aside #nav .nav.on:hover{
+  background:var(--y);color:var(--p-ink);border-color:transparent;transform:none;
+  box-shadow:0 10px 30px rgba(217,255,51,.16),inset 0 1px rgba(255,255,255,.4);
+}
+.nav-icon{width:22px;height:22px;flex:0 0 22px;border:0;border-radius:0;background:none;color:inherit}
+.nav-icon svg{width:20px;height:20px;stroke-width:1.75}
+.nav.on .nav-icon,#app aside #nav .nav.on .nav-icon{background:none;border:0;box-shadow:none;color:var(--p-ink)}
+.nav-label{font-size:14.5px;font-weight:600;letter-spacing:-.005em}
+.team-panel{padding:14px 6px 16px;border:0;border-top:1px solid var(--p-line)}
+.team-heading{font-size:12px;font-weight:600;color:var(--p-muted)}
+.team-member-name{font-weight:600}
+.team-member img{border-color:var(--p-line-2)}
+.profile{padding:12px;margin-top:auto;border:1px solid var(--p-line);border-radius:18px;background:var(--p-solid)}
+.avatar-btn{border-color:var(--p-line-2);box-shadow:none}
+#app aside #out.sidebar-logout{
+  justify-content:center;min-height:46px;border-radius:14px;
+  border:1px solid rgba(217,255,51,.38);background:transparent;color:var(--y);
+  font-weight:700;box-shadow:none;
+}
+#app aside #out.sidebar-logout:hover{background:rgba(217,255,51,.09);border-color:rgba(217,255,51,.6);transform:none}
+.sidebar-logout-icon{width:auto;height:auto;flex:0 0 auto;border:0;background:none;color:inherit;font-size:16px}
+#mobileNavToggle{border-radius:12px;border-color:var(--p-line-2);background:var(--p-solid)}
+
+/* ---- Header ---- */
+main>.top{
+  top:12px;padding:14px 18px;border:1px solid var(--p-line);border-radius:22px;
+  background:rgba(12,12,12,.74);box-shadow:inset 0 1px rgba(255,255,255,.05);
+  backdrop-filter:blur(22px) saturate(150%);-webkit-backdrop-filter:blur(22px) saturate(150%);
+}
+.page-heading{display:flex;flex-direction:column-reverse;gap:5px}
+.top h1{font-size:clamp(24px,2.4vw,32px);line-height:1.1;color:#fff}
+#sub{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:500;color:var(--p-muted)}
+#sub:not(:empty)::before{content:"";width:7px;height:7px;border-radius:50%;background:#35e69a;box-shadow:0 0 0 3px rgba(53,230,154,.16)}
+.tools select{min-height:44px;padding:10px 18px;border-radius:999px;border:1px solid var(--p-line-2);background:var(--p-solid);color:#fff;font-weight:600}
+.header-icon-button{width:44px;height:44px;border:1px solid var(--p-line-2);background:var(--p-solid);color:#d4d7d0;box-shadow:none}
+.header-icon-button:hover,.profile-trigger:hover{background:var(--p-solid-2);border-color:rgba(255,255,255,.22)}
+.header-icon-button.active{border-color:rgba(217,255,51,.55);background:rgba(217,255,51,.12);color:var(--y)}
+.header-icon-button#headerMessages svg circle{fill:var(--p-solid)}
+.header-count{border:2px solid #0c0c0c;font-weight:700}
+.profile-trigger{
+  width:auto;min-width:0;max-width:300px;height:52px;gap:11px;padding:5px 14px 5px 5px;
+  border:1px solid var(--p-line-2);background:var(--p-solid);box-shadow:none;
+  backdrop-filter:none;-webkit-backdrop-filter:none;
+}
+.profile-trigger>img{width:42px;height:42px;flex-basis:42px;border:2px solid var(--y);box-shadow:0 0 18px rgba(217,255,51,.22)}
+.profile-trigger-copy strong{font-family:var(--p-display);font-size:14px;font-weight:700;letter-spacing:-.01em}
+.profile-trigger-copy small{font-size:12px;color:var(--p-muted)}
+.profile-chevron{color:var(--p-muted)}
+
+/* ---- Buttons & inputs ---- */
+.btn{
+  font-family:var(--p-display);font-size:13.5px;font-weight:700;letter-spacing:-.005em;text-transform:none;
+  padding:12px 22px;border-radius:999px;color:var(--p-ink);
+  background:linear-gradient(135deg,#e4ff4d,#cdf400);
+  box-shadow:0 8px 26px rgba(217,255,51,.16),inset 0 1px rgba(255,255,255,.45);
+}
+.btn.o,.btn.photo-crop-cancel{background:transparent;border:1px solid var(--p-line-2);color:#fff;box-shadow:none}
+main input:not([type=file]),main select,#login input{border-radius:14px}
+main input:not([type=file]){background:var(--p-solid)!important;border:1px solid var(--p-line-2)!important}
+input:focus,select:focus,textarea:focus{border-color:rgba(217,255,51,.7)!important;box-shadow:0 0 0 3px rgba(217,255,51,.1)!important}
+
+/* ---- Cards: solid dark surfaces, quiet glass edge ---- */
+.c,.monthly-chart-card,.overview-tour-card,.tour-live-reference-card,.holiday-glass-card,.team-directory-card{
+  padding:22px;border:1px solid var(--p-line)!important;border-top-color:rgba(255,255,255,.11)!important;
+  border-radius:var(--p-radius)!important;background:var(--p-card)!important;color:var(--p-text);
+  box-shadow:0 18px 48px rgba(0,0,0,.35),inset 0 1px rgba(255,255,255,.04)!important;
+  backdrop-filter:blur(18px) saturate(130%);-webkit-backdrop-filter:blur(18px) saturate(130%);
+}
+.c:hover{border-color:var(--p-line-2)!important}
+.c.k{
+  border-color:rgba(217,255,51,.22)!important;
+  background:linear-gradient(160deg,rgba(26,30,10,.9),rgba(14,15,10,.94))!important;
+}
+.c:not(.y) .m{color:var(--p-muted)}
+.grid{gap:18px}
+
+/* Hero: the one loud lime surface */
+.c.y,.overview-hero-card{
+  border:1px solid rgba(255,255,255,.35)!important;border-radius:28px!important;
+  background:linear-gradient(115deg,#e0ff45 0%,#d6fb26 55%,#cdf200 100%)!important;color:var(--p-ink)!important;
+  box-shadow:0 30px 80px rgba(217,255,51,.12),0 18px 48px rgba(0,0,0,.35),inset 0 1px rgba(255,255,255,.55)!important;
+  backdrop-filter:none;-webkit-backdrop-filter:none;
+}
+.c.y h2,.c.y .big,.overview-hero-number{color:var(--p-ink)}
+.overview-hero-card:before,.overview-hero-card:after{border-color:rgba(13,17,0,.11)}
+.overview-hero-eyebrow{font-size:14px;font-weight:600;color:rgba(13,17,0,.7);margin-bottom:18px}
+.overview-hero-number{font-weight:800;letter-spacing:-.065em}
+.overview-hero-foot{
+  display:inline-flex;align-items:center;width:fit-content;gap:8px;padding:8px 14px;border-radius:999px;
+  background:rgba(13,17,0,.1);font-size:13px;font-weight:600;color:var(--p-ink);
+}
+.overview-hero-ring-value{stroke:var(--p-ink);stroke-width:10}
+.overview-hero-ring-track{stroke:rgba(13,17,0,.12);stroke-width:10}
+.overview-hero-ring-label strong{font-size:clamp(26px,3vw,36px)}
+.overview-hero-ring-label span{font-size:12px;font-weight:600;opacity:.65}
+.overview-hero-progress-caption{font-size:12px}
+
+/* Numbers & charts */
+.big{font-weight:800;letter-spacing:-.05em}
+.monthly-chart-heading h2{font-size:16px;font-weight:700;letter-spacing:-.02em}
+.monthly-chart-total{font-size:28px;color:#fff}
+.monthly-chart-total span{font-family:var(--p-body);font-weight:500;color:var(--p-muted)}
+.monthly-chart-period{font-size:12px;font-weight:600;border-radius:999px}
+.tour-gauge-legend{font-size:13px;color:var(--p-muted)}
+.tour-gauge-legend b{font-weight:700}
+
+/* Segments, pills, bars */
+.pipe{gap:8px}
+.pipe div{border:1px solid var(--p-line);border-radius:16px;background:var(--p-solid)}
+.pipe .on{border-color:rgba(217,255,51,.4);background:rgba(217,255,51,.12);color:var(--y)}
+.pill{padding:4px 11px;font-size:12px;font-weight:700;border-radius:999px;background:var(--y);color:var(--p-ink)}
+.pill.g{background:rgba(255,255,255,.08);color:#e9ebe6;border:1px solid var(--p-line-2)}
+.bar{height:7px;background:rgba(255,255,255,.09)}
+.bar i{background:linear-gradient(90deg,#e4ff4d,#bfe600)}
+
+/* Tables */
+.sc{border:1px solid var(--p-line);border-radius:16px;background:rgba(0,0,0,.18)}
+th{font-size:12px;font-weight:600;color:var(--p-muted);border-bottom:1px solid var(--p-line-2);padding:11px 10px}
+td{padding:11px 10px;border-bottom:1px solid var(--p-line)}
+tbody tr:hover td{background:rgba(255,255,255,.035)}
+tr.t td{background:rgba(217,255,51,.1);color:#f3ffc4}
+
+/* Calendar */
+.cal b{border-color:var(--p-line-2);background:rgba(255,255,255,.035)}
+.cal .hol{background:rgba(217,255,51,.14);border-color:rgba(217,255,51,.45);color:var(--y)}
+.cal .td{background:var(--y);border-color:var(--y);color:var(--p-ink);font-weight:700}
+
+/* Messaging */
+.messaging-shell{border:1px solid var(--p-line);border-radius:var(--p-radius);background:rgba(15,15,15,.82)}
+.messaging-list{border-right-color:var(--p-line);background:rgba(255,255,255,.02)}
+.messaging-list-head,.messaging-chat-head,.messaging-compose{border-color:var(--p-line)}
+.messaging-new{border-radius:999px;font-weight:700}
+.messaging-thread{border-radius:16px}
+.messaging-bubble{border-radius:18px 18px 18px 6px;background:var(--p-solid-2);border-color:var(--p-line)}
+.messaging-compose textarea{border-radius:18px;background:var(--p-solid);border-color:var(--p-line-2)}
+.messaging-send{border-radius:999px}
+
+/* Popovers, toast, dialogs */
+.header-popover,.team-profile-dialog,.photo-crop-dialog{
+  border:1px solid var(--p-line-2);border-radius:22px;background:rgba(18,18,18,.96);
+  box-shadow:0 30px 90px rgba(0,0,0,.6),inset 0 1px rgba(255,255,255,.06);
+}
+#toast{border-radius:16px;background:rgba(18,18,18,.94);font-weight:600}
+.team-profile-backdrop,.photo-crop-modal{background:rgba(0,0,0,.76)}
+
+/* ---- Login ---- */
+#login{
+  background:
+    radial-gradient(ellipse at 82% 10%,rgba(217,255,51,.17),transparent 46%),
+    radial-gradient(ellipse at 10% 92%,rgba(217,255,51,.05),transparent 44%),
+    #080808;
+}
+#login .lens{background:rgba(217,255,51,.16)}
+#login form{
+  padding:36px;border:1px solid var(--p-line-2);border-radius:28px;
+  background:rgba(16,16,16,.82);box-shadow:0 40px 110px rgba(0,0,0,.6),inset 0 1px rgba(255,255,255,.07);
+}
+#login h1{font-size:clamp(30px,4vw,38px);font-weight:800;letter-spacing:-.045em;margin-bottom:8px}
+#login h1::before{
+  content:"";display:block;width:50px;height:50px;margin-bottom:22px;border-radius:15px;
+  box-shadow:0 0 36px rgba(217,255,51,.3);
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 50 50'%3E%3Crect width='50' height='50' rx='15' fill='%23d9ff33'/%3E%3Cpath d='M30 10 12 29h14l-4 11 17-20H25z' fill='%230d1100'/%3E%3C/svg%3E") center/cover no-repeat;
+}
+#login input{padding:15px 16px;border-radius:14px;border:1px solid var(--p-line-2);background:rgba(255,255,255,.04)}
+#login .btn{width:100%;padding:15px 22px;font-size:14.5px}
+#err{font-weight:500}
+
+/* ---- Small screens ---- */
+@media(max-width:900px){
+  #app>aside{background:rgba(12,12,12,.82)}
+  #app aside #nav .nav{min-height:50px}
+}
+@media(max-width:600px){
+  .c,.monthly-chart-card,.overview-tour-card,.tour-live-reference-card,.holiday-glass-card{padding:16px;border-radius:20px!important}
+  .c.y,.overview-hero-card{border-radius:24px!important}
+  main>.top{top:8px;padding:14px;border-radius:18px}
+  .top h1{font-size:clamp(22px,7vw,28px)}
+  .grid{gap:12px}
+  .profile-trigger>img{width:38px;height:38px;flex-basis:38px}
+  .logo .sym,#app aside .logo .sym{width:34px;height:34px;flex-basis:34px}
+  #app aside .logo .h{font-size:22px!important}
+  #login form{padding:28px 22px}
+}
+@media(prefers-reduced-transparency:reduce){
+  .c,.monthly-chart-card,.overview-tour-card,.tour-live-reference-card,main>.top,#app>aside{backdrop-filter:none;-webkit-backdrop-filter:none}
+}
 </style></head><body>
 <div id="login"><div class="lens"></div><form id="lf"><h1 class="login-brand">NITEX<br>Studio Status</h1>
 <input id="lu" type="email" placeholder="Work email address" autocomplete="username" required aria-label="Email address"><input id="lp" type="password" placeholder="Password" autocomplete="current-password" aria-label="Password" required><button class="btn">Sign in</button><div id="err" class="m"></div></form></div>
