@@ -621,17 +621,6 @@ main>.top{position:sticky;top:10px;z-index:15;background:rgba(20,23,27,.86);back
 @keyframes nitexBarRise{from{transform:scaleY(.04);opacity:.45}to{transform:scaleY(1);opacity:1}}
 @media(prefers-reduced-motion:reduce){.dashboard-intro-card .stack-chart-bar{animation:none;transform:none}.monthly-chart-point,.stack-chart-bar{transition:none}}
 
-/* NITEX analytics — phase 5: monthly and quarterly trend panels */
-.analytics-trend-card{position:relative;overflow:hidden;border:1px solid rgba(255,255,255,.12)!important;border-radius:20px;background:linear-gradient(145deg,rgba(28,32,37,.97),rgba(16,19,23,.98))!important;box-shadow:inset 0 1px rgba(255,255,255,.045),0 12px 30px rgba(0,0,0,.13)}
-.analytics-trend-card:after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(120deg,rgba(255,255,255,.035),transparent 42%)}
-.analytics-trend-card h2{position:relative;z-index:1}
-.analytics-trend-total{font:clamp(25px,3vw,36px) 'Archivo Black',sans-serif;letter-spacing:-.035em;color:var(--y);margin:4px 0 2px}
-.analytics-trend-total span{font:10px 'Fragment Mono',monospace;letter-spacing:0;color:var(--muted);text-transform:uppercase}
-.analytics-trend-card .monthly-chart-svg{position:relative;z-index:1;margin-top:8px}
-.analytics-trend-card .monthly-chart-area{opacity:.9}
-.analytics-trend-card .monthly-chart-line{stroke-width:3.2}
-.analytics-trend-card .monthly-chart-point{r:4.5}
-@media(max-width:700px){.analytics-trend-card{grid-column:span 12}.analytics-trend-total{font-size:29px}}
 </style></head><body>
 <div id="login"><div class="lens"></div><form id="lf"><h1 class="login-brand">NITEX<br>Studio Status</h1>
 <input id="lu" type="email" placeholder="Work email address" autocomplete="username" required aria-label="Email address"><input id="lp" type="password" placeholder="Password" autocomplete="current-password" aria-label="Password" required><button class="btn">Sign in</button><div id="err" class="m"></div></form></div>
@@ -941,7 +930,7 @@ R.sm=()=>{const a=sel(),yr=Y==='All'?Math.max(...years()):Y,ya=D.rows.filter(r=>
  const qs=quarterData.map(q=>[q.l,...q.v.map(n),`<b>${n(q.t)}</b>`,q.b,f1(q.d)]);
  return`<div class="grid"><div class="c s6"><h2>${yr} products by month and type</h2>${stack(mr)}<div class="lg m">${TY.map((t,i)=>`<span style="--c:${TC[i]}">${t}</span>`).join('')}</div></div>
  <div class="c s6"><h2>Products by quarter and type</h2>${stack(quarterData)}<div class="lg m">${TY.map((t,i)=>`<span style="--c:${TC[i]}">${t}</span>`).join('')}</div></div>
- <div class="c s6 analytics-trend-card"><h2>Monthly production trend</h2><div class="analytics-trend-total">${n(sum(mr,m=>m.t))} <span>products this year</span></div>${area(mr.map(m=>m.t),mr.map(m=>m.l),640,190)}</div><div class="c s6 analytics-trend-card"><h2>Quarterly production trend</h2><div class="analytics-trend-total">${n(sum(quarterData,q=>q.t))} <span>products this year</span></div>${area(quarterData.map(q=>q.t),quarterData.map(q=>q.l),640,190)}</div>
+
  <div class="c s12"><h2>Quarterly breakdown ${yr}</h2>${tbl(['Quarter',...TY,'Total','Bunches','Avg days'],qs,['Year total',...TY.map((t,j)=>n(sum(quarterData,q=>q.v[j]))),n(sum(quarterData,q=>q.t)),sum(quarterData,q=>q.b),f1(avg(ya))])}</div>
  <div class="c s12"><h2>Monthly breakdown ${yr}</h2>${tbl(['Month',...TY,'Total','Bunches','Avg days'],mr.map((m,i)=>[MF[i],...m.v.map(n),`<b>${n(m.t)}</b>`,m.b,f1(m.d)]),['Year total',...TY.map((t,j)=>n(sum(mr,m=>m.v[j]))),n(sum(mr,m=>m.t)),sum(mr,m=>m.b),f1(avg(ya))])}</div>
  <div class="c s12"><h2>Yearly overview</h2>${tbl(['Year',...TY,'Total','Bunches','Avg days'],years().map(y=>{const z=D.rows.filter(r=>r.y===y);return[y,...TY.map(t=>n(sum(z.filter(r=>r.t===t),r=>r.q))),`<b>${n(sum(z,r=>r.q))}</b>`,z.length,f1(avg(z))]}),['Grand total',...TY.map(t=>n(sum(D.rows.filter(r=>r.t===t),r=>r.q))),n(sum(D.rows,r=>r.q)),D.rows.length,f1(avg(D.rows))])}</div></div>`};
