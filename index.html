@@ -1146,6 +1146,64 @@ tr.t td{background:rgba(217,255,51,.1);color:#f3ffc4}
 }
 @media(prefers-reduced-motion:reduce){.team-directory-card:hover .team-directory-photo{transform:none}}
 
+
+
+/* Studio Team — floating liquid-glass name overlay on portrait */
+.team-directory-photo-wrap{
+  position:relative;isolation:isolate;overflow:hidden;
+}
+.team-directory-caption{
+  position:absolute!important;
+  right:12px!important;bottom:12px!important;left:12px!important;
+  z-index:3!important;
+  display:flex!important;flex-direction:column;align-items:center;justify-content:center;
+  min-height:104px;padding:17px 18px 16px!important;
+  border:1px solid rgba(255,255,255,.34)!important;
+  border-radius:18px!important;
+  background:
+    linear-gradient(125deg,rgba(255,255,255,.20),rgba(255,255,255,.055) 48%,rgba(217,255,51,.075)),
+    rgba(13,17,21,.30)!important;
+  box-shadow:0 10px 30px rgba(0,0,0,.22),inset 0 1px rgba(255,255,255,.25),inset 0 -1px rgba(255,255,255,.08)!important;
+  -webkit-backdrop-filter:blur(17px) saturate(155%) contrast(105%)!important;
+  backdrop-filter:blur(17px) saturate(155%) contrast(105%)!important;
+  text-align:center;
+}
+.team-directory-caption:before{
+  content:"";position:absolute;inset:1px 12% auto;height:1px;
+  border-radius:50%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.65),transparent);
+  pointer-events:none;
+}
+.team-directory-caption:after{
+  content:"";position:absolute;inset:0;border-radius:inherit;
+  background:radial-gradient(ellipse at 15% 0%,rgba(255,255,255,.17),transparent 48%),
+             radial-gradient(ellipse at 90% 100%,rgba(217,255,51,.10),transparent 45%);
+  pointer-events:none;
+}
+.team-directory-name,.team-directory-role{position:relative;z-index:1}
+.team-directory-name{
+  font-size:clamp(19px,1.55vw,23px)!important;
+  color:#fff!important;text-shadow:0 2px 12px rgba(0,0,0,.35);
+}
+.team-directory-role{
+  margin-top:7px!important;color:#e4ff78!important;
+  font-size:13px!important;font-weight:650!important;
+  text-shadow:0 1px 8px rgba(0,0,0,.45);
+}
+@media(max-width:700px){
+  .team-directory-caption{
+    right:10px!important;bottom:10px!important;left:10px!important;
+    min-height:98px;padding:15px 13px 14px!important;border-radius:16px!important;
+  }
+  .team-directory-name{font-size:clamp(20px,6vw,25px)!important}
+  .team-directory-role{font-size:14px!important}
+}
+@media(prefers-reduced-transparency:reduce){
+  .team-directory-caption{
+    background:rgba(13,17,21,.88)!important;
+    -webkit-backdrop-filter:none!important;backdrop-filter:none!important;
+  }
+}
+
 </style></head><body>
 <div id="login"><div class="lens"></div><form id="lf"><h1 class="login-brand">NITEX<br>Studio Status</h1>
 <input id="lu" type="email" placeholder="Work email address" autocomplete="username" required aria-label="Email address"><input id="lp" type="password" placeholder="Password" autocomplete="current-password" aria-label="Password" required><button class="btn">Sign in</button><div id="err" class="m"></div></form></div>
