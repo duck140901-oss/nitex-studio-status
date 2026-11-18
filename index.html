@@ -542,6 +542,48 @@ main>.top{position:sticky;top:10px;z-index:15;background:rgba(20,23,27,.86);back
 .stack-chart-bar{transform-box:fill-box;transform-origin:center bottom;transition:filter .2s ease,opacity .2s ease}
 .stack-chart-bar:hover{filter:brightness(1.18);opacity:.92}
 @media(prefers-reduced-motion:reduce){.monthly-chart-point,.stack-chart-bar{transition:none}.monthly-chart-card:after{display:none}}
+
+/* NITEX balanced motion system — phase 2: global interface */
+:root{--motion-fast:160ms;--motion-base:220ms;--motion-page:420ms;--motion-ease:cubic-bezier(.2,.75,.25,1);--motion-soft:cubic-bezier(.22,1,.36,1)}
+@media(hover:hover) and (prefers-reduced-motion:no-preference){
+ #nav .nav{position:relative;border-radius:12px;transition:background var(--motion-base) var(--motion-ease),color var(--motion-fast) ease,transform var(--motion-base) var(--motion-ease),box-shadow var(--motion-base) ease}
+ #nav .nav:hover{transform:translateX(3px);background:rgba(215,255,0,.10);color:#fff}
+ #nav .nav.on{box-shadow:0 5px 18px rgba(215,255,0,.12),inset 0 1px rgba(255,255,255,.22)}
+ #nav .nav.on:hover{background:var(--y);color:var(--k);transform:translateX(2px)}
+ .btn,button:not(.nav):not(.team-member):not(.avatar-btn):not(.profile-trigger):not(.header-icon-button):not(.team-profile-close):not(.team-profile-edit-trigger):not(.team-profile-save):not(.team-profile-cancel){transition:transform var(--motion-fast) var(--motion-ease),box-shadow var(--motion-base) ease,filter var(--motion-fast) ease,border-color var(--motion-base) ease}
+ .btn:hover{filter:brightness(1.045);box-shadow:0 5px 18px rgba(215,255,0,.13)}
+ .btn:active,button:not(.nav):active{transform:scale(.985)}
+ .tools select,input:not([type=file]):not([type=checkbox]):not([type=radio]):not([type=range]),textarea{transition:border-color var(--motion-base) ease,box-shadow var(--motion-base) ease,background var(--motion-base) ease}
+ .tools select:focus,input:focus,textarea:focus{border-color:rgba(215,255,0,.72);box-shadow:0 0 0 3px rgba(215,255,0,.09)}
+ .c{transition:transform var(--motion-base) var(--motion-ease),box-shadow var(--motion-base) ease,border-color var(--motion-base) ease}
+ .c:hover{box-shadow:0 14px 32px rgba(0,0,0,.12)}
+ .c.k:hover{box-shadow:0 16px 34px rgba(0,0,0,.24),0 0 0 1px rgba(215,255,0,.12)}
+ .header-icon-button,.profile-trigger{transition:transform var(--motion-fast) var(--motion-ease),background var(--motion-base) ease,border-color var(--motion-base) ease,box-shadow var(--motion-base) ease}
+ .header-icon-button:hover,.profile-trigger:hover{transform:translateY(-1px);box-shadow:0 5px 18px rgba(0,0,0,.14)}
+}
+#pg.motion-page-enter>.grid>.c{animation:nitexCardEnter .42s var(--motion-soft) both;animation-delay:calc(min(var(--motion-index,0),8)*32ms)}
+#pg.motion-page-enter>.grid>.c:nth-child(1){--motion-index:0}
+#pg.motion-page-enter>.grid>.c:nth-child(2){--motion-index:1}
+#pg.motion-page-enter>.grid>.c:nth-child(3){--motion-index:2}
+#pg.motion-page-enter>.grid>.c:nth-child(4){--motion-index:3}
+#pg.motion-page-enter>.grid>.c:nth-child(5){--motion-index:4}
+#pg.motion-page-enter>.grid>.c:nth-child(6){--motion-index:5}
+#pg.motion-page-enter>.grid>.c:nth-child(7){--motion-index:6}
+#pg.motion-page-enter>.grid>.c:nth-child(8){--motion-index:7}
+@keyframes nitexCardEnter{from{opacity:0;transform:translate3d(0,10px,0)}to{opacity:1;transform:translate3d(0,0,0)}}
+.team-profile-modal.open .team-profile-dialog{animation:nitexModalEnter .28s var(--motion-soft) both}
+.photo-crop-modal.open .photo-crop-dialog{animation:nitexModalEnter .28s var(--motion-soft) both}
+@keyframes nitexModalEnter{from{opacity:0;transform:translateY(9px) scale(.985)}to{opacity:1;transform:translateY(0) scale(1)}}
+#toast{animation:nitexToastEnter .24s var(--motion-soft) both}
+@keyframes nitexToastEnter{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:900px){
+ #nav .nav:hover{transform:none}
+ #pg.motion-page-enter>.grid>.c{animation-duration:.32s;animation-delay:0ms}
+}
+@media(prefers-reduced-motion:reduce){
+ #pg.motion-page-enter>.grid>.c,.team-profile-modal.open .team-profile-dialog,.photo-crop-modal.open .photo-crop-dialog,#toast{animation:none!important}
+ #nav .nav,.btn,button,.c,.header-icon-button,.profile-trigger,input,select,textarea{transition:none!important}
+}
 </style></head><body>
 <div id="login"><div class="lens"></div><form id="lf"><h1 class="login-brand">NITEX<br>Studio Status</h1>
 <input id="lu" type="email" placeholder="Work email address" autocomplete="username" required aria-label="Email address"><input id="lp" type="password" placeholder="Password" autocomplete="current-password" aria-label="Password" required><button class="btn">Sign in</button><div id="err" class="m"></div></form></div>
@@ -903,7 +945,7 @@ function animateDashboardIntro(){
 let monthlyChartIntroPending=true;
 function go(){const ys=['All',...years()];$('#yr').innerHTML=ys.map(y=>`<option ${y===Y?'selected':''}>${y}</option>`).join('');document.querySelectorAll('.nav[data-p]').forEach(b=>{const active=b.dataset.p===P;b.classList.toggle('on',active);b.setAttribute('aria-current',active?'page':'false')});$('#headerMessages').classList.toggle('active',P==='msg');
  const pg=PAGES.find(p=>p[0]===P);$('#ttl').textContent=pg[1];$('#sub').textContent='NITEX STUDIO / data as of '+(D.at||'').slice(0,10);
- const rd=(animate=true)=>{$('#pg').innerHTML=R[P]();if(animate)animateDashboardIntro();if(P==='ov'&&monthlyChartIntroPending){const chart=$('#pg .monthly-chart-card');if(chart)chart.classList.add('is-intro');monthlyChartIntroPending=false}const q=$('#q');if(q){q.oninput=()=>{const p=q.selectionStart;rd(false);$('#q').focus();$('#q').setSelectionRange(p,p)}}const df=$('#statusFrom'),dt=$('#statusTo');if(df)df.onchange=()=>{statusFrom=df.value;rd(false)};if(dt)dt.onchange=()=>{statusTo=dt.value;rd(false)};const cf=$('#clearFilters');if(cf)cf.onclick=()=>{statusFrom='';statusTo='';rd(false);const search=$('#q');if(search)search.value=''};const m=$('#more');if(m)m.onclick=()=>{SH+=40;rd(false)}};rd();if(P==='msg'){ $('#yr').style.display='none';$('#up').style.display='none';$('#sub').textContent='DIRECT MESSAGES / NITEX STUDIO';initMessaging()}else{$('#yr').style.display='';$('#up').style.display=['alamin@nitex.com','sowrav@nitex.com'].includes((me?.email||'').toLowerCase())?'':'none'} }
+ const rd=(animate=true)=>{$('#pg').innerHTML=R[P]();if(animate){const root=$('#pg');root.classList.remove('motion-page-enter');void root.offsetWidth;root.classList.add('motion-page-enter');animateDashboardIntro()}if(P==='ov'&&monthlyChartIntroPending){const chart=$('#pg .monthly-chart-card');if(chart)chart.classList.add('is-intro');monthlyChartIntroPending=false}const q=$('#q');if(q){q.oninput=()=>{const p=q.selectionStart;rd(false);$('#q').focus();$('#q').setSelectionRange(p,p)}}const df=$('#statusFrom'),dt=$('#statusTo');if(df)df.onchange=()=>{statusFrom=df.value;rd(false)};if(dt)dt.onchange=()=>{statusTo=dt.value;rd(false)};const cf=$('#clearFilters');if(cf)cf.onclick=()=>{statusFrom='';statusTo='';rd(false);const search=$('#q');if(search)search.value=''};const m=$('#more');if(m)m.onclick=()=>{SH+=40;rd(false)}};rd();if(P==='msg'){ $('#yr').style.display='none';$('#up').style.display='none';$('#sub').textContent='DIRECT MESSAGES / NITEX STUDIO';initMessaging()}else{$('#yr').style.display='';$('#up').style.display=['alamin@nitex.com','sowrav@nitex.com'].includes((me?.email||'').toLowerCase())?'':'none'} }
 /* ---- Excel sync: owner picks the updated .xlsx, every viewer gets it ---- */
 const D8=v=>v instanceof Date?iso(new Date(v.getTime()+12*36e5)):null;
 function parse(buf){const wb=XLSX.read(buf,{cellDates:true}),g=s=>XLSX.utils.sheet_to_json(wb.Sheets[s],{header:1,raw:true,defval:null}),rows=[];
