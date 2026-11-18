@@ -1273,6 +1273,30 @@ tr.t td{background:rgba(217,255,51,.1);color:#f3ffc4}
  .team-profile-content{padding:18px 18px 20px!important}
 }
 
+
+/* Studio Team directory: one desktop row and consistent contact fields */
+.team-directory{grid-template-columns:repeat(5,minmax(0,1fr));width:100%;max-width:none;gap:clamp(10px,1.25vw,20px);align-items:stretch}
+.team-directory-card{display:flex;flex-direction:column;width:100%;height:100%;min-width:0}
+.team-directory-photo-wrap{width:100%;flex:0 0 auto;aspect-ratio:4/4.7}
+.team-directory-identity{display:flex;flex-direction:column;justify-content:center;min-height:104px;flex:1 0 auto;padding:16px 10px 8px}
+.team-directory-name{font-size:clamp(14px,1.15vw,20px);line-height:1.2}
+.team-directory-role{font-size:clamp(11px,.9vw,13px);line-height:1.35}
+.team-directory-contact{display:grid;grid-template-columns:minmax(0,1fr);gap:9px;width:100%;box-sizing:border-box;padding:12px}
+.team-directory-link{box-sizing:border-box;width:100%;min-width:0;min-height:52px;height:52px;display:flex;align-items:center;gap:9px;padding:8px 10px}
+.team-directory-link-icon{width:30px;height:30px;flex:0 0 30px}
+.team-directory-link span:last-child{display:block;min-width:0;flex:1 1 auto;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:clamp(10px,.82vw,13px);line-height:1.2}
+.team-directory-edit{align-self:stretch;justify-content:center}
+@media(max-width:700px){
+ .team-directory{grid-template-columns:minmax(0,420px);justify-content:center;gap:16px}
+ .team-directory-card{width:100%;height:auto}
+ .team-directory-photo-wrap{aspect-ratio:4/4.6}
+ .team-directory-identity{min-height:100px;padding:18px 17px 8px}
+ .team-directory-name{font-size:clamp(21px,6vw,27px)}
+ .team-directory-role{font-size:14px}
+ .team-directory-contact{padding:13px 17px 18px}
+ .team-directory-link{height:56px;min-height:56px;padding:11px 13px}
+ .team-directory-link span:last-child{font-size:14px}
+}
 </style></head><body>
 <div id="login"><div class="lens"></div><form id="lf"><h1 class="login-brand">NITEX<br>Studio Status</h1>
 <input id="lu" type="email" placeholder="Work email address" autocomplete="username" required aria-label="Email address"><input id="lp" type="password" placeholder="Password" autocomplete="current-password" aria-label="Password" required><button class="btn">Sign in</button><div id="err" class="m"></div></form></div>
